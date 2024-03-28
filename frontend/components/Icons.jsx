@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 export const MoonFilledIcon = ({
   size = 24,
   width,
