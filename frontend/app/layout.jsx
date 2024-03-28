@@ -6,7 +6,7 @@ import CustomNavbar from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'My Digitla Hub',
+  title: 'My Digital Hub',
   description: 'Le hub digital de MyDigitalSchool'
 }
 
