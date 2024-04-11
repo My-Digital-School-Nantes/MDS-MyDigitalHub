@@ -8,8 +8,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa6'
 export default function LoginForm () {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [credentials, setCredentials] = useState({
-    email: 'toto@mail.com',
-    password: 'password'
+    email: '',
+    password: ''
   })
 
   const handleChange = (e) => {
