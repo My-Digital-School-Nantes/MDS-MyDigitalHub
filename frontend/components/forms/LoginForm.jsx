@@ -2,8 +2,10 @@
 
 import { Input, Button } from '@nextui-org/react'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
+import { toast } from 'react-toastify'
 
 export default function LoginForm () {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
@@ -11,6 +13,8 @@ export default function LoginForm () {
     email: '',
     password: ''
   })
+
+  const router = useRouter()
 
   const handleChange = (e) => {
     setCredentials({
@@ -21,9 +25,20 @@ export default function LoginForm () {
 
   const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    signIn('credentials', credentials)
+    try {
+      const result = await signIn('credentials', { ...credentials, redirect: false }, {})
+      if (result.ok) {
+        toast.success('Vous êtes connecté')
+        router.push('/')
+      } else {
+        toast.error('Identifiant ou mot de passe incorrect')
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error('Identifiant ou mot de passe incorrect')
+    }
   }
 
   return (
