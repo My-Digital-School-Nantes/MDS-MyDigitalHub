@@ -19,7 +19,7 @@ import {
 } from '@nextui-org/react'
 import { menuItems } from '@/config/site.js'
 import { ThemeSwitcher } from './ThemeSwitcher.jsx'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 function CustomNavbar () {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -80,7 +80,7 @@ function CustomNavbar () {
                     <p className='font-semibold'>Signed in as</p>
                     <p className='font-semibold'>{session.email}</p>
                   </DropdownItem>
-                  <DropdownItem key='logout' color='danger'>
+                  <DropdownItem key='logout' color='danger' onClick={signOut}>
                     Log Out
                   </DropdownItem>
                 </DropdownMenu>
