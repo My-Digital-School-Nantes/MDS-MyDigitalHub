@@ -1,7 +1,7 @@
 'use client'
 
 import { Input, Button } from '@nextui-org/react'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
 
@@ -11,8 +11,6 @@ export default function LoginForm () {
     email: 'toto@mail.com',
     password: 'password'
   })
-
-  const { data: session, status } = useSession()
 
   const handleChange = (e) => {
     setCredentials({
