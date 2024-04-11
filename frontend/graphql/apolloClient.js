@@ -9,12 +9,20 @@ import {
 // import { setContext } from '@apollo/client/link/context'
 
 const httpLink = new HttpLink({
-  uri: process.env.STRAPI_URL
+  uri: `${process.env.STRAPI_URL}/graphql`
 })
 
 const client = new ApolloClient({
   link: from([httpLink]),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'no-cache'
+    },
+    watchQuery: {
+      fetchPolicy: 'no-cache'
+    }
+  }
 })
 
 export default client

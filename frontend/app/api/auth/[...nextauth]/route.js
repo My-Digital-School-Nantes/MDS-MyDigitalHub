@@ -13,21 +13,38 @@ const handler = NextAuth({
       },
       async authorize (credentials, req) {
         if (credentials === null) return null
+        console.log(credentials)
+        try {
+          const result = await client.mutate({
+            mutation: LOGIN_MUTATION,
+            variables: {
+              identifier: credentials.email,
+              password: credentials.password
+            }
+          })
+          console.log(result)
 
-        const result = await client.mutate({
-          mutation: LOGIN_MUTATION,
-          variables: {
-            identifier: credentials.email,
-            password: credentials.password
+          if (result && result.data && result.data.login) {
+            return result.data.login.user
+          } else {
+            return null
           }
-        })
-
-        console.log(result)
+        } catch (error) {
+          console.error(error)
+          return null
+        }
 
         // TODO implémenter la fonction de login
       }
     })
-  ]
+  ],
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error' // Error code passed in query string as ?error=
+    // verifyRequest: '/auth/verify-request', // (used for check email message)
+    // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  }
 })
 
 export { handler as GET, handler as POST }
