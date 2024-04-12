@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody } from '@nextui-org/react'
 
-export default function RoutePage () {
+export default function Projets () {
   return (
     <div className=''>
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24'>
