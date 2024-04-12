@@ -58,6 +58,11 @@ function CustomNavbar () {
             Integrations
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color='foreground' href='/joboffers'>
+            Job offers
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       {
         session && status === 'authenticated'
