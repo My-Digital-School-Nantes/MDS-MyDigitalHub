@@ -1,6 +1,6 @@
-export default function RoutePage() {
+export default function RoutePage () {
   return (
-    <div>
+    <div className=''>
       <h1>Projet</h1>
     </div>
   )
