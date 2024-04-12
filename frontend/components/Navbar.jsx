@@ -53,6 +53,11 @@ function CustomNavbar () {
             Customers
           </Link>
         </NavbarItem>
+        <NavbarItem isActive>
+          <Link href='/calendar' aria-current='page'>
+            Calendar
+          </Link>
+        </NavbarItem>
         <NavbarItem>
           <Link color='foreground' href='#'>
             Integrations
