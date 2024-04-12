@@ -55,7 +55,7 @@ function CustomNavbar () {
         </NavbarItem>
         <NavbarItem isActive>
           <Link href='/evenements' aria-current='page'>
-            Calendar
+            Evenements
           </Link>
         </NavbarItem>
         <NavbarItem>
