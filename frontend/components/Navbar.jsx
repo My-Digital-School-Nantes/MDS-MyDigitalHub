@@ -58,6 +58,11 @@ function CustomNavbar () {
             Integrations
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color='foreground' href='/projets'>
+            Projets
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       {
         session && status === 'authenticated'
