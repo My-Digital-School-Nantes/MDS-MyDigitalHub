@@ -1,5 +1,4 @@
-import { Card, CardHeader, CardBody } from '@nextui-org/react'
-
+import { Card, CardHeader, CardBody, Image } from '@nextui-org/react'
 export default function Projets () {
   return (
     <div className=''>
@@ -25,7 +24,12 @@ export default function Projets () {
             <h4 className='font-bold text-large'>Frontend Radio</h4>
           </CardHeader>
           <CardBody className='overflow-visible py-2'>
-            etst
+            <Image
+              alt='Card background'
+              className='object-cover rounded-xl'
+              src='/projet/dopamine.jpg'
+              width={270}
+            />
           </CardBody>
         </Card>
       </div>
