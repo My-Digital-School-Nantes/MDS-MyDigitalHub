@@ -1,7 +1,7 @@
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from '@nextui-org/react'
 import { RiGitRepositoryPrivateLine } from 'react-icons/ri'
 
-export default function CardQuizz ({ showIcon = false }) {
+export default function CardQuizz ({ showIcon = false, number }) {
   return (
     <Card className='max-w-[400px] relative'>
       <CardHeader className='flex gap-3'>
@@ -13,7 +13,7 @@ export default function CardQuizz ({ showIcon = false }) {
           width={40}
         />
         <div className='flex flex-col'>
-          <p className='text-md'>NextUI</p>
+          <p className='text-md'>NextUI {number}</p>
           <p className='text-small text-default-500'>nextui.org</p>
         </div>
         {showIcon && (
