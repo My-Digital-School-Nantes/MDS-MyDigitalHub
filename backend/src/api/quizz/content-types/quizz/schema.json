@@ -4,11 +4,30 @@
   "info": {
     "singularName": "quizz",
     "pluralName": "quizzes",
-    "displayName": "Quizz"
+    "displayName": "Quizz",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "themes": {
+      "type": "enumeration",
+      "enum": [
+        "Dev",
+        "Webmarket",
+        "UI/UX",
+        "DA"
+      ]
+    },
+    "Questions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "quizz.questions"
+    }
+  }
 }
