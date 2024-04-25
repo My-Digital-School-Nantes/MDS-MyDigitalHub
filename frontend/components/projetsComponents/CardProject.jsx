@@ -22,12 +22,12 @@ export const CardProject = (projet) => {
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw%'
             />
           </div>
-          <h1 className='relative inline-block font-medium text-lg text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-primary-400 before:transition before:origin-left before:scale-x-0 group-hover:before:scale-x-100 dark:text-white'>{projet.title}</h1>
+          <h1 className='relative inline-block text-xl capitalize font-semibold text-black pt-4 before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-primary-400 before:transition before:origin-left before:scale-x-0 group-hover:before:scale-x-100 dark:text-white'>{projet.title}</h1>
         </Link>
 
       </CardHeader>
       <CardBody className='overflow-visible py-2'>
-        <p className='text- dark:text-gray-400'>
+        <p className='mt-1 text-gray-600 dark:text-neutral-400'>
           {projet.description}
         </p>
         <p className='text-gray-600 dark:text-gray-400'>
