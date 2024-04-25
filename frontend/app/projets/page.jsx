@@ -1,4 +1,6 @@
+'use client'
 import { CardProject } from '@/components/projetsComponents/CardProject'
+import React, { useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
 import { LuSearch } from 'react-icons/lu'
 
@@ -61,6 +63,15 @@ const CARDS = [
 ]
 
 export default function Projets () {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase())
+  }
+
+  const filteredProjects = CARDS.filter((projet) =>
+    projet.title.toLowerCase().includes(searchTerm)
+  )
   return (
     <div>
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 '>
@@ -105,7 +116,8 @@ export default function Projets () {
             placeholder='Recherchez un projet...'
             startContent={
               <LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
-        }
+}
+            onChange={handleSearchChange}
           />
         </div>
         <div className='flex gap-3 justify-center items-center mt-5 sm:mt-10 w-full'>
@@ -140,7 +152,7 @@ export default function Projets () {
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12'>
         {/** Ajouter les cartes de projets ici **/}
         <div className='grid grid-cols-2 gap-4'>
-          {CARDS.map((projet) => {
+          {filteredProjects.map((projet) => {
             return <CardProject key={projet.slug} projet={projet} />
           })}
         </div>
