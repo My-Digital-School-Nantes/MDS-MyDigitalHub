@@ -1,6 +1,6 @@
 'use client'
 import { Card, CardHeader, CardBody, Image, CardFooter, Button, Chip } from '@nextui-org/react'
-import { LuArrowBigUpDash } from 'react-icons/lu'
+import { LuThumbsUp } from 'react-icons/lu'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 
@@ -42,7 +42,9 @@ export const CardProject = (projet) => {
           variant='faded'
           onClick={handleUpvote}
         >
-          <LuArrowBigUpDash className='w-5 h-5' />
+          <LuThumbsUp
+            className='w-5 h-5'
+          />
         </Button>
       </CardFooter>
     </Card>
