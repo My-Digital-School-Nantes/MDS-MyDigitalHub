@@ -1,5 +1,7 @@
-import React from 'react'
-import { Card, CardHeader, CardBody, Image, Chip } from '@nextui-org/react'
+'use client'
+import { useState } from 'react'
+import { Card, CardHeader, CardBody, Image, Chip, Input } from '@nextui-org/react'
+import { LuSearch } from 'react-icons/lu'
 
 const evenements = [
   {
@@ -48,9 +50,39 @@ export function EventList () {
   return (
     <section className='container mx-auto w-fit p-6'>
       <h1 className='text-4xl font-bold mb-8'>Liste des évènements</h1>
-      <div className='flex gap-6 flex-wrap justify-center'>
-        {evenements.map(event => (
-          <Card key={event.eventId} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>  {/* max-w-80 changed to max-w-xs for consistency */}
+      <Input
+        isClearable
+        radius='lg'
+        classNames={{
+          label: 'text-black/50 dark:text-white/90',
+          input: [
+            'bg-transparent',
+            'text-black/90 dark:text-white/90',
+            'placeholder:text-default-700/50 dark:placeholder:text-white/60'
+          ],
+          innerWrapper: 'bg-transparent',
+          inputWrapper: [
+            'shadow-xl',
+            'bg-default-200/50',
+            'dark:bg-default/60',
+            'backdrop-blur-xl',
+            'backdrop-saturate-200',
+            'hover:bg-default-200/70',
+            'dark:hover:bg-default/70',
+            'group-data-[focused=true]:bg-default-200/50',
+            'dark:group-data-[focused=true]:bg-default/60',
+            '!cursor-text'
+          ]
+        }}
+        placeholder='Type to search...'
+        startContent={
+          <LuSearch />
+        }
+      />
+
+      <div className='flex gap-6 flex-wrap justify-center mt-8'>
+        {filteredEvents.map(event => (
+          <Card key={event.eventId} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>
             <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-2'>
               <p className='text-bold text-primary'>{event.date}</p>
               <p className='text-large capitalize font-bold'>{event.name}</p>
@@ -64,7 +96,7 @@ export function EventList () {
             <CardBody className='flex justify-center items-center overflow-visible py-2'>
               <Image
                 alt={`Image de l'événement ${event.name}`}
-                className='object-cover rounded-xl h-48 w-full' // Changed width to w-full for responsiveness
+                className='object-cover rounded-xl h-48 w-full'
                 src={event.image}
               />
             </CardBody>
