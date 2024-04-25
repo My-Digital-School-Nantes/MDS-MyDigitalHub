@@ -1,4 +1,4 @@
-export default function QuizzLayout ({
+export default function QuizzIdLayout ({
   children
 }) {
   return (
