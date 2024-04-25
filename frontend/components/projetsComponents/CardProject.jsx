@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardHeader, CardBody, Image, CardFooter, Button, Chip } from '@nextui-org/react'
+import { Card, User, CardHeader, CardBody, Image, CardFooter, Button, Chip } from '@nextui-org/react'
 import { LuThumbsUp } from 'react-icons/lu'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
@@ -36,16 +36,26 @@ export const CardProject = (projet) => {
         <Chip radius='sm' color='primary'>{projet.category}</Chip>
       </CardBody>
       <CardFooter className='flex justify-between items-end'>
-        <p className='text-primary text-xl'>{projet.vote}</p>
-        <Button
-          isIconOnly aria-label='upVote'
-          variant='faded'
-          onClick={handleUpvote}
-        >
-          <LuThumbsUp
-            className='w-5 h-5'
-          />
-        </Button>
+        <User
+          name='Jane Doe'
+          description='Product Designer'
+          avatarProps={{
+            src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
+          }}
+        />
+        <div className='flex gap-2 items-center'>
+          <p className='text-primary text-xl'>{projet.vote}</p>
+          <Button
+            isIconOnly aria-label='upVote'
+            variant='faded'
+            onClick={handleUpvote}
+          >
+            <LuThumbsUp
+              className='w-5 h-5'
+            />
+          </Button>
+        </div>
+
       </CardFooter>
     </Card>
   )
