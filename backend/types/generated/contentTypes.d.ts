@@ -362,6 +362,65 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiOfferOffer extends Schema.CollectionType {
+  collectionName: 'offers';
+  info: {
+    singularName: 'offer';
+    pluralName: 'offers';
+    displayName: 'Offer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String;
+    Description: Attribute.Blocks;
+    skills: Attribute.JSON &
+      Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        [
+          'Python',
+          'JavaScript',
+          'Java',
+          'C++',
+          'C#',
+          'Swift',
+          'Ruby',
+          'PHP',
+          'TypeScript',
+          'Kotlin',
+          'Go',
+          'Rust',
+          'Perl',
+          'R',
+          'MATLAB'
+        ]
+      >;
+    education: Attribute.JSON &
+      Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        ['Bac +1', 'Bac +2', 'Bac +3', 'Bac +4', 'Bac +5']
+      >;
+    start_date: Attribute.Date;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::offer.offer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::offer.offer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -798,6 +857,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::offer.offer': ApiOfferOffer;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
