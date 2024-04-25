@@ -8,7 +8,7 @@ export default function Projets () {
         <div className='text-center'>
           <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200'>
             Découvrez les
-            <span className='text-primary'> projets </span> de nos étudiants
+            <span className='bg-gradient-to-r from-primary to-blue-400  text-transparent bg-clip-text '> projets </span> de nos étudiants
           </h1>
 
           <p className='mt-3 text-gray-600 dark:text-gray-400'>
