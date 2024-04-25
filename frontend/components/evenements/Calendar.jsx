@@ -1,32 +1,36 @@
 'use client'
 import FullCalendar from '@fullcalendar/react'
+import momentPlugin from '@fullcalendar/moment'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import frLocale from '@fullcalendar/core/locales/fr'
 
 export default function Calendar () {
   return (
     <FullCalendar
+      locale={frLocale}
       schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
       plugins={[
         dayGridPlugin,
         resourceTimelinePlugin,
         interactionPlugin,
-        timeGridPlugin
+        timeGridPlugin,
+        momentPlugin
       ]}
       headerToolbar={{
         left: 'prev,next today',
-        center: 'title',
-        right: 'resourceTimelineWeek,dayGridMonth,timeGridWeek'
+        center: '',
+        right: 'title'
       }}
       ressources={[
-        { id: 'a', title: 'Partouze' }
+        { id: 'a', title: 'Test' }
       ]}
       initialEvents={[
-        { title: 'Partouze', start: new Date(), resourceId: 'a' }
+        { title: 'Test', start: new Date(), resourceId: 'a' }
       ]}
-      initialView='timeGridWeek' // Affichage de base
+      initialView='dayGridMonth' // Affichage de base
       editable // Pour activer les interactions d'events
       selectable // Pour activer la sélection des dates
       nowIndicator

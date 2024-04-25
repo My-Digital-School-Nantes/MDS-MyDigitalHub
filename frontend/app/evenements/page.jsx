@@ -6,11 +6,11 @@ export default function Evenements () {
     <section>
       <div className='text-center my-16'>
         <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200'>
-          Calendriez des
+          Calendrier des
           <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> évènements </span>
         </h1>
       </div>
-      <div className='mx-8'>
+      <div className='mx-16'>
         <Calendar />
       </div>
 
