@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react'
 import { Card, CardHeader, CardBody, Image, Chip, Input } from '@nextui-org/react'
 import { LuSearch } from 'react-icons/lu'
 
@@ -49,7 +48,7 @@ const evenements = [
 export function EventList () {
   return (
     <section className='container mx-auto w-fit p-6'>
-      <h1 className='text-4xl font-bold mb-8'>Liste des évènements</h1>
+      <h1 className='text-4xl font-bold mb-8 capitalize'>Liste des évènements</h1>
       <Input
         isClearable
         radius='lg'
@@ -81,7 +80,7 @@ export function EventList () {
       />
 
       <div className='flex gap-6 flex-wrap justify-center mt-8'>
-        {filteredEvents.map(event => (
+        {evenements.map(event => (
           <Card key={event.eventId} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>
             <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-2'>
               <p className='text-bold text-primary'>{event.date}</p>
