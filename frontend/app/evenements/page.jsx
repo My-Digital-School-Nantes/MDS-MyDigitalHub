@@ -1,5 +1,5 @@
-import { Calendar } from '@/components/evenements/calendar'
-import { EventList } from '@/components/evenements/eventList'
+import { Calendar } from '@/components/evenements/Calendar'
+import { EventList } from '@/components/evenements/EventList'
 
 export default function Evenements () {
   return (
