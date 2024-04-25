@@ -65,7 +65,7 @@ export function EventList () {
     setSearchTerm('')
   }
   return (
-    <section className='container mx-auto w-fit p-6'>
+    <section className='container mx-auto p-6 w-full'>
       <h1 className='text-4xl font-bold mb-8 capitalize'>Liste des évènements</h1>
       <Input
         value={searchTerm}
