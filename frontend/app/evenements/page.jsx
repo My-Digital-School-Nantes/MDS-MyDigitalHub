@@ -1,12 +1,19 @@
-import Calendar from '@/components/evenements/calendar'
-import { EventList } from '@/components/evenements/eventList'
+import Calendar from '@/components/evenements/Calendar'
+import { EventList } from '@/components/evenements/EventList'
 
 export default function Evenements () {
   return (
     <section>
-      <h1 className='text-4xl text-center my-8'>Calendrier</h1>
-      <p>Salut à tous</p>
-      <Calendar />
+      <div className='text-center my-16'>
+        <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200'>
+          Calendriez des
+          <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> évènements </span>
+        </h1>
+      </div>
+      <div className='mx-8'>
+        <Calendar />
+      </div>
+
       <EventList />
     </section>
   )
