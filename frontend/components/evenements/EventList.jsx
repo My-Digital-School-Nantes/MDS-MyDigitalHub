@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { Card, CardHeader, CardBody, Image, Chip, Input } from '@nextui-org/react'
 import { LuSearch } from 'react-icons/lu'
 
@@ -6,7 +7,7 @@ const evenements = [
   {
     eventId: 1,
     name: 'Super evenement de la mort qui tue sa grand mere ez eza e ',
-    tags: ['devoir', 'sport', "vie d'école"],
+    tags: ['devoir', 'test', "vie d'école"],
     content: 'ezlahe jah e z lhazj enz,ae njza lza jkaje lazj kjeza je jklzj a ',
     image: '/assets/events/chat1.png',
     date: '12/03/2023'
@@ -14,7 +15,7 @@ const evenements = [
   {
     eventId: 2,
     name: 'event 2',
-    tags: ['devoir', 'sport', "vie d'école"],
+    tags: ['devoir', 'amour', "vie d'école"],
     content: 'eklj aze lazje laj ',
     image: '/assets/events/chat2.png',
     date: '12/03/2023'
@@ -33,23 +34,43 @@ const evenements = [
     tags: ['devoir', 'sport', "vie d'école"],
     content: 'ejlk zajej azj ekla',
     image: '/assets/events/chat3.jpg',
-    date: '12/03/2023'
+    date: '09/03/2023'
   },
   {
     eventId: 5,
     name: 'event 5',
-    tags: ['devoir', 'sport', "vie d'école"],
+    tags: ['love', 'sport', "vie d'école"],
     content: ' eklzajle kzakl jeza',
     image: '/assets/events/chat3.jpg',
-    date: '12/03/2023'
+    date: '12/04/2023'
   }
 ]
 
 export function EventList () {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  // Gestion du changement de l'input de recherche
+  const handleSearchChange = e => {
+    setSearchTerm(e.target.value)
+  }
+
+  // Fonction pour filtrer les événements par nom, contenu ou tags
+  const filteredEvents = evenements.filter(event =>
+    event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    event.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    event.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+  )
+
+  const handleClear = () => {
+    setSearchTerm('')
+  }
   return (
     <section className='container mx-auto w-fit p-6'>
       <h1 className='text-4xl font-bold mb-8 capitalize'>Liste des évènements</h1>
       <Input
+        value={searchTerm}
+        onChange={handleSearchChange}
+        onClear={handleClear}
         isClearable
         radius='lg'
         classNames={{
@@ -74,13 +95,11 @@ export function EventList () {
           ]
         }}
         placeholder='Type to search...'
-        startContent={
-          <LuSearch />
-        }
+        startContent={<LuSearch />}
       />
 
       <div className='flex gap-6 flex-wrap justify-center mt-8'>
-        {evenements.map(event => (
+        {filteredEvents.map(event => (
           <Card key={event.eventId} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>
             <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-2'>
               <p className='text-bold text-primary'>{event.date}</p>
