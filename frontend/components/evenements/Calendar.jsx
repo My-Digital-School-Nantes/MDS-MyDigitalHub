@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
+import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import frLocale from '@fullcalendar/core/locales/fr'
@@ -15,6 +16,7 @@ export default function Calendar () {
       plugins={[
         dayGridPlugin,
         resourceTimelinePlugin,
+        resourceTimeGridPlugin,
         interactionPlugin,
         timeGridPlugin,
         momentPlugin
@@ -35,6 +37,7 @@ export default function Calendar () {
       selectable // Pour activer la sélection des dates
       nowIndicator
       selectMirror
+      height={850}
     />
   )
 }

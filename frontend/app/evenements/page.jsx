@@ -10,8 +10,10 @@ export default function Evenements () {
           <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> évènements </span>
         </h1>
       </div>
-      <div className='mx-16'>
-        <Calendar />
+      <div className='flex justify-center'>
+        <div className='w-3/4'>
+          <Calendar />
+        </div>
       </div>
 
       <EventList />
