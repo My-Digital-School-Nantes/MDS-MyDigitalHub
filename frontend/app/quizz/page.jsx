@@ -1,30 +1,25 @@
-'use client'
-
 import { CardTheme } from '@/components/quizz/CardTheme'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import client from '@/graphql/apolloClient'
+import { GET_QUIZZTHEME } from '@/graphql/queries/quizz'
 
-export default function Page () {
-  const [theme, setTheme] = useState()
+async function getTheme () {
+  try {
+    const response = await client.query({
+      query: GET_QUIZZTHEME
+    })
+    return response.data.quizzThemes.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-  useEffect(() => {
-    const loadData = async () => {
-      axios.get('http://localhost:1337/api/quizz-themes').then((res) => {
-        return res.data
-      }).then((data) => {
-        setTheme(data.data)
-      })
-    }
-
-    loadData()
-  }, [])
-
-  console.log(theme)
+export default async function Page () {
+  const theme = await getTheme()
 
   return (
-    <div>
-      <div className='flex flex-col gap-4'>
-        <h2>
+    <div className='flex flex-col gap-10'>
+      <div className='flex flex-col gap-4 my-5'>
+        <h2 className='text-center'>
           Bienvenue dans "Quiz Master Challenge" !
         </h2>
         <p>
@@ -38,7 +33,7 @@ export default function Page () {
         </p>
       </div>
 
-      <div className='grid grid-cols-2'>
+      <div className='grid grid-cols-2 gap-10'>
         {theme?.map((theme) => (
           <CardTheme key={theme.id} theme={theme.attributes} />
         ))}

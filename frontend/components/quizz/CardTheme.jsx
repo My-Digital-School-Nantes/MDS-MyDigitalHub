@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 export function CardTheme ({ theme }) {
   return (
-    <Card key={theme.id}>
+    <Card key={theme.id} className='py-6' isHoverable>
       <CardBody>
-        <Link href={`/quizz/${theme.url}`}>
+        <Link href={`/quizz/${theme.url}`} className='text-center'>
           {theme.name}
         </Link>
       </CardBody>
