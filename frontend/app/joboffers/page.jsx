@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from '@nextui-org/react'
 
 export default function JobOffers () {
   const [jobOffer, setJobOffer] = useState(null)
@@ -8,7 +9,6 @@ export default function JobOffers () {
     fetch('http://localhost:1337/api/offers/1', {
       method: 'GET',
       headers: {
-        Authorization: 'Bearer 7c38daf07aabc6f67968cc06c79faf564138905fe5e1e6ee3d520600868db067b6b659e41adc6994d6caa3fb3736bdd8c51ae796638e63e8d9b550b7d906e9573d8c5440afaea2a0e4f971087dbd33d73068385fc8e923e7ba0616873cd466409be9d1b26bc108b1cb557e5b9add72e29f61d1a2a3769766e67e10c376a4b2d5',
         'Content-Type': 'application/json'
       }
     })
@@ -21,20 +21,45 @@ export default function JobOffers () {
   }, [])
 
   return (
-    <>
-      <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
-      {jobOffer && (
-        <div>
-          <h2>{jobOffer.Title}</h2>
-          <p>Description:</p>
-          {jobOffer.Description && jobOffer.Description.map((paragraph, index) => (
-            <p key={index}>{paragraph.children.map(child => child.text)}</p>
-          ))}
-          <p>Skills: {jobOffer.skills.join(', ')}</p>
-          <p>Education: {jobOffer.education.join(', ')}</p>
-          <p>Start Date: {jobOffer.start_date}</p>
+    <Card className='max-w-[400px]'>
+      <CardHeader className='flex gap-3'>
+        <Image
+          alt='mds logo'
+          height={40}
+          radius='sm'
+          src='http://localhost:1337/uploads/logomds_c5516472bc.webp'
+          width={40}
+        />
+        <div className='flex flex-col'>
+          <p className='text-md'>My Digital School</p>
+          <p className='text-small text-default-500'>mydigitalschool.com</p>
         </div>
-      )}
-    </>
+      </CardHeader>
+      <Divider />
+      <CardBody>
+        {jobOffer && (
+          <>
+            <h1 className='text-4xl text-center my-8'>{jobOffer.title}</h1>
+            <p>Description:</p>
+            {jobOffer.description && jobOffer.description.map((paragraph, index) => (
+              <p key={index}>{paragraph.children.map(child => child.text)}</p>
+            ))}
+            <p>Skills: {jobOffer.skills.join(', ')}</p>
+            <p>Education: {jobOffer.education.join(', ')}</p>
+            <p>Start Date: {jobOffer.start_date}</p>
+          </>
+        )}
+      </CardBody>
+      <Divider />
+      <CardFooter>
+        <Link
+          isExternal
+          showAnchorIcon
+          href='https://github.com/nextui-org/nextui'
+        >
+          Visit source code on GitHub.
+        </Link>
+      </CardFooter>
+    </Card>
   )
 }

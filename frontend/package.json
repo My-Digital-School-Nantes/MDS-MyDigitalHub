@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.9",
+    "@nextui-org/card": "^2.0.28",
     "@nextui-org/react": "^2.2.10",
     "@react-aria/ssr": "^3.9.2",
     "@react-aria/visually-hidden": "^3.8.10",
