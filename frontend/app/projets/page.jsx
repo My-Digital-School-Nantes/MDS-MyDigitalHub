@@ -1,7 +1,7 @@
 'use client'
 import { CardProject } from '@/components/projetsComponents/CardProject'
 import React, { useState } from 'react'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 import { LuSearch, LuTerminal, LuPencilLine, LuPalette, LuAreaChart } from 'react-icons/lu'
 
 const CARDS = [
@@ -60,6 +60,16 @@ const CARDS = [
     category: 'DA',
     tags: ['projet', 'backlog']
   }
+]
+
+const tri = [{
+  title: 'date',
+  id: '1'
+},
+{
+  title: 'popularité',
+  id: '2'
+}
 ]
 
 export default function Projets () {
@@ -125,6 +135,16 @@ export default function Projets () {
 }
             onChange={handleSearchChange}
           />
+          <Select
+            label='Trier par'
+            className='max-w-xs'
+          >
+            {tri.map((type) => (
+              <SelectItem key={type.id}>
+                {type.title}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
         <div className='flex gap-3 justify-center items-center mt-5 sm:mt-10 w-full'>
 
