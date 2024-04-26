@@ -1,4 +1,5 @@
 import Calendar from '@/components/evenements/Calendar'
+import DraggableEvents from '@/components/evenements/DraggableEvents'
 import { EventList } from '@/components/evenements/EventList'
 
 export default function Evenements () {
@@ -12,6 +13,7 @@ export default function Evenements () {
       </div>
       <div className='flex justify-center'>
         <div className='w-3/4'>
+          <DraggableEvents />
           <Calendar />
         </div>
       </div>

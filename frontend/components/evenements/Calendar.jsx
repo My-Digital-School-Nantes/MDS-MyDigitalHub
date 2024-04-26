@@ -35,6 +35,7 @@ export default function Calendar () {
       initialView='dayGridMonth' // Affichage de base
       editable // Pour activer les interactions d'events
       selectable // Pour activer la sélection des dates
+      droppable // Pour activer le fait d'ajouter un élement via le drag&drop
       nowIndicator
       selectMirror
       height={850}
