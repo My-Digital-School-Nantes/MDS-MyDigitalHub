@@ -19,6 +19,7 @@ query getProjects {
         },
         vote,
         slug,
+        category,
         tags,
       }
     }

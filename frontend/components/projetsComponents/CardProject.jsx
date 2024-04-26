@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import Markdown from 'react-markdown'
 
 export const CardProject = ({ projet }) => {
+  console.log(projet)
   const handleUpvote = () => {
     // TODO: Add upvote
     projet.votes += 1
@@ -14,12 +15,12 @@ export const CardProject = ({ projet }) => {
   return (
     <Card className='py-4'>
       <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-3'>
-        <Link href={'http://localhost:1337/' + projet.slug} className='group block'>
+        <Link href={'http://localhost:3000/' + projet.slug} className='group block'>
           <div className='aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
             <Image
               alt='Projet Image'
               className='group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl w-screen h-64'
-              src={projet.image.url}
+              src={'http://localhost:1337' + projet?.image?.data?.attributes?.url}
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw%'
             />
           </div>
@@ -27,10 +28,10 @@ export const CardProject = ({ projet }) => {
         </Link>
 
       </CardHeader>
-      <CardBody className='overflow-visible py-2'>
-        <Markdown className='mt-1 text-gray-600 dark:text-neutral-400'>
-          {projet.description}
-        </Markdown>
+      <CardBody className='overflow-visible py-2 gap-2'>
+
+        <Markdown className='truncate'>{projet.description}</Markdown>
+
         <p className='text-gray-600 dark:text-gray-400'>
           {projet.publishedDate}
         </p>
@@ -45,7 +46,7 @@ export const CardProject = ({ projet }) => {
           }}
         />
         <div className='flex gap-2 items-center'>
-          <p className='text-primary text-xl'>{projet.votes}</p>
+          <p className='text-primary text-xl'>{projet.vote}</p>
           <Button
             isIconOnly aria-label='upVote'
             variant='faded'
