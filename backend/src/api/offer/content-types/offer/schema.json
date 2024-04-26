@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "offers",
+  "info": {
+    "singularName": "offer",
+    "pluralName": "offers",
+    "displayName": "Offer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "skills": {
+      "type": "customField",
+      "options": [
+        "Python",
+        "JavaScript",
+        "Java",
+        "C++",
+        "C#",
+        "Swift",
+        "Ruby",
+        "PHP",
+        "TypeScript",
+        "Kotlin",
+        "Go",
+        "Rust",
+        "Perl",
+        "R",
+        "MATLAB"
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "education": {
+      "type": "customField",
+      "options": [
+        "Bac +1",
+        "Bac +2",
+        "Bac +3",
+        "Bac +4",
+        "Bac +5"
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "start_date": {
+      "type": "date"
+    }
+  }
+}
