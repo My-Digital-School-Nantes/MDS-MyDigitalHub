@@ -1,15 +1,32 @@
 'use client'
+import { Button, Divider, useDisclosure } from '@nextui-org/react'
+
 import CardCarousel from '@/components/card/CardCarousel'
 import CardAnnonce from '@/components/card/CardAnnonce'
-import { LinearGradient } from 'react-text-gradients'
 import ModalAnnonce from '@/components/modal/Modal'
-import { Button, Divider, useDisclosure } from '@nextui-org/react'
+
+import { LinearGradient } from 'react-text-gradients'
+
 import { profils } from './profilDatas'
 import { annonces } from './annonceDatas'
 
-const Sante = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+import client from '@/graphql/apolloClient'
+import { GET_ANNONCES } from '@/graphql/queries/sante'
 
+export const getAnnonces = async () => {
+  try {
+    const response = await client.query({
+      query: GET_ANNONCES
+    })
+    return response?.data?.annonces?.data
+  } catch (error) {
+    console.error('Error fetching data: ', error)
+  }
+}
+
+export default async function Sante() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const data = await getAnnonces()
   return (
     <>
       <div className='text-center pt-2 pb-10'>
@@ -52,5 +69,3 @@ const Sante = () => {
     </>
   )
 }
-
-export default Sante
