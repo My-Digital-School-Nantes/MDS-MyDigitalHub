@@ -1,25 +1,25 @@
 'use client'
-import { AcmeLogo } from './AcmeLogo.jsx'
-import { useState } from 'react'
+import { menuItems } from '@/config/site.js'
 import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
-  Button,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownTrigger,
-  Avatar
+  NavbarMenuToggle
 } from '@nextui-org/react'
-import { menuItems } from '@/config/site.js'
-import { ThemeSwitcher } from './ThemeSwitcher.jsx'
 import { signOut, useSession } from 'next-auth/react'
+import { useState } from 'react'
+import { AcmeLogo } from './AcmeLogo.jsx'
+import { ThemeSwitcher } from './ThemeSwitcher.jsx'
 
 function CustomNavbar () {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -61,6 +61,11 @@ function CustomNavbar () {
         <NavbarItem>
           <Link color='foreground' href='#'>
             Integrations
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color='foreground' href='/quizz'>
+            Quizz
           </Link>
         </NavbarItem>
         <NavbarItem>

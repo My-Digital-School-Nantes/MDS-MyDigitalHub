@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_quizz_questions",
+  "info": {
+    "displayName": "Questions",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "questionText": {
+      "type": "text"
+    },
+    "Responses": {
+      "type": "component",
+      "repeatable": true,
+      "component": "quizz.responses"
+    }
+  }
+}
