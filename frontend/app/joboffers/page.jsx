@@ -78,10 +78,10 @@ export default function JobOffers () {
         />
       </div>
       <br />
-      <div className='cards flex gap-4'>
+      <div className='cards flex gap-4 '>
         {jobOffers && filteredEvents.map((jobOffer, index) => (
-          <Card key={index}>
-            <CardHeader className='flex gap-3'>
+          <Card key={index} className='border border-transparent hover:border-primary'>
+            <CardHeader className='flex gap-3 '>
               <Image
                 alt='mds logo'
                 height={40}
