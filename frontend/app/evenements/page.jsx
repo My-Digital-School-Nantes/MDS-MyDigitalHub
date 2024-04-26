@@ -1,11 +1,26 @@
 import Calendar from '@/components/evenements/Calendar'
-import DraggableEvents from '@/components/evenements/DraggableEvents'
 import { EventList } from '@/components/evenements/EventList'
+import client from '@/graphql/apolloClient'
+import { GET_EVENTS } from '@/graphql/queries/event'
 
-export default function Evenements () {
+export const dynamic = 'force-dynamic'
+
+export const getData = async () => {
+  try {
+    const response = await client.query({
+      query: GET_EVENTS
+    })
+    return response?.data?.events?.data
+  } catch (error) {
+    console.error('Error fetching data: ', error)
+  }
+}
+
+export default async function Evenements () {
+  const data = await getData()
   return (
     <section>
-      <div className='text-center my-16'>
+      <div className='text-center my-16 capitalize'>
         <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200'>
           Calendrier des
           <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> évènements </span>
@@ -13,12 +28,10 @@ export default function Evenements () {
       </div>
       <div className='flex justify-center'>
         <div className='w-3/4'>
-          <DraggableEvents />
           <Calendar />
         </div>
       </div>
-
-      <EventList />
+      <EventList events={data} />
     </section>
   )
 }
