@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "annonces",
+  "info": {
+    "singularName": "annonce",
+    "pluralName": "annonces",
+    "displayName": "Annonce",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Date": {
+      "type": "datetime"
+    },
+    "Contact": {
+      "type": "string"
+    },
+    "Niveau": {
+      "type": "enumeration",
+      "enum": [
+        "Débutant",
+        "Intermédiaire",
+        "Avancé",
+        "Expert"
+      ]
+    },
+    "Sport": {
+      "type": "enumeration",
+      "enum": [
+        "Couse a pied",
+        "Football",
+        "Volley",
+        "Gym"
+      ]
+    }
+  }
+}
