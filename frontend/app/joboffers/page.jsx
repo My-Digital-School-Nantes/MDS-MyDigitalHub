@@ -99,7 +99,7 @@ export default function JobOffers () {
               <h2 className='text-xl text-center my-8'>{jobOffer.attributes.title}</h2>
               <div className='description flex flex-col gap-3 justify-normal'>
                 <p><strong>Description:</strong></p>
-                <ScrollShadow className='w-[300px] h-[200px] overflow-auto'>
+                <ScrollShadow className='w-[400px] h-[200px] overflow-auto'>
                   <div>
                     {jobOffer.attributes.description && jobOffer.attributes.description.map((paragraph, index) => (
                       <p key={index}>{(paragraph.children.map(child => child.text))}</p>
