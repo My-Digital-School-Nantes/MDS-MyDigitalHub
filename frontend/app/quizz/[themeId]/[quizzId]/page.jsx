@@ -14,10 +14,15 @@ export default function QuizzIdPage ({ params }) {
 
   const [userAvatar, setUserAvatar] = useState(null)
   const [userPseudo, setUserPseudo] = useState('')
+  const [pseudoSubmitted, setPseudoSubmitted] = useState(false)
 
   const handlePseudoSubmit = (pseudo) => {
     setUserPseudo(pseudo)
-    console.log('Pseudo set to:', pseudo)
+    setPseudoSubmitted(true)
+  }
+
+  const handleEditPseudo = () => {
+    setPseudoSubmitted(false) // This will allow the user to re-enter their pseudo
   }
 
   return (
@@ -36,13 +41,26 @@ export default function QuizzIdPage ({ params }) {
         </CardBody>
 
         <div className='space-y-6'>
-          <PseudoForm onSubmitPseudo={handlePseudoSubmit} />
-          {userPseudo && (
-            <p className='text-center'>Welcome, {userPseudo}! Ready to start the quiz?</p>
-          )}
+          {!pseudoSubmitted
+            ? (
+              <PseudoForm onSubmitPseudo={handlePseudoSubmit} />
+              )
+            : (
+              <div className='text-center'>
+                <h1 className='text-2xl font-bold'>Bienvenue, {userPseudo}!</h1>
+                <p>Prêt pour le quiz, bababoy ?</p>
+                <Button
+                  color='primary'
+                  className='text-sm font-medium'
+                  onClick={handleEditPseudo}
+                >
+                  Changer de pseudo
+                </Button>
+              </div>
+              )}
         </div>
 
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center space-y-6'>
           <div className='flex flex-col items-center space-y-4'>
             <AvatarSelector onSelect={setUserAvatar} />
             {userAvatar && (
@@ -60,7 +78,7 @@ export default function QuizzIdPage ({ params }) {
           </div>
         </div>
 
-        <CardFooter className='flex justify-center items-center'>
+        <CardFooter className='flex justify-center items-center space-y-6'>
           <Button color='primary' auto ghost>
             Commencer le Quizz
           </Button>
