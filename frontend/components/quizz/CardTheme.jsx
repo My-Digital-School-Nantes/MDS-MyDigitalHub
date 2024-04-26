@@ -5,7 +5,7 @@ export function CardTheme ({ theme }) {
   return (
     <Card key={theme.id}>
       <CardBody>
-        <Link href={`/quizz/${theme.slug}`}>
+        <Link href={`/quizz/${theme.url}`}>
           {theme.name}
         </Link>
       </CardBody>
