@@ -15,7 +15,7 @@ const evenements = [
   {
     eventId: 2,
     name: 'event 2',
-    tags: ['devoir', 'amour', "vie d'école"],
+    tags: ['devoir', 'amour'],
     content: 'eklj aze lazje laj ',
     image: '/assets/events/chat2.png',
     date: '12/03/2023'
@@ -23,7 +23,7 @@ const evenements = [
   {
     eventId: 3,
     name: 'event 3',
-    tags: ['devoir', 'sport', "vie d'école"],
+    tags: ['devoir'],
     content: ' jlezaje azj kae jl',
     image: '/assets/events/chat3.jpg',
     date: '12/03/2023'
@@ -31,7 +31,7 @@ const evenements = [
   {
     eventId: 4,
     name: 'event 4',
-    tags: ['devoir', 'sport', "vie d'école"],
+    tags: ['devoir', 'sport'],
     content: 'ejlk zajej azj ekla',
     image: '/assets/events/chat3.jpg',
     date: '09/03/2023'
@@ -65,7 +65,7 @@ export function EventList () {
     setSearchTerm('')
   }
   return (
-    <section className='container mx-auto w-fit p-6 mt-10'>
+    <section className='container mx-auto p-6 w-full mt-10'>
       <h1 className='text-4xl font-bold mb-8 capitalize'>Liste des évènements</h1>
       <Input
         value={searchTerm}
