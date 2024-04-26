@@ -12,22 +12,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
-    },
-    "themes": {
-      "type": "enumeration",
-      "enum": [
-        "Dev",
-        "Webmarket",
-        "UI/UX",
-        "DA"
-      ]
-    },
     "Questions": {
       "type": "component",
       "repeatable": true,
       "component": "quizz.questions"
+    },
+    "quizz_theme": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quizz-theme.quizz-theme",
+      "inversedBy": "quizz"
     }
   }
 }
