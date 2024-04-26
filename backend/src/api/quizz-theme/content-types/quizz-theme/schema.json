@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quizz_themes",
+  "info": {
+    "singularName": "quizz-theme",
+    "pluralName": "quizz-themes",
+    "displayName": "QuizzTheme",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "quizz": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quizz.quizz",
+      "mappedBy": "quizz_theme"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
