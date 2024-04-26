@@ -12,7 +12,7 @@ import {
   , ScrollShadow
 } from '@nextui-org/react'
 
-import { LuSearch } from 'react-icons/lu'
+import { LuSearch, LuFilter } from 'react-icons/lu'
 
 export default function JobOffers () {
   const [jobOffers, setJobOffers] = useState([])
@@ -31,12 +31,18 @@ export default function JobOffers () {
     'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
   ]
 
-  function truncateDescription (description) {
-    const maxLength = 50
-    if (description.length > maxLength) {
-      return `${description.slice(0, maxLength)}...` // Tronquer la description si elle dépasse la longueur maximale
-    }
-    return description
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearchChange = e => {
+    setSearchTerm(e.target.value)
+  }
+
+  const filteredEvents = jobOffers.filter(jobOffer =>
+    jobOffer.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const handleClear = () => {
+    setSearchTerm('')
   }
 
   return (
@@ -44,6 +50,9 @@ export default function JobOffers () {
       <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
       <div>
         <Input
+          value={searchTerm}
+          onChange={handleSearchChange}
+          onClear={handleClear}
           label='Search'
           isClearable
           radius='lg'
@@ -70,8 +79,8 @@ export default function JobOffers () {
       </div>
       <br />
       <div className='cards flex gap-4'>
-        {jobOffers && jobOffers.map((jobOffer, index) => (
-          <Card key={index} className='max-w-[400px]'>
+        {jobOffers && filteredEvents.map((jobOffer, index) => (
+          <Card key={index}>
             <CardHeader className='flex gap-3'>
               <Image
                 alt='mds logo'
@@ -86,15 +95,14 @@ export default function JobOffers () {
               </div>
             </CardHeader>
             <Divider />
-            <CardBody>
+            <CardBody className=''>
               <h2 className='text-xl text-center my-8'>{jobOffer.attributes.title}</h2>
               <div className='description flex flex-col gap-3 justify-normal'>
                 <p><strong>Description:</strong></p>
-                <ScrollShadow className='w-[300px] h-[400px] overflow-auto'>
+                <ScrollShadow className='w-[300px] h-[200px] overflow-auto'>
                   <div>
-                    <p><strong>Description:</strong></p>
                     {jobOffer.attributes.description && jobOffer.attributes.description.map((paragraph, index) => (
-                      <p key={index}>{truncateDescription(paragraph.children.map(child => child.text))}</p>
+                      <p key={index}>{(paragraph.children.map(child => child.text))}</p>
                     ))}
                   </div>
                 </ScrollShadow>
