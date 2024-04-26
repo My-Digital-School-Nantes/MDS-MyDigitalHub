@@ -8,6 +8,7 @@ import Markdown from 'react-markdown'
 export const CardProject = ({ projet }) => {
   const handleUpvote = () => {
     // TODO: Add upvote
+    projet.votes += 1
     toast.success('Upvoted!')
   }
   return (
@@ -44,7 +45,7 @@ export const CardProject = ({ projet }) => {
           }}
         />
         <div className='flex gap-2 items-center'>
-          <p className='text-primary text-xl'>{projet.vote}</p>
+          <p className='text-primary text-xl'>{projet.votes}</p>
           <Button
             isIconOnly aria-label='upVote'
             variant='faded'
