@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Card, CardHeader, CardBody, Image, Chip, Input, Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, Button, cn } from '@nextui-org/react'
+import { Card, CardHeader, CardBody, Image, Chip, Input, Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, Button } from '@nextui-org/react'
 import { LuSearch } from 'react-icons/lu'
 import { FaEdit, FaShareSquare } from 'react-icons/fa'
 import { BsThreeDotsVertical } from 'react-icons/bs'
