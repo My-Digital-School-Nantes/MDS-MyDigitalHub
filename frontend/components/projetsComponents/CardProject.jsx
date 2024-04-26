@@ -37,8 +37,8 @@ export const CardProject = (projet) => {
       </CardBody>
       <CardFooter className='flex justify-between items-end'>
         <User
-          name='Jane Doe'
-          description='Product Designer'
+          name='Guillaume Troyaux'
+          description='Developpeur Fullstack'
           avatarProps={{
             src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
           }}
