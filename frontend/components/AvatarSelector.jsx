@@ -1,13 +1,11 @@
-// components/AvatarSelector.js
-import Image from 'next/image'
 import React, { useState } from 'react'
+import { Avatar } from '@nextui-org/react'
 
 const avatars = [
   '/images/avatars/1.jpg',
   '/images/avatars/2.jpg',
   '/images/avatars/3.jpg',
   '/images/avatars/4.jpg'
-  // Add as many avatars as you like
 ]
 
 function AvatarSelector ({ onSelect }) {
@@ -15,21 +13,20 @@ function AvatarSelector ({ onSelect }) {
 
   return (
     <div>
-      <h2>Choisissez votre avatar</h2>
-      <div className='avatar-grid'>
+      <h2 className='text-2xl font-bold text-center mb-4'>Choisissez votre avatar</h2>
+      <div className='flex flex-row gap-3 items-center justify-center'>
         {avatars.map(avatar => (
-          <Image
+          <Avatar
             key={avatar}
             src={avatar}
             alt='Quiz Avatar'
-            className={`avatar ${selectedAvatar === avatar ? 'selected' : ''}`}
-            width={100}
-            height={24}
+            isBordered
+            size='lg' // You can vary sizes as needed or manage via state
+            className={selectedAvatar === avatar ? 'selected' : ''}
             onClick={() => {
               setSelectedAvatar(avatar)
               onSelect(avatar)
             }}
-            style={{ cursor: 'pointer', border: selectedAvatar === avatar ? '2px solid blue' : 'none' }}
           />
         ))}
       </div>

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-04-12T11:56:35.845Z"
+    "x-generation-date": "2024-04-26T06:46:06.640Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -94,7 +94,26 @@
         "properties": {
           "data": {
             "type": "object",
-            "properties": {}
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "themes": {
+                "type": "string",
+                "enum": [
+                  "Dev",
+                  "Webmarket",
+                  "UI/UX",
+                  "DA"
+                ]
+              },
+              "Questions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/QuizzQuestionsComponent"
+                }
+              }
+            }
           }
         }
       },
@@ -147,6 +166,24 @@
       "Quizz": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string"
+          },
+          "themes": {
+            "type": "string",
+            "enum": [
+              "Dev",
+              "Webmarket",
+              "UI/UX",
+              "DA"
+            ]
+          },
+          "Questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuizzQuestionsComponent"
+            }
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -466,6 +503,43 @@
           },
           "meta": {
             "type": "object"
+          }
+        }
+      },
+      "QuizzQuestionsComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "questionText": {
+            "type": "string"
+          },
+          "Responses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "responseA": {
+                  "type": "string"
+                },
+                "responseB": {
+                  "type": "string"
+                },
+                "responseC": {
+                  "type": "string"
+                },
+                "responseD": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
