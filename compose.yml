@@ -38,6 +38,8 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
       MYSQL_PASSWORD: strapi
       MYSQL_DATABASE: myDigitalHub
+    ports:
+      - 3306:3306
     volumes:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
