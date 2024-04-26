@@ -1,28 +1,25 @@
+'use client'
+
 import { CardTheme } from '@/components/quizz/CardTheme'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 export default function Page () {
-  const themeObject = [
-    {
-      id: 1,
-      name: 'Développement',
-      slug: 'developpement'
-    },
-    {
-      id: 2,
-      name: 'Web Marketing',
-      slug: 'web-marketing'
-    },
-    {
-      id: 3,
-      name: 'Web Design',
-      slug: 'web-design'
-    },
-    {
-      id: 4,
-      name: 'Direction Artistique',
-      slug: 'direction-artistique'
+  const [theme, setTheme] = useState()
+
+  useEffect(() => {
+    const loadData = async () => {
+      axios.get('http://localhost:1337/api/quizz-themes').then((res) => {
+        return res.data
+      }).then((data) => {
+        setTheme(data.data)
+      })
     }
-  ]
+
+    loadData()
+  }, [])
+
+  console.log(theme)
 
   return (
     <div>
@@ -42,13 +39,9 @@ export default function Page () {
       </div>
 
       <div className='grid grid-cols-2'>
-        {
-        themeObject.map((theme) => {
-          return (
-            <CardTheme key={theme.id} theme={theme} />
-          )
-        })
-      }
+        {theme?.map((theme) => (
+          <CardTheme key={theme.id} theme={theme.attributes} />
+        ))}
       </div>
     </div>
   )
