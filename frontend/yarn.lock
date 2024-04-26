@@ -606,7 +606,7 @@
     "@nextui-org/system-rsc" "2.1.1"
     "@react-types/shared" "^3.22.1"
 
-"@nextui-org/dropdown@2.1.23":
+"@nextui-org/dropdown@2.1.23", "@nextui-org/dropdown@^2.1.23":
   version "2.1.23"
   resolved "https://registry.yarnpkg.com/@nextui-org/dropdown/-/dropdown-2.1.23.tgz#8ca87d598a92f1dd42b051d75b7b3f13074fbed1"
   integrity sha512-4wAzUbKztvuzzuJcLuDKhvnxB++EQ2aATbCdnfcBA5IyBxj6k4lbalgmSQxtx6D4dm5iJeiOWCJHRZgsIqkxRg==
