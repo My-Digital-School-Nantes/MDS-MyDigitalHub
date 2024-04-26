@@ -25,11 +25,59 @@ export default async function JobOffers () {
   const data = await getData()
   console.log('data', data)
 
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearchChange = e => {
+    setSearchTerm(e.target.value)
+  }
+
+  const filteredEvents = jobOffers.filter(jobOffer =>
+    jobOffer.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const handleClear = () => {
+    setSearchTerm('')
+  }  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearchChange = e => {
+    setSearchTerm(e.target.value)
+  }
+
+  const filteredEvents = jobOffers.filter(jobOffer =>
+    jobOffer.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const handleClear = () => {
+    setSearchTerm('')
+  }
   return (
     <>
       <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
       <div>
-        {/* Votre code pour la barre de recherche */}
+        <Input
+          label='Search'
+          isClearable
+          radius='lg'
+          classNames={{
+            label: 'text-black/50 dark:text-white/90',
+            input: [
+              'bg-transparent', 'text-black/90 dark:text-white/90',
+              'placeholder:text-default-700/50 dark:placeholder:text-white/60'
+            ],
+            innerWrapper: 'bg-transparent',
+            inputWrapper: [
+              'shadow-xl', 'bg-default-200/50', 'dark:bg-default/60',
+              'backdrop-blur-xl', 'backdrop-saturate-200',
+              'hover:bg-default-200/70', 'dark:hover:bg-default/70',
+              'group-data-[focused=true]:bg-default-200/50',
+              'dark:group-data-[focused=true]:bg-default/60', '!cursor-text'
+            ]
+          }}
+          placeholder='Type to search...'
+          startContent={
+            <LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
+          }
+        />
       </div>
       <br />
       <div className='cards flex gap-4'>
@@ -53,7 +101,7 @@ export default async function JobOffers () {
               <h2 className='text-xl text-center my-8'>{item.attributes.title}</h2>
               <div className='description flex flex-col gap-3 justify-normal'>
                 <p><strong>Description:</strong></p>
-                <ScrollShadow className='w-[300px] h-[400px] overflow-auto'>
+                <ScrollShadow className='w-[400px] h-[200px] overflow-auto'>
                   <div>
                     {item.attributes.description.map((paragraph, paragraphIndex) => (
                       <p key={paragraphIndex}>{paragraph.children[0].text}</p>
