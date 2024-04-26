@@ -32,7 +32,7 @@ const CARDS = [
     slug: '3',
     image: '/projet/dopamine.jpg',
     description: 'Description du Projet 3',
-    votes: 0,
+    votes: 20,
     comments: [],
     publishedDate: '2024-04-25',
     category: 'Dev',
@@ -54,7 +54,7 @@ const CARDS = [
     slug: '5',
     image: '/projet/dopamine.jpg',
     description: 'Description du Projet 5',
-    votes: 0,
+    votes: 10,
     comments: [],
     publishedDate: '2024-04-25',
     category: 'DA',
@@ -75,7 +75,7 @@ const tri = [{
 export default function Projets () {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-
+  const [selectedSort, setSelectedSort] = useState('date')
   const handleCategoryFilter = (category) => {
     setSelectedCategory(category)
   }
@@ -84,11 +84,22 @@ export default function Projets () {
     setSearchTerm(e.target.value.toLowerCase())
   }
 
-  const filteredProjects = CARDS.filter((projet) => {
+  const handleSortChange = (sortType) => {
+    setSelectedSort(sortType)
+  }
+  const sortedProjects = CARDS.filter((projet) => {
     const titleMatches = projet.title.toLowerCase().includes(searchTerm)
     const categoryMatches = selectedCategory === '' || projet.category === selectedCategory
     return titleMatches && categoryMatches
+  }).sort((a, b) => {
+    if (selectedSort === '1') {
+      return new Date(b.publishedDate) - new Date(a.publishedDate)
+    } else if (selectedSort === '2') {
+      return b.votes - a.votes
+    }
+    return 0
   })
+
   return (
     <div>
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 '>
@@ -138,9 +149,14 @@ export default function Projets () {
           <Select
             label='Trier par'
             className='max-w-xs'
+            value={selectedSort}
+            onChange={(e) => {
+              const value = e.target.value
+              handleSortChange(value)
+            }}
           >
             {tri.map((type) => (
-              <SelectItem key={type.id}>
+              <SelectItem key={type.id} value={type.title}>
                 {type.title}
               </SelectItem>
             ))}
@@ -169,9 +185,8 @@ export default function Projets () {
       </div>
 
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12'>
-        {/** Ajouter les cartes de projets ici **/}
         <div className='grid grid-cols-2 gap-4'>
-          {filteredProjects.map((projet) => {
+          {sortedProjects.map((projet) => {
             return <CardProject key={projet.slug} projet={projet} />
           })}
         </div>
