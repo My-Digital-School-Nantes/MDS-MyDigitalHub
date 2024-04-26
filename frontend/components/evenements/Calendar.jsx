@@ -14,7 +14,7 @@ export default function Calendar () {
   const handleEventClick = (clickInfo) => {
     Swal.fire({
       title: 'Êtes-vous sûr?',
-      text: 'Voulez-vous supprimer cet événement?',
+      text: 'Voulez-vous supprimer cet événement ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#2fb8c5',
@@ -158,15 +158,14 @@ export default function Calendar () {
 }
 
 function renderDayCellContent (dayCell) {
-  if (dayCell.isToday) {
-    return (
-      <div className='bg-primary-500 rounded-full p-1'>
-        <div className='bg-white rounded-full h-6 w-6 flex items-center justify-center'>
-          {dayCell.dayNumberText}
-        </div>
-      </div>
-    )
-  }
+  const isToday = dayCell.isToday
+  const dayCellStyle = isToday ? { backgroundColor: '#46c1ca', color: 'white' } : {}
 
-  return dayCell.dayNumberText
+  return (
+    <div style={dayCellStyle} className='p-1 rounded-full'>
+      <div className='rounded-full h-6 w-6 flex items-center justify-center' style={isToday ? { color: 'white' } : {}}>
+        {dayCell.dayNumberText}
+      </div>
+    </div>
+  )
 }
