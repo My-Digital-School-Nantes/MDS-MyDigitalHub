@@ -5,11 +5,8 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-  Tooltip
-  , Input
-  , ScrollShadow
+  ScrollShadow
 } from '@nextui-org/react'
-import { LuSearch } from 'react-icons/lu'
 import { GET_OFFERS } from '@/graphql/queries/queries'
 import client from '@/graphql/apolloClient'
 
@@ -27,18 +24,6 @@ export const getData = async () => {
 export default async function JobOffers () {
   const data = await getData()
   console.log('data', data)
-
-  const colors = [
-    'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
-  ]
-
-  function truncateDescription (description) {
-    const maxLength = 50
-    if (description.length > maxLength) {
-      return `${description.slice(0, maxLength)}...` // Tronquer la description si elle dépasse la longueur maximale
-    }
-    return description
-  }
 
   return (
     <>
