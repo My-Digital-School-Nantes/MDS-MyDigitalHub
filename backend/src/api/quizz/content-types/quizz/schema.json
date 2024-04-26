@@ -22,6 +22,9 @@
       "relation": "oneToOne",
       "target": "api::quizz-theme.quizz-theme",
       "inversedBy": "quizz"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

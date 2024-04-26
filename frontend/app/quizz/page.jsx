@@ -1,25 +1,20 @@
-'use client'
-
 import { CardTheme } from '@/components/quizz/CardTheme'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import client from '@/graphql/apolloClient'
+import { GET_QUIZZTHEME } from '@/graphql/queries/quizz'
 
-export default function Page () {
-  const [theme, setTheme] = useState()
+async function getTheme () {
+  try {
+    const response = await client.query({
+      query: GET_QUIZZTHEME
+    })
+    return response.data.quizzThemes.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-  useEffect(() => {
-    const loadData = async () => {
-      axios.get('http://localhost:1337/api/quizz-themes').then((res) => {
-        return res.data
-      }).then((data) => {
-        setTheme(data.data)
-      })
-    }
-
-    loadData()
-  }, [])
-
-  console.log(theme)
+export default async function Page () {
+  const theme = await getTheme()
 
   return (
     <div>
