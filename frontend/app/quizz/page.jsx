@@ -17,9 +17,9 @@ export default async function Page () {
   const theme = await getTheme()
 
   return (
-    <div>
-      <div className='flex flex-col gap-4'>
-        <h2>
+    <div className='flex flex-col gap-10'>
+      <div className='flex flex-col gap-4 my-5'>
+        <h2 className='text-center'>
           Bienvenue dans "Quiz Master Challenge" !
         </h2>
         <p>
@@ -33,7 +33,7 @@ export default async function Page () {
         </p>
       </div>
 
-      <div className='grid grid-cols-2'>
+      <div className='grid grid-cols-2 gap-10'>
         {theme?.map((theme) => (
           <CardTheme key={theme.id} theme={theme.attributes} />
         ))}
