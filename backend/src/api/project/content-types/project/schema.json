@@ -16,9 +16,6 @@
       "type": "string",
       "required": true
     },
-    "description": {
-      "type": "blocks"
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -60,6 +57,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "projects"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }
