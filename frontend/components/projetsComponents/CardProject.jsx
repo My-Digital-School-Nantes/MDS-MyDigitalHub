@@ -3,9 +3,9 @@ import { Card, User, CardHeader, CardBody, Image, CardFooter, Button, Chip } fro
 import { LuThumbsUp } from 'react-icons/lu'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import Markdown from 'react-markdown'
 
-export const CardProject = (projet) => {
-  projet = projet.projet
+export const CardProject = ({ projet }) => {
   const handleUpvote = () => {
     // TODO: Add upvote
     toast.success('Upvoted!')
@@ -13,12 +13,12 @@ export const CardProject = (projet) => {
   return (
     <Card className='py-4'>
       <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-3'>
-        <Link href={projet.slug} className='group block'>
+        <Link href={'http://localhost:1337/' + projet.slug} className='group block'>
           <div className='aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
             <Image
               alt='Projet Image'
               className='group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl w-screen h-64'
-              src={projet.image}
+              src={projet.image.url}
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw%'
             />
           </div>
@@ -27,9 +27,9 @@ export const CardProject = (projet) => {
 
       </CardHeader>
       <CardBody className='overflow-visible py-2'>
-        <p className='mt-1 text-gray-600 dark:text-neutral-400'>
+        <Markdown className='mt-1 text-gray-600 dark:text-neutral-400'>
           {projet.description}
-        </p>
+        </Markdown>
         <p className='text-gray-600 dark:text-gray-400'>
           {projet.publishedDate}
         </p>

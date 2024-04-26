@@ -1,67 +1,10 @@
-'use client'
 import { CardProject } from '@/components/projetsComponents/CardProject'
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 import { LuSearch, LuTerminal, LuPencilLine, LuPalette, LuAreaChart } from 'react-icons/lu'
-
-const CARDS = [
-  {
-    title: 'Projet 1',
-    slug: '1',
-    image: '/projet/dopamine.jpg',
-    description: 'Description du Projet 1',
-    votes: 0,
-    comments: [],
-    publishedDate: '2024-04-25',
-    category: 'Dev',
-    tags: ['projet', 'backlog']
-  },
-  {
-    title: 'Projet 2',
-    slug: '2',
-    image: '/projet/endorphine.webp',
-    description: 'Description du Projet 2',
-    votes: 0,
-    comments: [],
-    publishedDate: '2024-04-25',
-    category: 'Ux/ui',
-    tags: ['projet', 'backlog']
-  },
-  {
-    title: 'Projet 3',
-    slug: '3',
-    image: '/projet/dopamine.jpg',
-    description: 'Description du Projet 3',
-    votes: 0,
-    comments: [],
-    publishedDate: '2024-04-25',
-    category: 'Dev',
-    tags: ['projet', 'backlog']
-  },
-  {
-    title: 'Projet 4',
-    slug: '4',
-    image: '/projet/endorphine.webp',
-    description: 'Description du Projet 4',
-    votes: 0,
-    comments: [],
-    publishedDate: '2024-04-25',
-    category: 'Marketing',
-    tags: ['projet', 'backlog']
-  },
-  {
-    title: 'Projet 5',
-    slug: '5',
-    image: '/projet/dopamine.jpg',
-    description: 'Description du Projet 5',
-    votes: 0,
-    comments: [],
-    publishedDate: '2024-04-25',
-    category: 'DA',
-    tags: ['projet', 'backlog']
-  }
-]
-
+import { GET_PROJECTS } from '@/graphql/queries/projects'
+import CardSkeleton from '@/components/projetsComponents/CardSkeleton'
+import client from '@/graphql/apolloClient'
 const tri = [{
   title: 'date',
   id: '1'
@@ -71,24 +14,37 @@ const tri = [{
   id: '2'
 }
 ]
-
-export default function Projets () {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('')
-
-  const handleCategoryFilter = (category) => {
-    setSelectedCategory(category)
+export async function getData () {
+  try {
+    const response = await client.query({
+      query: GET_PROJECTS
+    })
+    return response.data.projects.data
+  } catch (error) {
+    console.error(error)
   }
+}
+export const dynamic = 'force-dynamic'
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value.toLowerCase())
-  }
+export default async function Projets () {
+  const data = await getData()
+  console.log(data)
+  // const [searchTerm, setSearchTerm] = useState('')
+  // const [selectedCategory, setSelectedCategory] = useState('')
 
-  const filteredProjects = CARDS.filter((projet) => {
-    const titleMatches = projet.title.toLowerCase().includes(searchTerm)
-    const categoryMatches = selectedCategory === '' || projet.category === selectedCategory
-    return titleMatches && categoryMatches
-  })
+  // const handleCategoryFilter = (category) => {
+  //   setSelectedCategory(category)
+  // }
+
+  // const handleSearchChange = (e) => {
+  //   setSearchTerm(e.target.value.toLowerCase())
+  // }
+
+  // const filteredProjects = Object.values(projets).filter((projet) => {
+  //   const titleMatches = projet.title.toLowerCase().includes(searchTerm)
+  //   const categoryMatches = selectedCategory === '' || projet.category === selectedCategory
+  //   return titleMatches && categoryMatches
+  // })
   return (
     <div>
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 '>
@@ -133,9 +89,8 @@ export default function Projets () {
             startContent={
               <LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
 }
-            onChange={handleSearchChange}
           />
-          <Select
+          {/* <Select
             label='Trier par'
             className='max-w-xs'
           >
@@ -144,9 +99,9 @@ export default function Projets () {
                 {type.title}
               </SelectItem>
             ))}
-          </Select>
+          </Select> */}
         </div>
-        <div className='flex gap-3 justify-center items-center mt-5 sm:mt-10 w-full'>
+        {/* <div className='flex gap-3 justify-center items-center mt-5 sm:mt-10 w-full'>
 
           <Button className='m-1 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border  border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800' onClick={() => handleCategoryFilter('')}>
             <svg className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z' /></svg>
@@ -165,15 +120,14 @@ export default function Projets () {
             Marketing
           </Button>
 
-        </div>
+        </div> */}
       </div>
 
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12'>
         {/** Ajouter les cartes de projets ici **/}
         <div className='grid grid-cols-2 gap-4'>
-          {filteredProjects.map((projet) => {
-            return <CardProject key={projet.slug} projet={projet} />
-          })}
+          {data && data.map((projet) => <CardProject key={projet.id} projet={projet.attributes} />)}
+
         </div>
 
       </div>
