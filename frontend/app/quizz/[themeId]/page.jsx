@@ -20,7 +20,6 @@ export default async function ThemePage () {
     <div>
       <h1 className='text-4xl text-center my-8'>Nos Quizz</h1>
       <QuizzesList data={data} />
-
     </div>
   )
 }

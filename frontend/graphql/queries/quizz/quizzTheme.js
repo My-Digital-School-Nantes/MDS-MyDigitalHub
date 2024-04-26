@@ -9,7 +9,8 @@ const QUIZZ_THEME = gql`
           Questions{
             title,
             id
-          }
+          },
+          name
         }
       }
     }

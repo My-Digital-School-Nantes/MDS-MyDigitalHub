@@ -1,9 +1,14 @@
-import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from '@nextui-org/react'
-import Link from 'next/link'
-import { RiGitRepositoryPrivateLine } from 'react-icons/ri'
+import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from '@nextui-org/react'
+import { useEffect, useState } from 'react'
 
-export default function CardQuizz ({ showIcon = false, number }) {
-  const test = window.location.pathname
+export default function CardQuizz ({ quizz }) {
+  console.log(quizz)
+
+  const [pathname, setPathname] = useState('')
+
+  useEffect(() => {
+    setPathname(window.location.pathname)
+  }, [])
 
   return (
     <Card className='max-w-[400px] relative'>
@@ -16,24 +21,19 @@ export default function CardQuizz ({ showIcon = false, number }) {
           width={40}
         />
         <div className='flex flex-col'>
-          <p className='text-md'>NextUI {number}</p>
+          <p className='text-md'>{quizz.attributes.name}</p>
           <p className='text-small text-default-500'>nextui.org</p>
         </div>
-        {showIcon && (
-          <div className='absolute top-0 right-0 p-4 text-primary'>
-            <RiGitRepositoryPrivateLine size={24} />
-          </div>
-        )}
       </CardHeader>
       <Divider />
       <CardBody>
-        <p>Make beautiful websites regardless of your design experience.</p>
+        <p>Description</p>
       </CardBody>
       <Divider />
       <CardFooter>
         <Link
           showAnchorIcon
-          href={`${test}/${number}`}
+          href={`${pathname}/5`}
         >
           Discover the quiz.
         </Link>
