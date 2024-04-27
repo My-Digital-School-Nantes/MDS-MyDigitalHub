@@ -53,6 +53,11 @@ function CustomNavbar () {
             Customers
           </Link>
         </NavbarItem>
+        <NavbarItem isActive>
+          <Link href='/evenements'>
+            Evenements
+          </Link>
+        </NavbarItem>
         <NavbarItem>
           <Link color='foreground' href='#'>
             Integrations
