@@ -1,15 +1,7 @@
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from '@nextui-org/react'
-import { useEffect, useState } from 'react'
+import Markdown from 'react-markdown'
 
 export default function CardQuizz ({ quizz }) {
-  console.log(quizz)
-
-  const [pathname, setPathname] = useState('')
-
-  useEffect(() => {
-    setPathname(window.location.pathname)
-  }, [])
-
   return (
     <Card className='max-w-[400px] relative'>
       <CardHeader className='flex gap-3'>
@@ -21,19 +13,21 @@ export default function CardQuizz ({ quizz }) {
           width={40}
         />
         <div className='flex flex-col'>
-          <p className='text-md'>{quizz.attributes.name}</p>
+          <p className='text-md'>{quizz.attributes.title}</p>
           <p className='text-small text-default-500'>nextui.org</p>
         </div>
       </CardHeader>
       <Divider />
       <CardBody>
-        <p>Description</p>
+        <Markdown className='truncate'>
+          {quizz.attributes.description}
+        </Markdown>
       </CardBody>
       <Divider />
       <CardFooter>
         <Link
           showAnchorIcon
-          href={`${pathname}/5`}
+          href={`${quizz.attributes.quizz_theme.data.attributes.url}/${quizz.attributes.slug}`}
         >
           Discover the quiz.
         </Link>
