@@ -1,4 +1,4 @@
-export default function jobLayout({
+export default function jobLayout ({
   children
 }) {
   return (
