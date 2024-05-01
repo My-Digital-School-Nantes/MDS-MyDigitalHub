@@ -2,12 +2,12 @@
 import { Button, Divider, useDisclosure } from '@nextui-org/react'
 
 import CardCarousel from '@/components/santeComponents/card/CardCarousel'
-// import CardAnnonce from '@/components/santeComponents/card/CardAnnonce'
+import CardAnnonce from '@/components/santeComponents/card/CardAnnonce'
 import { ListAnnonce } from '@/components/santeComponents/list/ListAnnonce'
 import ModalAnnonce from '@/components/santeComponents/modal/Modal'
 
 import { profils } from './profilDatas'
-// import { annonces } from './annonceDatas'
+import { annonces } from './annonceDatas'
 
 import client from '@/graphql/apolloClient'
 import { GET_ANNONCES } from '@/graphql/queries/sante'
@@ -25,7 +25,8 @@ export const getAnnonces = async () => {
 
 export default async function Sante () {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const annonces = await getAnnonces()
+  const aaannonces = await getAnnonces()
+  console.log(annonces)
   return (
     <>
       <div className='text-center my-16 capitalize'>
@@ -65,7 +66,8 @@ export default async function Sante () {
       <ModalAnnonce isOpen={isOpen} onOpenChange={onOpenChange} />
 
       <div className='m-8'>
-        <ListAnnonce annonces={annonces} />
+        {/* <ListAnnonce annonces={annonces} /> */}
+        <CardAnnonce cardsData={annonces} />
       </div>
 
     </>

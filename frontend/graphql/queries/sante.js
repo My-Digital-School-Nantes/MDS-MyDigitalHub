@@ -4,6 +4,7 @@ export const GET_ANNONCES = gql`
 query annonce {
     annonces{
         data{
+            id,
             attributes{
                 Title 
                 Description 

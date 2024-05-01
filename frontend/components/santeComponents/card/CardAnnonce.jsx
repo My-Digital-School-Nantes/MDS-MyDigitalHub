@@ -2,13 +2,13 @@
 import React, { useState } from 'react'
 import { Card, CardBody, Image, CardHeader, Input } from '@nextui-org/react'
 
-export const CardAnnonce = ({ annonce }) => {
+const CardAnnonce = ({ cardsData = [] }) => {
   const [searchTerm, setSearchTerm] = useState('')
 
-  // const filteredCards = annonces.filter(annonce =>
-  //   annonce.attributes.Title.toLowerCase().includes(searchTerm.toLowerCase())
-  // )
-  console.log(annonce)
+  const filteredCards = cardsData.filter(card =>
+    card.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <div>
       <div className='mb-4'>
@@ -18,29 +18,32 @@ export const CardAnnonce = ({ annonce }) => {
         />
       </div>
       <div className='flex flex-wrap justify-center -m-2'>
-
-        <div className='p-2 w-1/4'>
-          <Card className='border border-gray-700 rounded-xl'>
-            <CardHeader className='pb-0 pt-2 px-4 flex-col items-center'>
-              <h6 className='font-bold text-large text-center'>{annonce.Title}</h6>
-              {/* <small className='pt-3 text-default-500 text-center'>{annonce.Description}</small>
-              <small className='text-default-500 text-center'>{annonce.Sport}</small>
-              <small className='pb-3 text-default-500 text-center'>{annonce.Niveau}</small>
-              <small className='pb-3 text-default-500 text-center'>{annonce.Date}</small>
-              <small className=' text-default-500 text-center'>{annonce.Contact}</small> */}
-            </CardHeader>
-            <CardBody className='overflow-visible py-2 flex justify-center'>
-              {/* <Image
+        {filteredCards.map((card, index) => (
+          <div className='p-2 w-1/4' key={index}>
+            <Card className='border border-gray-700 rounded-xl'>
+              <CardHeader className='pb-0 pt-2 px-4 flex-col items-center'>
+                <h6 className='font-bold text-large text-center'>{card.title}</h6>
+                {/* <small className='pt-3 text-default-500 text-center'>{card.description}</small>
+                <small className='text-default-500 text-center'>{card.sport}</small>
+                <small className='pb-3 text-default-500 text-center'>{card.niveau}</small>
+                <small className='pb-3 text-default-500 text-center'>{card.date}</small>
+                <small className=' text-default-500 text-center'>{card.contact}</small> */}
+              </CardHeader>
+              <CardBody className='overflow-visible py-2 flex justify-center'>
+                <Image
                   alt='Card background'
                   className='object-cover rounded-xl'
-                  src={annonce.image}
+                  src={card.image}
                   width='100%'
                   height='auto'
-                /> */}
-            </CardBody>
-          </Card>
-        </div>
+                />
+              </CardBody>
+            </Card>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
+
+export default CardAnnonce
