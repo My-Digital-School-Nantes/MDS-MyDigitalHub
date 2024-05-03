@@ -11,34 +11,28 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 
-const addOneDay = (dateString) => {
-  const date = new Date(dateString)
-  date.setDate(date.getDate() + 1)
-  return date.toISOString().split('T')[0]
-}
-
 export default function Calendar () {
   const [events, setEvents] = useState([])
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch('http://localhost:1337/api/calendar-events')
-        const data = await response.json()
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch('http://localhost:1337/api/calendar-events')
+      const data = await response.json()
 
-        const formattedEvents = data.data.map(event => ({
-          title: event.attributes.title,
-          start: event.attributes.date_debut,
-          end: addOneDay(event.attributes.date_fin),
-          id: event.id
-        }))
+      const formattedEvents = data.data.map(event => ({
+        title: event.attributes.title,
+        start: event.attributes.date_debut,
+        end: event.attributes.date_fin,
+        id: event.id
+      }))
 
-        setEvents(formattedEvents)
-      } catch (error) {
-        console.error('Erreur lors de la récupération des événements :', error)
-      }
+      setEvents(formattedEvents)
+    } catch (error) {
+      console.error('Erreur lors de la récupération des événements :', error)
     }
+  }
 
+  useEffect(() => {
     fetchEvents()
   }, [])
 
@@ -55,11 +49,16 @@ export default function Calendar () {
     }).then(async (result) => {
       if (result.value) {
         try {
-          await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
+          const response = await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
             method: 'DELETE'
           })
-          clickInfo.event.remove()
-          Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
+
+          if (response.ok) {
+            Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
+            fetchEvents() // Rafraîchir les événements
+          } else {
+            throw new Error('Erreur lors de la suppression de l\'événement')
+          }
         } catch (error) {
           console.error('Erreur lors de la suppression de l\'événement :', error)
         }
@@ -101,19 +100,13 @@ export default function Calendar () {
             },
             body: JSON.stringify({ data: newEvent })
           })
-          const result = await response.json()
-          const createdEvent = {
-            ...newEvent,
-            id: result.data.id
+
+          if (response.ok) {
+            Swal.fire('Événement créé!')
+            fetchEvents() // Rafraîchir les événements
+          } else {
+            throw new Error('Erreur lors de la création de l\'événement')
           }
-
-          const calendarApi = selectInfo.view.calendar
-          calendarApi.addEvent(createdEvent)
-          setEvents([...events, createdEvent])
-
-          console.log('Événement ajouté:', createdEvent) // Vérification de l'événement ajouté
-
-          Swal.fire('Événement créé!')
         } catch (error) {
           console.error('Erreur lors de la création de l\'événement :', error)
         }
@@ -140,9 +133,7 @@ export default function Calendar () {
         center: 'dayGridMonth listMonth',
         right: 'title'
       }}
-      events={[
-        ...events
-      ]}
+      events={events}
       eventColor='#2fb8c5'
       initialView='dayGridMonth' // Affichage de base
       editable // Pour activer les interactions d'events
