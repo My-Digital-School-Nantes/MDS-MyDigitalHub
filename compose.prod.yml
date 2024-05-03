@@ -23,7 +23,7 @@ services:
       - 1337:1337
     networks:
       - mydigitalhub-backend
-      - mydigitalhub-frontend
+      - public-network
     depends_on:
       - strapiDB
 
@@ -54,8 +54,23 @@ services:
     networks:
       - mydigitalhub-backend
 
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    container_name: -frontend
+    stdin_open: true
+    depends_on:
+      - mydigitalhub-backend
+    restart: unless-stopped
+    networks:
+      - mydigitalhub-backend
+      - public-network
+
 volumes:
   strapi-data:
 networks:
   mydigitalhub-backend:
-  mydigitalhub-frontend:
+  public-network:
+    external: true
+      

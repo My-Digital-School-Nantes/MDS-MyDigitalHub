@@ -64,6 +64,11 @@ function CustomNavbar () {
           </Link>
         </NavbarItem>
         <NavbarItem>
+          <Link color='foreground' href='/joboffers'>
+            Job offers
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
           <Link color='foreground' href='/projets'>
             Projets
           </Link>

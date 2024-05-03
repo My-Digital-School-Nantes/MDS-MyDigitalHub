@@ -1,3 +1,4 @@
+'use client'
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 
@@ -27,7 +28,7 @@ export default function CardQuizz ({ quizz }) {
       </CardHeader>
       <Divider />
       <CardBody>
-        <p>Description</p>
+        <p>{quizz.attributes.description}</p>
       </CardBody>
       <Divider />
       <CardFooter>
