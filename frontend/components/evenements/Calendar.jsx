@@ -23,7 +23,8 @@ export default function Calendar () {
         title: event.attributes.title,
         start: event.attributes.date_debut,
         end: event.attributes.date_fin,
-        id: event.id
+        id: event.id,
+        backgroundColor: event.attributes.color
       }))
 
       setEvents(formattedEvents)
@@ -55,7 +56,7 @@ export default function Calendar () {
 
           if (response.ok) {
             Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
-            fetchEvents() // Rafraîchir les événements
+            fetchEvents()
           } else {
             throw new Error('Erreur lors de la suppression de l\'événement')
           }
@@ -68,7 +69,8 @@ export default function Calendar () {
 
   const handleDateSelect = async selectInfo => {
     const { startStr, endStr, allDay } = selectInfo
-    Swal.fire({
+
+    const { value: eventName } = await Swal.fire({
       title: 'Créer un événement',
       input: 'text',
       inputAttributes: {
@@ -78,41 +80,59 @@ export default function Calendar () {
       confirmButtonText: 'Créer',
       confirmButtonColor: '#2fb8c5',
       cancelButtonText: 'Annuler',
-      showLoaderOnConfirm: true,
-      preConfirm: async eventName => {
-        if (!eventName) {
-          Swal.showValidationMessage('Veuillez entrer le nom de l\'événement')
-          return
-        }
-
-        const newEvent = {
-          title: eventName,
-          date_debut: startStr,
-          date_fin: endStr,
-          allDay
-        }
-
-        try {
-          const response = await fetch('http://localhost:1337/api/calendar-events', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ data: newEvent })
-          })
-
-          if (response.ok) {
-            Swal.fire('Événement créé!')
-            fetchEvents() // Rafraîchir les événements
-          } else {
-            throw new Error('Erreur lors de la création de l\'événement')
-          }
-        } catch (error) {
-          console.error('Erreur lors de la création de l\'événement :', error)
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading()
+      showLoaderOnConfirm: true
     })
+
+    if (!eventName) {
+      Swal.showValidationMessage('Veuillez entrer le nom de l\'événement')
+      return
+    }
+
+    const { value: color } = await Swal.fire({
+      title: 'Sélectionnez une couleur',
+      input: 'select',
+      inputOptions: {
+        '#d33': 'Rouge',
+        '#28a701': 'Vert',
+        '#2fb8c5': 'Bleu'
+      },
+      inputPlaceholder: 'Sélectionnez une couleur',
+      confirmButtonText: 'OK',
+      showCancelButton: true,
+      cancelButtonText: 'Annuler'
+    })
+
+    if (!color) {
+      Swal.showValidationMessage('Veuillez sélectionner une couleur')
+      return
+    }
+
+    const newEvent = {
+      title: eventName,
+      date_debut: startStr,
+      date_fin: endStr,
+      allDay,
+      color
+    }
+
+    try {
+      const response = await fetch('http://localhost:1337/api/calendar-events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: newEvent })
+      })
+
+      if (response.ok) {
+        Swal.fire('Événement créé!')
+        fetchEvents()
+      } else {
+        throw new Error('Erreur lors de la création de l\'événement')
+      }
+    } catch (error) {
+      console.error('Erreur lors de la création de l\'événement :', error)
+    }
   }
 
   return (

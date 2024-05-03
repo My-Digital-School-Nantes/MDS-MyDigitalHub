@@ -4,7 +4,8 @@
   "info": {
     "singularName": "calendar-event",
     "pluralName": "calendar-events",
-    "displayName": "CalendarEvent"
+    "displayName": "CalendarEvent",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,9 @@
     },
     "date_fin": {
       "type": "date"
+    },
+    "color": {
+      "type": "string"
     }
   }
 }
