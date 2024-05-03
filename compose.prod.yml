@@ -61,7 +61,7 @@ services:
     container_name: -frontend
     stdin_open: true
     depends_on:
-      - property-manager-backend
+      - mydigitalhub-backend
     restart: unless-stopped
     networks:
       - mydigitalhub-backend
