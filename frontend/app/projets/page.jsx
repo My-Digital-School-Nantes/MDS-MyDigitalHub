@@ -1,8 +1,9 @@
-import { Input } from '@nextui-org/react'
+// import { Input } from '@nextui-org/react'
 import { GET_PROJECTS } from '@/graphql/queries/projects'
-import { LuSearch } from 'react-icons/lu'
+// import { LuSearch } from 'react-icons/lu'
 import client from '@/graphql/apolloClient'
 import { ListProjects } from '@/components/projetsComponents/ListProject'
+import Search from '@/components/projetsComponents/Search'
 
 export async function getData () {
   try {
@@ -33,7 +34,7 @@ export default async function Projets () {
           </p>
         </div>
         <div className='flex justify-center place-content-center items-center pt-4 w-full'>
-          <Input
+          {/*           <Input
             label='Recherche'
             isClearable
             radius='lg'
@@ -63,8 +64,9 @@ export default async function Projets () {
             startContent={
               <LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
 }
-          />
+          /> */}
         </div>
+        <Search />
       </div>
 
       <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12'>
