@@ -5,11 +5,15 @@ import { QUIIZZ_BY_THEME } from '@/graphql/queries/quizz/quizzByTheme'
 export const getData = async () => {
   try {
     const response = await client.query({
-      query: QUIIZZ_BY_THEME
+      query: QUIIZZ_BY_THEME,
+      variables: { themeName: 'web-marketing' }
     })
-    return response.data.quizzes.data
+
+    return response.data
   } catch (error) {
     console.error(error)
+
+    throw new Error('Quiz not found', { statusCode: 404 })
   }
 }
 
@@ -26,7 +30,7 @@ export default async function QuizzByThemePage () {
           </h1>
 
           <p className='mt-3 text-gray-600 dark:text-gray-400'>
-            Au sein de notre établissement, pour familiariser les étudiants avec les métiers du numérique, nous avons mis en place des quizz.
+            Au sein de notre  établissement, pour familiariser les étudiants avec les métiers du numérique, nous avons mis en place ces quizzs.
           </p>
         </div>
       </div>
