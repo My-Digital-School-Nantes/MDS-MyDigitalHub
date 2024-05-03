@@ -80,9 +80,9 @@ export default async function JobOffers () {
         />
       </div>
       <br />
-      <div className='cards flex gap-4'>
+      <div className='cards flex flex-wrap gap-8'>
         {data.map((item, index) => (
-          <Card key={index} className='border border-transparent hover:border-primary'>
+          <Card key={index} className='border border-transparent hover:border-primary w-1/3 '>
             <CardHeader className='flex gap-4'>
               <Image
                 alt='mds logo'
