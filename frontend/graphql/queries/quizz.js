@@ -7,7 +7,7 @@ query getQuizzesTheme{
       id
       attributes{
         name
-        url
+        slug
       }
     }
   }

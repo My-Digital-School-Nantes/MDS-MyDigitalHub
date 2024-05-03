@@ -21,8 +21,9 @@
       "target": "api::quizz.quizz",
       "mappedBy": "quizz_theme"
     },
-    "url": {
-      "type": "string"
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     }
   }
 }

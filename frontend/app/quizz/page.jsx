@@ -19,9 +19,10 @@ export default async function Page () {
   return (
     <div className='flex flex-col gap-10'>
       <div className='flex flex-col gap-4 my-5'>
-        <h2 className='text-center'>
-          Bienvenue dans "Quiz Master Challenge" !
-        </h2>
+        <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200 text-center'>
+          Essayer les
+          <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> Quizz </span> de notre école
+        </h1>
         <p>
           Plongez dans un monde de connaissances et de défis mentaux où vos compétences sont mises à l'épreuve à chaque question.
 
