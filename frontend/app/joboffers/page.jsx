@@ -7,44 +7,46 @@ import {
   Button,
   Tooltip,
   Input,
-  ScrollShadow,
+  ScrollShadow
 } from '@nextui-org/react'
 import { GET_OFFERS } from '@/graphql/queries/queries'
 import client from '@/graphql/apolloClient'
 import { LuSearch, LuFilter } from 'react-icons/lu'
+
+export const dynamic = 'force-dynamic'
 
 export const getData = async () => {
   try {
     const response = await client.query({
       query: GET_OFFERS
     })
+    console.log('Response of getData GET_OFFERS : ', response.data.offers.data)
     return response.data.offers.data
   } catch (error) {
     console.error(error)
   }
 }
 
- const colors = [
-    'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
-  ]
+const colors = [
+  'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
+]
 
 export default async function JobOffers () {
   const data = await getData()
   console.log('data', data)
 
- 
   // const handleSearchChange = e => {
   //   setSearchTerm(e.target.value)
   // }
- 
+
   // const filteredEvents = data.filter(data =>
   //   data.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
   // )
- 
+
   // const handleClear = () => {
   //   setSearchTerm('')
   // }
- 
+
   return (
     <>
       <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
@@ -121,21 +123,10 @@ export default async function JobOffers () {
               </div>
             </CardBody>
             <Divider />
-            <CardFooter>
-              <Dropdown>
-                <DropdownTrigger>
-                  <Button variant='bordered'>Actions</Button>
-                </DropdownTrigger>
-                <DropdownMenu aria-label='Static Actions'>
-                  <DropdownItem key='new'>Apply</DropdownItem>
-                  <DropdownItem key='copy'>Add to favorite</DropdownItem>
-                  <DropdownItem key='edit'>Share offer</DropdownItem>
-                  <DropdownItem key='delete' className='text-danger' color='danger'>
-                    Hide offer
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </CardFooter>
+            <CardFooter />
+            <Button color='primary' variant='ghost'>
+              Apply
+            </Button>
           </Card>
         ))}
       </div>
