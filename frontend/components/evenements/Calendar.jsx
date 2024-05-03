@@ -98,6 +98,8 @@ export default function Calendar () {
       },
       inputPlaceholder: 'Sélectionnez une couleur',
       confirmButtonText: 'OK',
+      confirmButtonColor: '#2fb8c5',
+      cancelButtonColor: '#d33',
       showCancelButton: true,
       cancelButtonText: 'Annuler'
     })
@@ -154,7 +156,7 @@ export default function Calendar () {
         right: 'title'
       }}
       events={events}
-      eventColor='#2fb8c5'
+      eventColor='#fff'
       initialView='dayGridMonth' // Affichage de base
       editable // Pour activer les interactions d'events
       droppable // Pour activer le fait d'ajouter un élement via le drag&drop
