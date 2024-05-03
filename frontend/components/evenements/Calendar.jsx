@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -10,8 +11,38 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 
+const addOneDay = (dateString) => {
+  const date = new Date(dateString)
+  date.setDate(date.getDate() + 1)
+  return date.toISOString().split('T')[0]
+}
+
 export default function Calendar () {
-  const handleEventClick = (clickInfo) => {
+  const [events, setEvents] = useState([])
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('http://localhost:1337/api/calendar-events')
+        const data = await response.json()
+
+        const formattedEvents = data.data.map(event => ({
+          title: event.attributes.title,
+          start: event.attributes.date_debut,
+          end: addOneDay(event.attributes.date_fin),
+          id: event.id
+        }))
+
+        setEvents(formattedEvents)
+      } catch (error) {
+        console.error('Erreur lors de la récupération des événements :', error)
+      }
+    }
+
+    fetchEvents()
+  }, [])
+
+  const handleEventClick = clickInfo => {
     Swal.fire({
       title: 'Êtes-vous sûr?',
       text: 'Voulez-vous supprimer cet événement ?',
@@ -21,19 +52,23 @@ export default function Calendar () {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Oui, supprimez-le!',
       cancelButtonText: 'Non, annulez!'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.value) {
-        clickInfo.event.remove() // Supprimer l'événement
-        Swal.fire(
-          'Supprimé!',
-          'Votre événement a été supprimé.',
-          'success'
-        )
+        try {
+          await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
+            method: 'DELETE'
+          })
+          clickInfo.event.remove()
+          Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
+        } catch (error) {
+          console.error('Erreur lors de la suppression de l\'événement :', error)
+        }
       }
     })
   }
 
-  const handleDateSelect = (selectInfo) => {
+  const handleDateSelect = async selectInfo => {
+    const { startStr, endStr, allDay } = selectInfo
     Swal.fire({
       title: 'Créer un événement',
       input: 'text',
@@ -45,28 +80,48 @@ export default function Calendar () {
       confirmButtonColor: '#2fb8c5',
       cancelButtonText: 'Annuler',
       showLoaderOnConfirm: true,
-      preConfirm: (eventName) => {
+      preConfirm: async eventName => {
         if (!eventName) {
           Swal.showValidationMessage('Veuillez entrer le nom de l\'événement')
+          return
         }
-        const calendarApi = selectInfo.view.calendar
-        calendarApi.unselect() // clear date selection
-        calendarApi.addEvent({
+
+        const newEvent = {
           title: eventName,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        })
+          date_debut: startStr,
+          date_fin: endStr,
+          allDay
+        }
+
+        try {
+          const response = await fetch('http://localhost:1337/api/calendar-events', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: newEvent })
+          })
+          const result = await response.json()
+          const createdEvent = {
+            ...newEvent,
+            id: result.data.id
+          }
+
+          const calendarApi = selectInfo.view.calendar
+          calendarApi.addEvent(createdEvent)
+          setEvents([...events, createdEvent])
+
+          console.log('Événement ajouté:', createdEvent) // Vérification de l'événement ajouté
+
+          Swal.fire('Événement créé!')
+        } catch (error) {
+          console.error('Erreur lors de la création de l\'événement :', error)
+        }
       },
       allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Événement créé!'
-        })
-      }
     })
   }
+
   return (
     <FullCalendar
       locale={frLocale}
@@ -86,60 +141,7 @@ export default function Calendar () {
         right: 'title'
       }}
       events={[
-        {
-          title: 'Soirée mousse',
-          start: '2024-04-11',
-          backgroundColor: 'green',
-          borderColor: 'green'
-        },
-        {
-          title: 'AAA',
-          start: '2024-04-02',
-          end: '2024-04-04'
-        },
-        {
-          title: 'BBB',
-          start: '2024-04-15',
-          end: '2024-04-17',
-          backgroundColor: 'purple',
-          borderColor: 'purple'
-        },
-        {
-          title: 'Examens math',
-          start: '2024-04-20',
-          backgroundColor: '#d33',
-          borderColor: '#d33'
-        },
-        {
-          title: 'Examens français',
-          start: '2024-04-20',
-          backgroundColor: '#d33',
-          borderColor: '#d33'
-        },
-        {
-          title: 'Examens devOps',
-          start: '2024-04-20',
-          backgroundColor: '#d33',
-          borderColor: '#d33'
-        },
-        {
-          title: 'Examens PWA',
-          start: '2024-04-20',
-          backgroundColor: '#d33',
-          borderColor: '#d33'
-        },
-        {
-          title: 'Examens roublardise',
-          start: '2024-04-20',
-          backgroundColor: '#d33',
-          borderColor: '#d33'
-        },
-        {
-          title: 'Examens finaux',
-          start: '2024-04-20',
-          backgroundColor: '#d33',
-          borderColor: '#d33'
-        }
+        ...events
       ]}
       eventColor='#2fb8c5'
       initialView='dayGridMonth' // Affichage de base
@@ -149,8 +151,8 @@ export default function Calendar () {
       dayMaxEvents
       selectMirror
       height={850}
-      dayCellContent={renderDayCellContent}
       selectable
+      dayCellContent={renderDayCellContent}
       select={handleDateSelect}
       eventClick={handleEventClick}
     />
