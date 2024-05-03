@@ -1,7 +1,21 @@
 'use client'
-import { Input, Card, CardBody, Image, CardHeader } from '@nextui-org/react'
+import { Input, Card, CardBody, CardHeader, CardFooter, Divider, Chip } from '@nextui-org/react'
+import { MdDirectionsRun } from 'react-icons/md'
+
 import React, { useState } from 'react'
 import { LuSearch } from 'react-icons/lu'
+
+const formatDate = (isoString) => {
+  const date = new Date(isoString)
+  return date.toLocaleString('fr-FR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false // Utilise le format 24h
+  })
+}
 
 export const ListAnnonce = ({ annonces = [] }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -34,21 +48,28 @@ export const ListAnnonce = ({ annonces = [] }) => {
 
       <div className='flex gap-6 flex-wrap justify-center mt-8'>
         {filteredCards.map((annonce) => (
-          <Card key={annonce.id} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>
-            <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-2'>
-              <div className='flex justify-between w-full items-center'>
-                <p className='text-bold text-primary'>{annonce.attributes.Title}</p>
+          <Card key={annonce.id} className='max-w-[400px] border border-gray-700 rounded-xl hover:-translate-y-3 cursor-pointer'>
+            <CardHeader className='flex gap-3'>
+              <MdDirectionsRun className='text-4xl pointer-events-none flex-shrink-0' />
+              <div className='flex flex-col'>
+                <p className='text-lg text-bold text-primary'>{annonce.attributes.Title}</p>
+                <div className='flex gap-2 pt-3'>
+                  <Chip color='primary'>{annonce.attributes.Sport}</Chip>
+                  <Chip color='primary'>{annonce.attributes.Niveau}</Chip>
+                </div>
               </div>
             </CardHeader>
-            <CardBody className='overflow-visible py-2 flex justify-center'>
-              <Image
-                alt='Card background'
-                className='object-cover rounded-xl'
-                src={annonce.image}
-                width='100%'
-                height='auto'
-              />
+            <Divider />
+            <CardBody>
+              <p>{annonce.attributes.Description}</p>
             </CardBody>
+            <Divider />
+            <CardFooter>
+              <div className='flex flex-col'>
+                <p className='text-bold text-primary'>{formatDate(annonce.attributes.Date)}</p>
+                <p className='text-bold text-primary'>{annonce.attributes.Contact}</p>
+              </div>
+            </CardFooter>
           </Card>
         ))}
       </div>
