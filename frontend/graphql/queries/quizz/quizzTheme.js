@@ -11,6 +11,7 @@ const QUIZZ_THEME = gql`
             id
           },
           name
+          description
         }
       }
     }
@@ -20,4 +21,3 @@ const QUIZZ_THEME = gql`
 export {
   QUIZZ_THEME
 }
-
