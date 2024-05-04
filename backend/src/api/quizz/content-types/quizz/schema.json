@@ -19,12 +19,29 @@
     },
     "quizz_theme": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::quizz-theme.quizz-theme",
-      "inversedBy": "quizz"
+      "inversedBy": "quizzes"
     },
     "name": {
       "type": "string"
+    },
+    "time": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": false
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "is_private": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }

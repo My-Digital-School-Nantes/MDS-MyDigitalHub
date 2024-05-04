@@ -15,9 +15,12 @@
     "name": {
       "type": "string"
     },
-    "quizz": {
+    "url": {
+      "type": "string"
+    },
+    "quizzes": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::quizz.quizz",
       "mappedBy": "quizz_theme"
     },
