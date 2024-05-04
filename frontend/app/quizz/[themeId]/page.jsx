@@ -2,11 +2,11 @@ import QuizzesList from '@/components/quizz/QuizzesList'
 import client from '@/graphql/apolloClient'
 import { QUIIZZ_BY_THEME } from '@/graphql/queries/quizz/quizzByTheme'
 
-export const getData = async () => {
+export const getData = async (themeId) => {
   try {
     const response = await client.query({
       query: QUIIZZ_BY_THEME,
-      variables: { themeName: 'web-marketing' }
+      variables: { themeName: themeId }
     })
 
     return response.data
@@ -17,8 +17,11 @@ export const getData = async () => {
   }
 }
 
-export default async function QuizzByThemePage () {
-  const data = await getData()
+export async function generateStaticParams () {
+}
+
+export default async function QuizzByThemePage ({ params: { themeId } }) {
+  const data = await getData(themeId)
 
   return (
     <>
