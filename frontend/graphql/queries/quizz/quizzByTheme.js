@@ -1,24 +1,23 @@
 import { gql } from '@apollo/client'
 
-export const QUIIZZ_BY_THEME = gql`
-  query getQuizzesTheme($themeName: String!){
-    quizzThemes(filters: {url: {eq: $themeName}}){
-      data{
-        attributes{
-          name
-          url,
-          quizzes{
-            data{
-              attributes{
-                is_private,
-                description,
-                slug,
-                name
-              }
+export const GET_QUIZZ_BY_THEME = gql`
+query getQuizzesByTheme($themeName: String!){
+  quizzes(filters: {quizz_theme: {slug: {eq: $themeName}}}){
+    data{
+      id
+      attributes{
+        name
+        description
+        slug
+        quizz_theme{
+          data{
+            attributes{
+              slug
             }
           }
         }
       }
     }
   }
+}
 `
