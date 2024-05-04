@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react'
 import AvatarSelector from '@/components/AvatarSelector'
-import { Avatar, avatar } from '@nextui-org/react'
+import { Avatar } from '@nextui-org/react'
 
 function AvatarManager ({ avatars }) {
   const [userAvatar, setUserAvatar] = useState(null)
+
+  console.log(userAvatar)
 
   return (
     <div className='flex justify-center items-center space-y-6'>
@@ -15,7 +17,7 @@ function AvatarManager ({ avatars }) {
           <div className='flex flex-col items-center'>
             <h3 className='text-lg font-bold'>VOUS</h3>
             <Avatar
-              src={userAvatar}
+              src={`http://localhost:1337${userAvatar.attributes.url}`}
               alt='Selected Avatar'
               isBordered
               color='primary'
