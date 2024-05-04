@@ -3,7 +3,7 @@ import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/reac
 import PseudoManager from '../PseudoManager'
 import AvatarManager from '../AvatarManager'
 
-export default function CardPage ({ quizzData }) {
+export default function CardPage ({ quizzData, avatars }) {
   return (
     <div className='flex justify-center items-center h-screen p-5'>
       <Card>
@@ -21,7 +21,7 @@ export default function CardPage ({ quizzData }) {
 
         <PseudoManager />
 
-        <AvatarManager />
+        <AvatarManager avatars={avatars} />
 
         <CardFooter className='flex justify-center items-center space-y-6'>
           <Button color='primary' auto ghost>

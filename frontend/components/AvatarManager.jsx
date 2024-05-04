@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react'
 import AvatarSelector from '@/components/AvatarSelector'
-import { Avatar } from '@nextui-org/react'
+import { Avatar, avatar } from '@nextui-org/react'
 
-function AvatarManager () {
+function AvatarManager ({ avatars }) {
   const [userAvatar, setUserAvatar] = useState(null)
 
   return (
     <div className='flex justify-center items-center space-y-6'>
       <div className='flex flex-col items-center space-y-4'>
-        <AvatarSelector onSelect={setUserAvatar} />
+        <AvatarSelector onSelect={setUserAvatar} avatars={avatars} />
         {userAvatar && (
           <div className='flex flex-col items-center'>
             <h3 className='text-lg font-bold'>VOUS</h3>

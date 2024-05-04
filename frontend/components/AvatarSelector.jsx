@@ -1,14 +1,8 @@
+'use client'
 import React, { useState } from 'react'
 import { Avatar } from '@nextui-org/react'
 
-const avatars = [
-  '/images/avatars/1.jpg',
-  '/images/avatars/2.jpg',
-  '/images/avatars/3.jpg',
-  '/images/avatars/4.jpg'
-]
-
-function AvatarSelector ({ onSelect }) {
+function AvatarSelector ({ onSelect, avatars }) {
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0])
 
   return (
@@ -17,11 +11,11 @@ function AvatarSelector ({ onSelect }) {
       <div className='flex flex-row gap-3 items-center justify-center'>
         {avatars.map(avatar => (
           <Avatar
-            key={avatar}
-            src={avatar}
+            key={avatar.id}
+            src={`http://localhost:1337${avatar.attributes.url}`}
             alt='Quiz Avatar'
             isBordered
-            size='lg' // You can vary sizes as needed or manage via state
+            size='lg'
             className={selectedAvatar === avatar ? 'selected' : ''}
             onClick={() => {
               setSelectedAvatar(avatar)
