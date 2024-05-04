@@ -13,3 +13,17 @@ query getQuizzesTheme{
   }
 }
 `
+export const QUIZZ_INFOS = gql`
+query GetQuizzes($id: ID!){
+  quizz(id: $id){
+    data{
+      id
+      attributes{
+        name
+        description
+        time
+      }
+    }
+  }
+}
+`

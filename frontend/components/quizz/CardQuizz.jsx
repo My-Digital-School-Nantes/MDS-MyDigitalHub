@@ -1,15 +1,8 @@
+'use client'
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from '@nextui-org/react'
-import { useEffect, useState } from 'react'
+import Markdown from 'react-markdown'
 
-export default function CardQuizz ({ quizz }) {
-  console.log(quizz)
-
-  const [pathname, setPathname] = useState('')
-
-  useEffect(() => {
-    setPathname(window.location.pathname)
-  }, [])
-
+export default function CardQuizz ({ quizz, slugTheme }) {
   return (
     <Card className='max-w-[400px] relative'>
       <CardHeader className='flex gap-3'>
@@ -27,13 +20,15 @@ export default function CardQuizz ({ quizz }) {
       </CardHeader>
       <Divider />
       <CardBody>
-        <p>Description</p>
+        <Markdown className='truncate'>
+          {quizz.attributes.description}
+        </Markdown>
       </CardBody>
       <Divider />
       <CardFooter>
         <Link
           showAnchorIcon
-          href={`${pathname}/5`}
+          href={`${slugTheme}/${quizz.attributes.slug}`}
         >
           Discover the quiz.
         </Link>

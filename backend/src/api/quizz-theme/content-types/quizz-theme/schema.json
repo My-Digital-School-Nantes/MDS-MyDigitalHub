@@ -15,14 +15,14 @@
     "name": {
       "type": "string"
     },
-    "quizz": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::quizz.quizz",
-      "mappedBy": "quizz_theme"
-    },
     "url": {
       "type": "string"
+    },
+    "quizzes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::quizz.quizz",
+      "mappedBy": "quizz_theme"
     }
   }
 }
