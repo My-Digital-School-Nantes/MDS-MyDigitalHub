@@ -53,3 +53,16 @@ query GetQuizzes($id: ID!){
   }
 }
 `
+
+export const GET_AVATARS = gql`
+query GetAvatar {
+  uploadFiles{
+    data{
+      attributes{
+        name
+        url
+      }
+    }
+  }
+}
+`
