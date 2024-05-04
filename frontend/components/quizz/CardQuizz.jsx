@@ -2,6 +2,7 @@ import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from '@n
 import Markdown from 'react-markdown'
 
 export default function CardQuizz ({ quizz, slugTheme }) {
+  console.log(quizz)
   return (
     <Card className='max-w-[400px] relative'>
       <CardHeader className='flex gap-3'>

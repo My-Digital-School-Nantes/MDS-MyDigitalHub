@@ -17,9 +17,6 @@ export const getData = async (themeId) => {
   }
 }
 
-export async function generateStaticParams () {
-}
-
 export default async function QuizzByThemePage ({ params: { themeId } }) {
   const data = await getData(themeId)
 
