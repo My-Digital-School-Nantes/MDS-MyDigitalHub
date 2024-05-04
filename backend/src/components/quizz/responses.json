@@ -17,6 +17,18 @@
     },
     "responseD": {
       "type": "text"
+    },
+    "responseA_isCorrect": {
+      "type": "boolean"
+    },
+    "responseB_isCorrect": {
+      "type": "boolean"
+    },
+    "responseC_isCorrect": {
+      "type": "boolean"
+    },
+    "responseD_isCorrect": {
+      "type": "boolean"
     }
   }
 }

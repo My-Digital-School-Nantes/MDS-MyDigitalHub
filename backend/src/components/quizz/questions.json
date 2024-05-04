@@ -14,7 +14,7 @@
     },
     "Responses": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "component": "quizz.responses"
     }
   }

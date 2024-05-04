@@ -25,12 +25,6 @@
     },
     "name": {
       "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "time": {
-      "type": "integer"
     }
   }
 }

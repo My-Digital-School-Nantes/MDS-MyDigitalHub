@@ -13,6 +13,32 @@ query getQuizzesTheme{
   }
 }
 `
+
+export const GET_QUIZZ_QUESTION = gql`
+query getQuizzQuestion($id: ID!) {
+  quizz(id: $id) {
+    data {
+      id
+      attributes {
+        Questions {
+          title
+          questionText
+          Responses {
+            responseA
+            responseB
+            responseC
+            responseD
+            responseA_isCorrect
+            responseB_isCorrect
+            responseC_isCorrect
+            responseD_isCorrect
+          }
+        }
+      }
+    }
+  }
+}
+`
 export const QUIZZ_INFOS = gql`
 query GetQuizzes($id: ID!){
   quizz(id: $id){
