@@ -9,6 +9,7 @@ query getQuizzesByTheme($themeName: String!){
         name
         description
         slug
+        is_private
         quizz_theme{
           data{
             attributes{
