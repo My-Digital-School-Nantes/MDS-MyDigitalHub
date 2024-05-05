@@ -1,11 +1,11 @@
 import { CardTheme } from '@/components/quizz/CardTheme'
 import client from '@/graphql/apolloClient'
-import { GET_QUIZZTHEME } from '@/graphql/queries/quizz'
+import { GET_THEMES } from '@/graphql/queries/quizz'
 
 async function getTheme () {
   try {
     const response = await client.query({
-      query: GET_QUIZZTHEME
+      query: GET_THEMES
     })
     return response.data.quizzThemes.data
   } catch (error) {

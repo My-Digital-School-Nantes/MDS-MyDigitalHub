@@ -1,11 +1,11 @@
 import client from '@/graphql/apolloClient'
 import { QuizzQuestion } from '@/components/quizz/QuizzQuestion'
-import { GET_QUIZZ_QUESTION } from '@/graphql/queries/quizz'
+import { GET_QUIZZ_QUESTIONS } from '@/graphql/queries/quizz'
 
 export const getQuizz = async () => {
   try {
     const response = await client.query({
-      query: GET_QUIZZ_QUESTION,
+      query: GET_QUIZZ_QUESTIONS,
       variables: {
         id: 2
       }
