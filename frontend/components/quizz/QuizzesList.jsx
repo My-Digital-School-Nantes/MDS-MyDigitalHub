@@ -16,10 +16,8 @@ export default function QuizzesList ({ data }) {
     <div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-4 md:p-0'>
 
-        {data?.quizzThemes.data.map((theme, index) => (
-          theme?.attributes.quizzes.data.map((quizz, index) => (
-            <CardQuizz key={index} quizz={quizz} slugTheme={theme.attributes.url} />
-          ))
+        {data.map((item) => (
+          <CardQuizz key={item.id} quizz={item} slugTheme={item.attributes.quizz_theme.data.attributes.slug} />
         ))}
 
       </div>
