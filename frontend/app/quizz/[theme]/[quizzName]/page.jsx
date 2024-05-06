@@ -29,7 +29,6 @@ export const getAvatars = async () => {
 
 export default async function QuizzIdPage ({ params: { quizzName } }) {
   const quizzData = await getData(quizzName)
-
   const avatars = await getAvatars()
 
   return (
@@ -44,6 +43,5 @@ export default async function QuizzIdPage ({ params: { quizzName } }) {
           </div>
           )}
     </>
-    // <CardPage quizzData={quizzData} avatars={avatars} />
   )
 }

@@ -37,13 +37,13 @@ query getQuizzesByTheme($themeName: String!){
 `
 
 export const GET_QUIZZ_QUESTIONS = gql`
-query getQuizzQuestion($id: ID!) {
-  quizz(id: $id) {
+query getQuizzQuestion($quizzName: String!) {
+  quizzes(filters: {slug: {eq: $quizzName}}) {
     data {
       id
       attributes {
+        slug
         Questions {
-          title
           questionText
           Responses {
             responseA

@@ -35,9 +35,23 @@ export default async function Page () {
       </div>
 
       <div className='grid grid-cols-2 gap-10'>
-        {theme?.map((theme) => (
-          <CardTheme key={theme.id} theme={theme.attributes} />
-        ))}
+        {theme.length > 0 && (
+        // display card if found theme
+          <>
+            {theme?.map((theme) => (
+              <CardTheme key={theme.id} theme={theme.attributes} />
+            ))}
+          </>
+        )}
+
+        {
+          theme.length === 0 && (
+            // display error when no theme found
+            <div className='p-80 text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200 text-center'>
+              <h1>Une erreur est survenue</h1>
+            </div>
+          )
+        }
       </div>
     </div>
   )

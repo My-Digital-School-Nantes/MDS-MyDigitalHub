@@ -7,8 +7,6 @@ import { Avatar } from '@nextui-org/react'
 function AvatarManager ({ avatars }) {
   const [userAvatar, setUserAvatar] = useState(null)
 
-  console.log(userAvatar)
-
   return (
     <div className='flex justify-center items-center space-y-6'>
       <div className='flex flex-col items-center space-y-4'>

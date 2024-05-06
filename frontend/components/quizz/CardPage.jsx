@@ -1,9 +1,17 @@
 'use client'
-import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
 import PseudoManager from '../PseudoManager'
 import AvatarManager from '../AvatarManager'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function CardPage ({ quizzData, avatars }) {
+  const [url, setUrl] = useState('')
+
+  useEffect(() => {
+    setUrl(window.location.href)
+  }, [])
+
   return (
     <div className='flex justify-center items-center h-screen p-5'>
       <Card>
@@ -24,9 +32,8 @@ export default function CardPage ({ quizzData, avatars }) {
         <AvatarManager avatars={avatars} />
 
         <CardFooter className='flex justify-center items-center space-y-6'>
-          <Button color='primary' auto ghost>
-            Commencer le Quizz
-          </Button>
+          <input type='hidden' value={quizzData.id} name='id' />
+          <Link href={`${url}/game`}>Jouer</Link>
         </CardFooter>
       </Card>
     </div>

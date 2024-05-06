@@ -22,29 +22,30 @@ export default async function QuizzByThemePage ({ params: { theme } }) {
 
   return (
     <>
-      {data
-        ? (
-          <>
-            <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 '>
-              <div className='text-center'>
-                <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200'>
-                  Nos
-                  <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> quizz </span> de nos étudiants
-                </h1>
+      {data.length > 0 && (
+        // display card if found theme
+        <>
+          <div className='max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 '>
+            <div className='text-center'>
+              <h1 className='text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200'>
+                Nos
+                <span className='bg-gradient-to-r from-primary to-blue-400 text-transparent bg-clip-text '> quizz </span> de nos étudiants
+              </h1>
 
-                <p className='mt-3 text-gray-600 dark:text-gray-400'>
-                  Au sein de notre  établissement, pour familiariser les étudiants avec les métiers du numérique, nous avons mis en place ces quizzs.
-                </p>
-              </div>
+              <p className='mt-3 text-gray-600 dark:text-gray-400'>
+                Au sein de notre  établissement, pour familiariser les étudiants avec les métiers du numérique, nous avons mis en place ces quizzs.
+              </p>
             </div>
-            <QuizzesList data={data} />
-          </>
-          )
-        : (
-          <div className='p-80 text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200 text-center'>
-            <h1>Une erreur est survenue</h1>
           </div>
-          )}
+          <QuizzesList data={data} />
+        </>
+      )}
+      {data.length === 0 && (
+        // display error when no theme found
+        <div className='p-80 text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200 text-center'>
+          <h1>Une erreur est survenue</h1>
+        </div>
+      )}
     </>
   )
 }

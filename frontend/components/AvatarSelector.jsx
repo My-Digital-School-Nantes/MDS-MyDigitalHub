@@ -11,7 +11,7 @@ function AvatarSelector ({ onSelect, avatars }) {
       <div className='flex flex-row gap-3 items-center justify-center'>
         {avatars.map(avatar => (
           <Avatar
-            key={avatar.id}
+            key={avatar.attributes.url}
             src={`http://localhost:1337${avatar.attributes.url}`}
             alt='Quiz Avatar'
             isBordered
