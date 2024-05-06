@@ -1,6 +1,6 @@
-import client from '@/graphql/apolloClient'
-import { GET_QUIZZ, GET_AVATARS } from '@/graphql/queries/quizz'
 import CardPage from '@/components/quizz/CardPage'
+import client from '@/graphql/apolloClient'
+import { GET_AVATARS, GET_QUIZZ } from '@/graphql/queries/quizz'
 
 export const getData = async (slug) => {
   try {
@@ -10,9 +10,15 @@ export const getData = async (slug) => {
         slug
       }
     })
+
+    if (response.data.quizzes.data.length === 0) {
+      throw new Error('Quizz not found', { statusCode: 404 })
+    }
+
     return response.data.quizzes.data[0]
   } catch (error) {
     console.error(error)
+    throw new Error('Quizz not found', { statusCode: 404 })
   }
 }
 
@@ -33,15 +39,7 @@ export default async function QuizzIdPage ({ params: { quizzName } }) {
 
   return (
     <>
-      {quizzData
-        ? (
-          <CardPage quizzData={quizzData} avatars={avatars} />
-          )
-        : (
-          <div className='p-80 text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200 text-center'>
-            <h1>La page que vous avez demandé n'existe pas</h1>
-          </div>
-          )}
+      <CardPage quizzData={quizzData} avatars={avatars} />
     </>
   )
 }
