@@ -12,8 +12,6 @@ const CardCarousel = ({ contacts }) => {
       slidesPerView={3}
       scrollbar={{ draggable: true }}
       loop
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
       autoplay={{
         delay: 2500,
         disableOnInteraction: false
