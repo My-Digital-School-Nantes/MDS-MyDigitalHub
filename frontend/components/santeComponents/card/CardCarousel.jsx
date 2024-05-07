@@ -5,11 +5,11 @@ import 'swiper/css'
 
 import { Card, CardBody, Image, CardHeader } from '@nextui-org/react'
 
-const CardCarousel = ({ cardsData }) => {
+const CardCarousel = ({ contacts }) => {
   return (
     <Swiper
-      spaceBetween={50} // Espace entre les slides
-      slidesPerView={3} // Nombre de slides visibles à la fois
+      spaceBetween={50}
+      slidesPerView={3}
       scrollbar={{ draggable: true }}
       loop
       onSlideChange={() => console.log('slide change')}
@@ -20,20 +20,20 @@ const CardCarousel = ({ cardsData }) => {
       }}
       modules={[Autoplay]}
     >
-      {cardsData.map((card, index) => (
-        <SwiperSlide key={index}>
+      {contacts.map((contact) => (
+        <SwiperSlide key={contact.id}>
           <Card className='py-4 border border-gray-700 rounded-xl'>
             <CardHeader className='pb-0 pt-2 px-4 flex-col items-center'>
-              <h4 className='font-bold text-large text-center'>{card.title}</h4>
-              <small className='pt-3  text-default-500 text-center'>{card.description}</small>
-              <small className=' text-default-500 text-center'>{card.mail}</small>
-              <small className='pb-3 text-default-500 text-center'>{card.tel}</small>
+              <h4 className='font-bold text-large text-center'>{contact.attributes.Nom}</h4>
+              <small className='pt-3  text-default-500 text-center'>{contact.attributes.Metier}</small>
+              <small className=' text-default-500 text-center'>{contact.attributes.Mail}</small>
+              <small className='pb-3 text-default-500 text-center'>{contact.attributes.Telephone}</small>
             </CardHeader>
             <CardBody className='overflow-visible py-2 flex items-center'>
               <Image
                 alt='Card background'
                 className='object-cover rounded-xl'
-                src={card.image}
+                src={'http://localhost:1337' + contact?.attributes?.image?.data?.attributes?.url}
                 width={270}
               />
             </CardBody>

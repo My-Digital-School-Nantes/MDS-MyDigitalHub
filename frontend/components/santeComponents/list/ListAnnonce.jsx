@@ -13,7 +13,7 @@ const formatDate = (isoString) => {
     year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false // Utilise le format 24h
+    hour12: false
   })
 }
 
