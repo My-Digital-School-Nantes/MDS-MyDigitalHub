@@ -3,9 +3,10 @@
 import React, { useState } from 'react'
 import AvatarSelector from '@/components/AvatarSelector'
 import { Avatar } from '@nextui-org/react'
+import { useGamer } from '@/context/GamerContext'
 
 function AvatarManager ({ avatars }) {
-  const [userAvatar, setUserAvatar] = useState(null)
+  const { userAvatar, setUserAvatar } = useGamer()
 
   return (
     <div className='flex justify-center items-center space-y-6'>
