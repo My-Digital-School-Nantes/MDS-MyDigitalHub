@@ -15,7 +15,7 @@ export const CardProject = ({ projet }) => {
   return (
     <Card className='py-4'>
       <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-3'>
-        <Link href={'http://localhost:3000/' + projet.slug} className='group block'>
+        <Link href={'http://localhost:3000/projets/' + projet.slug} className='group block'>
           <div className='aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
             <Image
               alt='Projet Image'
