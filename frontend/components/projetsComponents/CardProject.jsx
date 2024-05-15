@@ -30,7 +30,7 @@ export const CardProject = ({ projet }) => {
       </CardHeader>
       <CardBody className='overflow-visible py-2 gap-2'>
 
-        <Markdown className='truncate'>{projet.description}</Markdown>
+        <Markdown className='truncate text-ellipsis'>{projet.description}</Markdown>
 
         <p className='text-gray-600 dark:text-gray-400'>
           {projet.publishedDate}
