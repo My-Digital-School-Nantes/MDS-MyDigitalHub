@@ -104,7 +104,7 @@ export default async function JobOffers () {
               <h2 className='text-xl text-center my-8'>{item.attributes.title}</h2>
               <div className='description flex flex-col gap-3 justify-normal'>
                 <p><strong>Description:</strong></p>
-                <ScrollShadow className='w-[400px] h-[200px] overflow-auto'>
+                <ScrollShadow className='w-[490px] h-[200px] overflow-auto'>
                   <div>
                     {item.attributes.description && item.attributes.description.map((paragraph, index) => (
                       <p key={index}>{(paragraph.children.map(child => child.text))}</p>
