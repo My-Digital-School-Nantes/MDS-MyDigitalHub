@@ -23,6 +23,24 @@
     },
     "color": {
       "type": "string"
+    },
+    "tags": {
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "content": {
+      "type": "richtext"
     }
   }
 }

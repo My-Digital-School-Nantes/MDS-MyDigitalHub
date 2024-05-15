@@ -24,7 +24,10 @@ export default function Calendar () {
         start: event.attributes.date_debut,
         end: event.attributes.date_fin,
         id: event.id,
-        backgroundColor: event.attributes.color
+        backgroundColor: event.attributes.color,
+        tags: event.attributes.tags,
+        image: event.attributes.image,
+        description: event.attributes.content
       }))
 
       setEvents(formattedEvents)
@@ -88,6 +91,37 @@ export default function Calendar () {
       return
     }
 
+    const { value: description } = await Swal.fire({
+      title: 'Ajouter une description',
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#2fb8c5',
+      cancelButtonText: 'Annuler',
+      showLoaderOnConfirm: true
+    })
+
+    if (!description) {
+      Swal.showValidationMessage('Veuillez entrer une description')
+      return
+    }
+
+    const { value: tags } = await Swal.fire({
+      title: 'Ajouter des tags (séparés par des virgules)',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#2fb8c5',
+      cancelButtonText: 'Annuler',
+      showLoaderOnConfirm: true
+    })
+
     const { value: color } = await Swal.fire({
       title: 'Sélectionnez une couleur',
       input: 'select',
@@ -109,12 +143,33 @@ export default function Calendar () {
       return
     }
 
+    const { value: imageUrl } = await Swal.fire({
+      title: 'Ajouter une URL d\'image',
+      input: 'file',
+      inputAttributes: {
+        accept: 'image/*'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#2fb8c5',
+      cancelButtonText: 'Annuler',
+      showLoaderOnConfirm: true
+    })
+
+    if (!imageUrl) {
+      Swal.showValidationMessage('Veuillez ajouter une image')
+      return
+    }
+
     const newEvent = {
       title: eventName,
       date_debut: startStr,
       date_fin: endStr,
       allDay,
-      color
+      color,
+      description,
+      tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+      image: imageUrl
     }
 
     try {
