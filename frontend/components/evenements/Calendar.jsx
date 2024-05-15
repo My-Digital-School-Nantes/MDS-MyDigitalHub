@@ -150,9 +150,12 @@ export default function Calendar () {
       title: 'Sélectionnez une couleur',
       input: 'select',
       inputOptions: {
-        '#d33': 'Rouge',
+        '#be0202': 'Rouge',
         '#28a701': 'Vert',
-        '#2fb8c5': 'Bleu'
+        '#2fb8c5': 'Bleu',
+        '#a700cf': 'Violet',
+        '#cf8f00': 'Orange',
+        '#cfc800': 'Jaune'
       },
       inputPlaceholder: 'Sélectionnez une couleur',
       confirmButtonText: 'OK',
