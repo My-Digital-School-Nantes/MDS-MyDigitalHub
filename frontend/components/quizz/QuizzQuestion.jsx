@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 import QuizResult from './QuizResult'
+import { CountdownCircleTimer } from  'react-countdown-circle-timer'
+
 
 export function QuizzQuestion ({ params }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -13,7 +15,9 @@ export function QuizzQuestion ({ params }) {
   const response = params.Questions[currentQuestionIndex]?.Responses
 
   const nextQuestion = (e) => {
-    e.preventDefault()
+    if (e) {
+      e.preventDefault()
+    }
     if (userResponse === true) {
       const radioButton = document.querySelector('input[name="userResponse"]:checked')
       if (radioButton) {
@@ -46,8 +50,24 @@ export function QuizzQuestion ({ params }) {
             {response
               ? (
                 <div className='flex flex-col items-center gap-20'>
-                  <div className='flex flex-col items-center gap-20'>
-                    <h1 className='py-16 text-4xl sm:text-6xl font-bold  text-gray-800 dark:text-gray-200 text-center'>
+                  <div className='flex flex-col items-center gap-10'>
+                  <CountdownCircleTimer 
+                      isPlaying 
+                      duration={30} 
+                      size={120}
+                      colors={[ 
+                        ['#004777', 0.33], 
+                        ['#F7B801', 0.33], 
+                        ['#A30000', 0.33], 
+                      ]} 
+                      onComplete={() => {
+                        nextQuestion()
+                        return [true, 0] // This returns true to restart the timer and a delay of 0
+                      }}
+                    > 
+                      {({ remainingTime }) => remainingTime} 
+                  </CountdownCircleTimer>
+                    <h1 className='pb-16 pt-4 text-4xl sm:text-6xl font-bold  text-gray-800 dark:text-gray-200 text-center'>
                       {params.Questions[currentQuestionIndex].questionText}
                     </h1>
                     <div className='grid grid-cols-2 gap-4'>
