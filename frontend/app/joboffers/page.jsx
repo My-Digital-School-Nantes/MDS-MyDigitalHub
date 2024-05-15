@@ -7,7 +7,10 @@ import {
 } from '@nextui-org/react'
 import { GET_OFFERS } from '@/graphql/queries/queries'
 import client from '@/graphql/apolloClient'
-import { LuSearch, LuFilter } from 'react-icons/lu'
+import { LuSearch } from 'react-icons/lu'
+import AddJobOfferModal from '@/components/jobOfferAdd/addJobOfferModal'
+
+export const dynamic = 'force-dynamic'
 
 export const dynamic = 'force-dynamic'
 
@@ -46,34 +49,40 @@ export default async function JobOffers () {
   return (
     <>
       <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
-      <div>
+      <div className='flex items-center justify-center space-x-2 my-4'>
         <Input
-          // value={searchTerm}
-          // onChange={handleSearchChange}
-          // onClear={handleClear}
+        // value={searchTerm}
+        // onChange={handleSearchChange}
+        // onClear={handleClear}
           label='Search'
           isClearable
-          radius='lg'
+          radius='md'
+          width='200px' // Largeur de la barre de recherche
           classNames={{
             label: 'text-black/50 dark:text-white/90',
             input: [
-              'bg-transparent', 'text-black/90 dark:text-white/90',
+              'bg-transparent',
+              'text-black/90 dark:text-white/90',
               'placeholder:text-default-700/50 dark:placeholder:text-white/60'
             ],
             innerWrapper: 'bg-transparent',
             inputWrapper: [
-              'shadow-xl', 'bg-default-200/50', 'dark:bg-default/60',
-              'backdrop-blur-xl', 'backdrop-saturate-200',
-              'hover:bg-default-200/70', 'dark:hover:bg-default/70',
+              'shadow-xl',
+              'bg-default-200/50',
+              'dark:bg-default/60',
+              'backdrop-blur-xl',
+              'backdrop-saturate-200',
+              'hover:bg-default-200/70',
+              'dark:hover:bg-default/70',
               'group-data-[focused=true]:bg-default-200/50',
-              'dark:group-data-[focused=true]:bg-default/60', '!cursor-text'
+              'dark:group-data-[focused=true]:bg-default/60',
+              '!cursor-text'
             ]
           }}
           placeholder='Type to search...'
-          startContent={
-            <LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
-          }
+          startContent={<LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />}
         />
+        <AddJobOfferModal />
       </div>
       <br />
       <div className='cards flex flex-wrap gap-8'>
