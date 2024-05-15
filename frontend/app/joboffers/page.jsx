@@ -12,8 +12,6 @@ import AddJobOfferModal from '@/components/jobOfferAdd/addJobOfferModal'
 
 export const dynamic = 'force-dynamic'
 
-export const dynamic = 'force-dynamic'
-
 export const getData = async () => {
   try {
     const response = await client.query({
