@@ -10,7 +10,7 @@ export const getData = async () => {
     const response = await client.query({
       query: GET_EVENTS
     })
-    return response?.data?.events?.data
+    return response?.data?.calendarEvents?.data
   } catch (error) {
     console.error('Error fetching data: ', error)
   }

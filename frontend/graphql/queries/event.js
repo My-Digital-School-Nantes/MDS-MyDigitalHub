@@ -1,18 +1,20 @@
 const { gql } = require('@apollo/client')
 
 export const GET_EVENTS = gql`
-query getEvents {
-  events {
-    data{
-      id,
-      attributes{
-        name,
-        content,
-        tags,
-        date,
-        image{
-          data{
-            attributes{
+query getCalendarEvents {
+  calendarEvents {
+    data {
+      id
+      attributes {
+        title
+        content
+        tags
+        date_debut
+        date_fin
+        color
+        image {
+          data {
+            attributes {
               url
             }
           }
