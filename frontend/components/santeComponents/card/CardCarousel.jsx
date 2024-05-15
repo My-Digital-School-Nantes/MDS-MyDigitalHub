@@ -6,6 +6,9 @@ import 'swiper/css'
 import { Card, CardBody, Image, CardHeader } from '@nextui-org/react'
 
 const CardCarousel = ({ contacts }) => {
+  if (contacts.length === 0) {
+    return <div className='text-center'>Aucun contact disponible.</div>
+  }
   return (
     <Swiper
       spaceBetween={50}
