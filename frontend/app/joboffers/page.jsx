@@ -1,10 +1,6 @@
 import {
   Card, CardHeader, CardBody, CardFooter, Divider, Image,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
+  Popover, PopoverTrigger, PopoverContent, Button,
   Tooltip,
   Input,
   ScrollShadow
@@ -123,10 +119,15 @@ export default async function JobOffers () {
               </div>
             </CardBody>
             <Divider />
+            <Popover>
+              <PopoverTrigger>
+                <Button color='success' className='capitalize'>
+                  Apply
+                </Button>
+              </PopoverTrigger>
+              Application successfully send !
+            </Popover>
             <CardFooter />
-            <Button color='primary' variant='ghost'>
-              Apply
-            </Button>
           </Card>
         ))}
       </div>

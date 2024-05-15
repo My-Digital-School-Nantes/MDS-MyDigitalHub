@@ -757,7 +757,7 @@
     "@react-aria/utils" "^3.23.2"
     scroll-into-view-if-needed "3.0.10"
 
-"@nextui-org/popover@2.1.21":
+"@nextui-org/popover@2.1.21", "@nextui-org/popover@^2.1.21":
   version "2.1.21"
   resolved "https://registry.yarnpkg.com/@nextui-org/popover/-/popover-2.1.21.tgz#db63b5b16ce6df410af01a1e1b8b5b4227278d4a"
   integrity sha512-Loa6eoAYW0DacDIW+/SC//0LhDDAMnUcd8R9axXtKd00N0Zgnj3YpUJoyLRYvwl5I/FWwV1nCOAvndzW6JJvpQ==
