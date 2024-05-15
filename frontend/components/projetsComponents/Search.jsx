@@ -1,54 +1,63 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Input, Select, SelectItem, Button } from '@nextui-org/react'
 import { LuSearch, LuTerminal, LuPencilLine, LuPalette, LuAreaChart } from 'react-icons/lu'
-import client from '@/graphql/apolloClient'
-import { GET_PROJECTS } from '@/graphql/queries/projects'
 
 const tri = [
   { title: 'date', id: '1' },
   { title: 'popularité', id: '2' }
 ]
 
-export default function Search () {
-  useEffect(() => {
-    async function fetchData () {
-      try {
-        const response = await client.query({
-          query: GET_PROJECTS
-        })
-        const data = response.data.projects.data
-        console.log(data)
-        // Mettre en place la logique de filtrage et de tri ici
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
-
+export default function Search ({ searchTerm, setSearchTerm }) {
   const handleSortChange = (value) => {
     console.log('Tri par:', value)
   }
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase())
+  }
 
   return (
-    <div className='flex flex-col items-center space-y-4'>
+    <div className='flex flex-col items-center space-y-2'>
       <div className='flex items-center space-x-4'>
         <div className='flex items-center space-x-2'>
           <LuSearch className='text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0' />
           <Input
             label='Recherche'
             isClearable
+            classNames={{
+              label: 'text-black/50 dark:text-white/90',
+              input: [
+                'bg-transparent',
+                'text-black/90 dark:text-white/90',
+                'placeholder:text-default-700/50 dark:placeholder:text-white/60',
+                ''
+              ],
+              innerWrapper: 'bg-transparent',
+              inputWrapper: [
+                'shadow-xl',
+                'bg-default-200/50',
+                'dark:bg-default/60',
+                'backdrop-blur-xl',
+                'backdrop-saturate-200',
+                'hover:bg-default-200/70',
+                'dark:hover:bg-default/70',
+                'group-data-[focused=true]:bg-default-200/50',
+                'dark:group-data-[focused=true]:bg-default/60',
+                '!cursor-text'
+              ]
+            }}
             radius='lg'
             placeholder='Recherchez un projet...'
-            style={{ width: '250px' }}
+            style={{ width: '500px' }}
+            onChange={handleSearchChange}
+            value={searchTerm}
           />
         </div>
         <Select
           label='Trier par'
           placeholder='Trier'
           className='max-w-xs'
-          style={{ flexShrink: 0 }} // Empêcher le changement de taille
+          style={{ flexShrink: 0, width: '150px' }} // Empêcher le changement de taille
           onChange={(e) => handleSortChange(e.target.value)}
         >
           {tri.map((type) => (
