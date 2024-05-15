@@ -10,6 +10,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 export default function Calendar () {
   const [events, setEvents] = useState([])
@@ -109,18 +112,39 @@ export default function Calendar () {
       return
     }
 
-    const { value: tags } = await Swal.fire({
-      title: 'Ajouter des tags (séparés par des virgules)',
-      input: 'text',
-      inputAttributes: {
-        autocapitalize: 'off'
+    const tagOptions = ['Vie d\'école', 'Divertissement', 'Sport']
+
+    const tagCheckboxes = tagOptions.map(tag => (
+      `<input type="checkbox" id="tag-${tag}" name="tags" value="${tag}">
+       <label for="tag-${tag}">${tag}</label><br>`
+    )).join('')
+
+    const { value: formValues } = await MySwal.fire({
+      title: 'Sélectionner les tags',
+      html:
+        `<form id="tags-form">
+          ${tagCheckboxes}
+         </form>`,
+      focusConfirm: false,
+      preConfirm: () => {
+        const form = MySwal.getPopup().querySelector('#tags-form')
+        const selectedTags = Array.from(form.querySelectorAll('input[name="tags"]:checked'))
+          .map(tag => tag.value)
+        if (selectedTags.length === 0) {
+          MySwal.showValidationMessage('Veuillez sélectionner au moins un tag')
+        }
+        return selectedTags
       },
-      showCancelButton: true,
       confirmButtonText: 'OK',
       confirmButtonColor: '#2fb8c5',
+      showCancelButton: true,
       cancelButtonText: 'Annuler',
-      showLoaderOnConfirm: true
+      cancelButtonColor: '#d33'
     })
+
+    if (!formValues) {
+      return
+    }
 
     const { value: color } = await Swal.fire({
       title: 'Sélectionnez une couleur',
@@ -143,8 +167,8 @@ export default function Calendar () {
       return
     }
 
-    const { value: imageUrl } = await Swal.fire({
-      title: 'Ajouter une URL d\'image',
+    const { value: file } = await Swal.fire({
+      title: 'Ajouter une image',
       input: 'file',
       inputAttributes: {
         accept: 'image/*'
@@ -156,7 +180,7 @@ export default function Calendar () {
       showLoaderOnConfirm: true
     })
 
-    if (!imageUrl) {
+    if (!file) {
       Swal.showValidationMessage('Veuillez ajouter une image')
       return
     }
@@ -167,18 +191,18 @@ export default function Calendar () {
       date_fin: endStr,
       allDay,
       color,
-      description,
-      tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
-      image: imageUrl
+      content: description,
+      tags: formValues
     }
+
+    const formData = new FormData()
+    formData.append('data', JSON.stringify(newEvent))
+    formData.append('files.image', file)
 
     try {
       const response = await fetch('http://localhost:1337/api/calendar-events', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data: newEvent })
+        body: formData
       })
 
       if (response.ok) {
