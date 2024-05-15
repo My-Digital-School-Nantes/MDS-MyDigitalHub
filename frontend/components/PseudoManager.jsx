@@ -1,21 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
 import PseudoForm from '@/components/forms/PseudoForm'
 import { Button } from '@nextui-org/react'
+import { useGamer } from '@/context/GamerContext'
 
 function PseudoManager () {
-  const [userPseudo, setUserPseudo] = useState('')
-  const [pseudoSubmitted, setPseudoSubmitted] = useState(false)
-
-  const handlePseudoSubmit = (pseudo) => {
-    setUserPseudo(pseudo)
-    setPseudoSubmitted(true)
-  }
-
-  const handleEditPseudo = () => {
-    setPseudoSubmitted(false)
-  }
+  const { userPseudo, handlePseudoSubmit, handleEditPseudo, pseudoSubmitted } = useGamer()
 
   return (
     <div className='space-y-6'>

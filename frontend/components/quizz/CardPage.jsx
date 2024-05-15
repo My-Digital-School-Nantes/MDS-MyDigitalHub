@@ -24,7 +24,6 @@ export default function CardPage ({ quizzData, avatars }) {
             {quizzData.attributes.description}
           </p>
           <p><strong>Durée estimée :</strong> {quizzData.attributes.time} minutes</p>
-          <p><strong>Lorem lorem</strong>Lorem lorem</p>
         </CardBody>
 
         <PseudoManager />

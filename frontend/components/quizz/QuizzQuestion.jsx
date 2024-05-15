@@ -1,9 +1,10 @@
 'use client'
 
-import { Card } from '@nextui-org/react'
+import { Button, Card } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
+import QuizResult from './QuizResult'
 
 export function QuizzQuestion ({ params }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -32,7 +33,6 @@ export function QuizzQuestion ({ params }) {
               <span>{`${currentQuestionIndex + 1}/${params.Questions.length}`}</span>
               )
             : <span>{`${currentQuestionIndex}/${params.Questions.length}`}</span>}
-          <span>Score: {userScore}</span>
         </div>
       </div>
       <form className='flex justify-center items-center'>
@@ -114,13 +114,18 @@ export function QuizzQuestion ({ params }) {
                 </div>
                 )
               : (
-                <div className='flex flex-col items-center gap-10'>
-                  <h1 className='py-16 text-4xl sm:text-6xl font-bold  text-gray-800 dark:text-gray-200 '>
-                    Fin du quizz
-                  </h1>
-                  <Link href='/quizz'>
-                    Retouner à la page des quizz
-                  </Link>
+                <div className='flex flex-col items-center mt-5'>
+                  <QuizResult />
+                  <h2 className='py-5 text-4xl sm:text-6xl font-bold  text-gray-800 dark:text-gray-200'>Votre score: {userScore}</h2>
+                  <Button
+                    color='primary'
+                    className='text-sm font-medium'
+                  >
+                    <Link href='/quizz'>
+                      Retouner à la page des quizz
+                    </Link>
+                  </Button>
+
                 </div>
                 )}
           </motion.div>
