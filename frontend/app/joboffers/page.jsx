@@ -1,5 +1,3 @@
-'use client'
-import React, { useState, useEffect } from 'react'
 import {
   Card, CardHeader, CardBody, CardFooter, Divider, Image,
   Dropdown,
@@ -7,52 +5,54 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-  Tooltip
-  , Input
-  , ScrollShadow
+  Tooltip,
+  Input,
+  ScrollShadow,
 } from '@nextui-org/react'
-
+import { GET_OFFERS } from '@/graphql/queries/queries'
+import client from '@/graphql/apolloClient'
 import { LuSearch, LuFilter } from 'react-icons/lu'
 
-export default function JobOffers () {
-  const [jobOffers, setJobOffers] = useState([])
+export const getData = async () => {
+  try {
+    const response = await client.query({
+      query: GET_OFFERS
+    })
+    return response.data.offers.data
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-  useEffect(() => {
-    fetch('http://localhost:1337/api/offers')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Data fetched:', data)
-        setJobOffers(data.data)
-      })
-      .catch(error => console.error('Error fetching job offers:', error))
-  }, [])
-
-  const colors = [
+ const colors = [
     'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
   ]
 
-  const [searchTerm, setSearchTerm] = useState('')
+export default async function JobOffers () {
+  const data = await getData()
+  console.log('data', data)
 
-  const handleSearchChange = e => {
-    setSearchTerm(e.target.value)
-  }
-
-  const filteredEvents = jobOffers.filter(jobOffer =>
-    jobOffer.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-
-  const handleClear = () => {
-    setSearchTerm('')
-  }
-
+ 
+  // const handleSearchChange = e => {
+  //   setSearchTerm(e.target.value)
+  // }
+ 
+  // const filteredEvents = data.filter(data =>
+  //   data.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // )
+ 
+  // const handleClear = () => {
+  //   setSearchTerm('')
+  // }
+ 
   return (
     <>
       <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
       <div>
         <Input
-          value={searchTerm}
-          onChange={handleSearchChange}
-          onClear={handleClear}
+          // value={searchTerm}
+          // onChange={handleSearchChange}
+          // onClear={handleClear}
           label='Search'
           isClearable
           radius='lg'
@@ -78,10 +78,10 @@ export default function JobOffers () {
         />
       </div>
       <br />
-      <div className='cards flex gap-4 '>
-        {jobOffers && filteredEvents.map((jobOffer, index) => (
+      <div className='cards flex gap-4'>
+        {data.map((item, index) => (
           <Card key={index} className='border border-transparent hover:border-primary'>
-            <CardHeader className='flex gap-4 '>
+            <CardHeader className='flex gap-4'>
               <Image
                 alt='mds logo'
                 height={40}
@@ -96,19 +96,19 @@ export default function JobOffers () {
             </CardHeader>
             <Divider />
             <CardBody className=''>
-              <h2 className='text-xl text-center my-8'>{jobOffer.attributes.title}</h2>
+              <h2 className='text-xl text-center my-8'>{item.attributes.title}</h2>
               <div className='description flex flex-col gap-3 justify-normal'>
                 <p><strong>Description:</strong></p>
                 <ScrollShadow className='w-[400px] h-[200px] overflow-auto'>
                   <div>
-                    {jobOffer.attributes.description && jobOffer.attributes.description.map((paragraph, index) => (
+                    {item.attributes.description && item.attributes.description.map((paragraph, index) => (
                       <p key={index}>{(paragraph.children.map(child => child.text))}</p>
                     ))}
                   </div>
                 </ScrollShadow>
                 <p><strong>Skills:</strong></p>
                 <div className='flex flex-wrap gap-4'>
-                  {jobOffer.attributes.skills.map((skill, index) => (
+                  {item.attributes.skills.map((skill, index) => (
                     <Tooltip key={index} content={skill}>
                       <Button variant='flat' color={colors[index % colors.length]} className='capitalize'>
                         {skill}
@@ -116,8 +116,8 @@ export default function JobOffers () {
                     </Tooltip>
                   ))}
                 </div>
-                <p><strong>Education:</strong> {jobOffer.attributes.education.join(', ')}</p>
-                <p><strong>Start Date:</strong> {jobOffer.attributes.start_date}</p>
+                <p><strong>Education:</strong> {item.attributes.education.join(', ')}</p>
+                <p><strong>Start Date:</strong> {item.attributes.start_date}</p>
               </div>
             </CardBody>
             <Divider />
