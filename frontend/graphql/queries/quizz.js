@@ -23,6 +23,8 @@ query getQuizzesByTheme($themeName: String!){
         name
         description
         slug
+        is_private
+        time
         quizz_theme{
           data{
             attributes{
@@ -72,6 +74,7 @@ query GetQuizzBySlug($slug: String!){
         name
         description
         time
+        is_private
       }
     }
   }
