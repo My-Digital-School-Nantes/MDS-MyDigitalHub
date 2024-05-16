@@ -1,5 +1,6 @@
 name: Build and publish
-#Environment variables
+
+# Environment variables
 env:
   REGISTRY: ghcr.io
   BACKEND_IMAGE_NAME: ${{ github.repository }}-backend
@@ -31,45 +32,49 @@ jobs:
       #   timeout-minutes: 5
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  build-published-backend:
-    name: 🚀 Build and publish backend
+  
+  build-publish-backend:
+    name: 🛠️ Build and publish backend
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
       packages: write
-
+    
     steps:
-    # Checkout (clone) the repository
-      - name: Checkout repository
+      # Checkout (clone) the repository
+      - name: ⏬ Checkout repository
         uses: actions/checkout@v4
-      
-      #Login to the Github Container Registry
-      - name: Login to GitHub Container Registry
+    
+      # Login to the Gitbub Container Registry
+      - name: 🐳 Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata for Docker
+        
+      # Get Docker image metadata (tags, labels, etc.)
+      - name: 🗃️ Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
-        with: 
+        with:
           images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+      
+      # Set up Docker Buildx (the docker build system)
+      - name: 🛠️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Set up Docker Buildx
-        uses : docker/setup-buildx-action@v3
-
-      - name: Build and push backend image
-        uses : docker/build-push-action@v5
-        with: 
+      # Build and push the docker image to repository
+      - name: 🛠️ Build and ⏫ push backend image
+        uses: docker/build-push-action@v5
+        with:
           context: ./backend
           file: ./backend/Dockerfile.prod
           push: true
           no-cache: true
-          tags: ${{steps.meta.outputs.tags}}
-          labels: ${{steps.meta.outputs.labels}}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             "HOST=0.0.0.0"
             "PORT=1337"
@@ -84,3 +89,7 @@ jobs:
             "DATABASE_NAME=myDigitalHub"
             "DATABASE_USERNAME=strapi"
             "DATABASE_PASSWORD=strapi"
+            
+
+
+          
