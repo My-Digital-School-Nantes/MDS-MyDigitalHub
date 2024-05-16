@@ -18,7 +18,7 @@ export function EventList ({ events = [] }) {
 
   // Fonction pour filtrer les événements par nom, contenu ou tags
   const filteredEvents = events.filter(event =>
-    event.attributes.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    event.attributes.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.attributes.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.attributes.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
   )
@@ -45,7 +45,7 @@ export function EventList ({ events = [] }) {
           <Card key={event.id} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>
             <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-2'>
               <div className='flex justify-between w-full items-center'>
-                <p className='text-bold text-primary'>{event.attributes.date_debut}</p>
+                <p className='text-bold text-primary'>{event.attributes.date}</p>
                 <Dropdown>
                   <DropdownTrigger className='min-w-10 min-h-10'>
                     <Button
@@ -86,7 +86,7 @@ export function EventList ({ events = [] }) {
                   </DropdownMenu>
                 </Dropdown>
               </div>
-              <p className='text-large capitalize font-bold'>{event.attributes.title}</p>
+              <p className='text-large capitalize font-bold'>{event.attributes.name}</p>
               <h4 className='font-light text-secondary-300 truncate w-64'>{event.attributes.content}</h4>
               <div className='flex gap-2 flex-wrap'>
                 {event?.attributes.tags && event?.attributes.tags.length > 0 && event.attributes.tags.map(tag => (
