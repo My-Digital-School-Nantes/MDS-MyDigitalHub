@@ -11,6 +11,8 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { DELETE_EVENT } from '@/graphql/mutations/eventDelete'
+import client from '@/graphql/apolloClient'
 
 const MySwal = withReactContent(Swal)
 
@@ -43,7 +45,7 @@ export default function Calendar () {
     fetchEvents()
   }, [])
 
-  const handleEventClick = clickInfo => {
+  const handleEventClick = async (clickInfo) => {
     Swal.fire({
       title: 'Êtes-vous sûr?',
       text: 'Voulez-vous supprimer cet événement ?',
@@ -56,11 +58,11 @@ export default function Calendar () {
     }).then(async (result) => {
       if (result.value) {
         try {
-          const response = await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
-            method: 'DELETE'
+          const { data } = await client.mutate({
+            mutation: DELETE_EVENT,
+            variables: { id: clickInfo.event.id }
           })
-
-          if (response.ok) {
+          if (data.deleteCalendarEvent.data.id) {
             Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
             fetchEvents()
           } else {
