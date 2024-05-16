@@ -3,8 +3,6 @@ services:
     container_name: mydigitalhub-backend
     image: ghcr.io/my-digital-school-nantes/mds-mydigitalhub-backend:master
     restart: unless-stopped
-    env_file: 
-      - ./backend/.env
     environment:
       DATABASE_CLIENT: mysql
       DATABASE_HOST: strapiDB
@@ -26,7 +24,6 @@ services:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
-    env_file: ./backend/.env
     image: mariadb:latest
     environment:
       MYSQL_USER: strapi
