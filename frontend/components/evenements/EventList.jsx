@@ -5,7 +5,6 @@ import { LuSearch } from 'react-icons/lu'
 import { FaEdit, FaShareSquare } from 'react-icons/fa'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { MdDeleteForever } from 'react-icons/md'
-import Link from 'next/link'
 
 export function EventList ({ events = [] }) {
   const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0'
@@ -18,7 +17,7 @@ export function EventList ({ events = [] }) {
 
   // Fonction pour filtrer les événements par nom, contenu ou tags
   const filteredEvents = events.filter(event =>
-    event.attributes.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    event.attributes.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.attributes.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.attributes.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
   )
@@ -45,7 +44,7 @@ export function EventList ({ events = [] }) {
           <Card key={event.id} className='py-4 my-2 max-w-xs hover:-translate-y-3 cursor-pointer'>
             <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-2'>
               <div className='flex justify-between w-full items-center'>
-                <p className='text-bold text-primary'>{event.attributes.date}</p>
+                <p className='text-bold text-primary'>{event.attributes.date_debut}</p>
                 <Dropdown>
                   <DropdownTrigger className='min-w-10 min-h-10'>
                     <Button
@@ -86,7 +85,7 @@ export function EventList ({ events = [] }) {
                   </DropdownMenu>
                 </Dropdown>
               </div>
-              <p className='text-large capitalize font-bold'>{event.attributes.name}</p>
+              <p className='text-large capitalize font-bold'>{event.attributes.title}</p>
               <h4 className='font-light text-secondary-300 truncate w-64'>{event.attributes.content}</h4>
               <div className='flex gap-2 flex-wrap'>
                 {event?.attributes.tags && event?.attributes.tags.length > 0 && event.attributes.tags.map(tag => (
@@ -95,13 +94,11 @@ export function EventList ({ events = [] }) {
               </div>
             </CardHeader>
             <CardBody className='flex justify-center items-center overflow-visible py-2'>
-              <Link href={`/evenements/${event.id}`}>
-                <Image
-                  alt={`Image de l'événement ${event.attributes.title}`}
-                  className='object-cover rounded-xl h-48 w-full'
-                  src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'}${event.attributes.image.data.attributes.url}`}
-                />
-              </Link>
+              <Image
+                alt={`Image de l'événement ${event.attributes.title}`}
+                className='object-cover rounded-xl h-48 w-full'
+                src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'}${event.attributes.image.data.attributes.url}`}
+              />
             </CardBody>
           </Card>
         ))}

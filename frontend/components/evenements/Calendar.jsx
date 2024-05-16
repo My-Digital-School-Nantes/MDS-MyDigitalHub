@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment'
@@ -12,32 +11,18 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { CREATE_EVENT, DELETE_EVENT } from '@/graphql/mutations/event'
-import { GET_EVENTS } from '@/graphql/queries/event'
-import client from '@/graphql/apolloClient'
-
-/* ---------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------- */
 
 const MySwal = withReactContent(Swal)
-
-/* ---------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------- */
-// Composant principal du calendrier
 
 export default function Calendar () {
   const [events, setEvents] = useState([])
 
-  // Fonction pour récupérer les événements depuis l'API
   const fetchEvents = async () => {
     try {
-      const { data } = await client.query({
-        query: GET_EVENTS
-      })
+      const response = await fetch('http://localhost:1337/api/calendar-events')
+      const data = await response.json()
 
-      const formattedEvents = data.calendarEvents.data.map(event => ({
+      const formattedEvents = data.data.map(event => ({
         title: event.attributes.title,
         start: event.attributes.date_debut,
         end: event.attributes.date_fin,
@@ -54,17 +39,11 @@ export default function Calendar () {
     }
   }
 
-  // Utilisation de useEffect pour récupérer les événements lors du montage du composant
   useEffect(() => {
     fetchEvents()
   }, [])
 
-  /* ---------------------------------------------------------------------------------------------- */
-  /* ---------------------------------------------------------------------------------------------- */
-  /* ---------------------------------------------------------------------------------------------- */
-  // Gestion de la suppression d'un événement
-
-  const handleEventClick = async (clickInfo) => {
+  const handleEventClick = clickInfo => {
     Swal.fire({
       title: 'Êtes-vous sûr?',
       text: 'Voulez-vous supprimer cet événement ?',
@@ -77,11 +56,11 @@ export default function Calendar () {
     }).then(async (result) => {
       if (result.value) {
         try {
-          const { data } = await client.mutate({
-            mutation: DELETE_EVENT,
-            variables: { id: clickInfo.event.id }
+          const response = await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
+            method: 'DELETE'
           })
-          if (data.deleteCalendarEvent.data.id) {
+
+          if (response.ok) {
             Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
             fetchEvents()
           } else {
@@ -94,12 +73,7 @@ export default function Calendar () {
     })
   }
 
-  /* ---------------------------------------------------------------------------------------------- */
-  /* ---------------------------------------------------------------------------------------------- */
-  /* ---------------------------------------------------------------------------------------------- */
-  // Gestion de la sélection d'une date pour créer un nouvel événement
-
-  const handleDateSelect = async (selectInfo) => {
+  const handleDateSelect = async selectInfo => {
     const { startStr, endStr, allDay } = selectInfo
 
     const { value: eventName } = await Swal.fire({
@@ -229,23 +203,12 @@ export default function Calendar () {
     formData.append('files.image', file)
 
     try {
-      const { data } = await client.mutate({
-        mutation: CREATE_EVENT,
-        variables: {
-          data: {
-            title: eventName,
-            date_debut: startStr,
-            date_fin: endStr,
-            allDay,
-            color,
-            content: description,
-            tags: formValues,
-            image: file
-          }
-        }
+      const response = await fetch('http://localhost:1337/api/calendar-events', {
+        method: 'POST',
+        body: formData
       })
 
-      if (data.createCalendarEvent.data) {
+      if (response.ok) {
         Swal.fire('Événement créé!')
         fetchEvents()
       } else {
@@ -253,14 +216,8 @@ export default function Calendar () {
       }
     } catch (error) {
       console.error('Erreur lors de la création de l\'événement :', error)
-      Swal.fire('Erreur', 'Une erreur est survenue lors de la création de l\'événement.', 'error')
     }
   }
-
-  /* ---------------------------------------------------------------------------------------------- */
-  /* ---------------------------------------------------------------------------------------------- */
-  /* ---------------------------------------------------------------------------------------------- */
-  // Rendu du composant FullCalendar
 
   return (
     <FullCalendar
@@ -296,11 +253,6 @@ export default function Calendar () {
     />
   )
 }
-
-/* ---------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------- */
-// Fonction pour rendre le contenu des cellules du jour
 
 function renderDayCellContent (dayCell) {
   const isToday = dayCell.isToday
