@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_quizz_responses",
+  "info": {
+    "displayName": "Responses",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "responseA": {
+      "type": "text"
+    },
+    "responseB": {
+      "type": "text"
+    },
+    "responseC": {
+      "type": "text"
+    },
+    "responseD": {
+      "type": "text"
+    }
+  }
+}
