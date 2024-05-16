@@ -3,7 +3,7 @@ import { Button, useDisclosure } from '@nextui-org/react'
 
 import ModalAnnonce from '@/components/santeComponents/modal/Modal'
 
-export default function Annonce () {
+export default function Annonce ({ onAdd }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   return (
     <>
@@ -20,7 +20,7 @@ export default function Annonce () {
         </div>
       </div>
 
-      <ModalAnnonce isOpen={isOpen} onOpenChange={onOpenChange} />
+      <ModalAnnonce isOpen={isOpen} onOpenChange={onOpenChange} onAdd={onAdd} />
 
     </>
   )

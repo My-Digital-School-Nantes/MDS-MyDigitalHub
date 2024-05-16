@@ -1,9 +1,22 @@
 'use client'
 import { Input, Card, CardBody, CardHeader, CardFooter, Divider, Chip } from '@nextui-org/react'
 import { MdDirectionsRun } from 'react-icons/md'
-
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LuSearch } from 'react-icons/lu'
+import client from '@/graphql/apolloClient'
+import { GET_ANNONCES } from '@/graphql/queries/sante'
+import ModalAnnonce from '@/components/santeComponents/ModalAnnonce'
+
+export const getAnnonces = async () => {
+  try {
+    const response = await client.query({
+      query: GET_ANNONCES
+    })
+    return response?.data?.annonces?.data
+  } catch (error) {
+    console.error('Error fetching data: ', error)
+  }
+}
 
 const formatDate = (isoString) => {
   const date = new Date(isoString)
@@ -17,8 +30,25 @@ const formatDate = (isoString) => {
   })
 }
 
-export const ListAnnonce = ({ annonces = [] }) => {
+export const ListAnnonce = ({ InitAnnonces }) => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [annonces, setAnnonces] = useState(InitAnnonces)
+  console.log(annonces)
+  // useEffect(() => {
+  //   const fetchAnnonces = async () => {
+  //     console.log('la')
+  //     const data = await getAnnonces()
+  //     setAnnonces(data)
+  //   }
+  //   fetchAnnonces()
+  // }, [])
+
+  const handleAddAnnonce = (newAnnonce) => {
+    console.log('Début' + newAnnonce[4])
+    setAnnonces([newAnnonce, ...annonces])
+    console.log('Fin' + annonces)
+  }
 
   const handleSearchChange = e => {
     setSearchTerm(e.target.value)
@@ -31,11 +61,10 @@ export const ListAnnonce = ({ annonces = [] }) => {
   const handleClear = () => {
     setSearchTerm('')
   }
-
   return (
     <section className='container mx-auto p-6 w-full mt-10'>
       <h1 className='text-4xl font-bold mb-8 capitalize'>Liste des évènements</h1>
-
+      <ModalAnnonce isOpen={isModalOpen} onOpenChange={setModalOpen} onAdd={handleAddAnnonce} />
       <Input
         value={searchTerm}
         onChange={handleSearchChange}

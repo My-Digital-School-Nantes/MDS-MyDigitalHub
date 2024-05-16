@@ -27,9 +27,9 @@
     "Niveau": {
       "type": "enumeration",
       "enum": [
-        "Débutant",
-        "Intermédiaire",
-        "Avancé",
+        "Debutant",
+        "Intermediaire",
+        "Avance",
         "Expert"
       ]
     },

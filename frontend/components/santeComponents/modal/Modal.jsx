@@ -4,8 +4,30 @@ import React, { useState } from 'react'
 import { Button, Modal, Input, ModalContent, ModalHeader, ModalBody, ModalFooter, Autocomplete, AutocompleteItem, Textarea, DatePicker } from '@nextui-org/react'
 import { sports, niveau } from '../../../app/sante/datas'
 import { now, getLocalTimeZone } from '@internationalized/date'
+import { ADD_MUTATION } from '@/graphql/mutations/sante'
+import client from '@/graphql/apolloClient'
 
-const ModalAnnonce = ({ isOpen, onOpenChange }) => {
+export const AddAnnonce = async (formData) => {
+  try {
+    const response = await client.mutate({
+      mutation: ADD_MUTATION,
+      variables: {
+        title: formData.title,
+        description: formData.description,
+        date: formData.date,
+        contact: formData.contact,
+        niveau: formData.niveau,
+        sport: formData.sport,
+        publishedAt: new Date()
+      }
+    })
+    return response?.data?.createAnnonce?.data?.attributes
+  } catch (error) {
+    console.error('Error fetching data: ', error)
+  }
+}
+
+const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [contact, setContact] = useState('')
@@ -13,17 +35,32 @@ const ModalAnnonce = ({ isOpen, onOpenChange }) => {
   const [selectedSport, setSelectedSport] = useState('')
   const [date, setDate] = useState(now(getLocalTimeZone()))
 
-  const onSubmit = (event) => {
-    event.preventDefault()
+  const onSubmit = async () => {
+    const dateISO = new Date(
+      date.year,
+      date.month - 1,
+      date.day,
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond
+    ).toISOString()
+
     const formData = {
       title,
       description,
       contact,
       niveau: selectedNiveau,
       sport: selectedSport,
-      date
+      date: dateISO
     }
-    console.log(formData)
+
+    // const newAnnonce = await AddAnnonce(formData)
+    // if (newAnnonce) {
+    //   onAdd(newAnnonce)
+    // }
+    onAdd(formData)
+
     onOpenChange(false)
   }
 

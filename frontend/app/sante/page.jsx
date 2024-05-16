@@ -1,5 +1,5 @@
 import CardCarousel from '@/components/santeComponents/card/CardCarousel'
-import ModalAnnonce from '@/components/santeComponents/ModalAnnonce'
+// import ModalAnnonce from '@/components/santeComponents/ModalAnnonce'
 import { ListAnnonce } from '@/components/santeComponents/list/ListAnnonce'
 import { Divider } from '@nextui-org/react'
 
@@ -56,10 +56,8 @@ export default async function Sante () {
       </div>
       <Divider className='my-4' />
 
-      <ModalAnnonce />
-
       <div className='m-8'>
-        <ListAnnonce annonces={annonces} />
+        <ListAnnonce InitAnnonces={annonces} />
       </div>
 
     </>
