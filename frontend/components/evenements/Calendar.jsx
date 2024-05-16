@@ -13,6 +13,7 @@ import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { CREATE_EVENT, DELETE_EVENT } from '@/graphql/mutations/event'
+import { GET_EVENTS } from '@/graphql/queries/event'
 import client from '@/graphql/apolloClient'
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -32,10 +33,11 @@ export default function Calendar () {
   // Fonction pour récupérer les événements depuis l'API
   const fetchEvents = async () => {
     try {
-      const response = await fetch('http://localhost:1337/api/calendar-events')
-      const data = await response.json()
+      const { data } = await client.query({
+        query: GET_EVENTS
+      })
 
-      const formattedEvents = data.data.map(event => ({
+      const formattedEvents = data.calendarEvents.data.map(event => ({
         title: event.attributes.title,
         start: event.attributes.date_debut,
         end: event.attributes.date_fin,
@@ -95,7 +97,7 @@ export default function Calendar () {
   /* ---------------------------------------------------------------------------------------------- */
   /* ---------------------------------------------------------------------------------------------- */
   /* ---------------------------------------------------------------------------------------------- */
-  // Gestion de la création d'un événement
+  // Gestion de la sélection d'une date pour créer un nouvel événement
 
   const handleDateSelect = async (selectInfo) => {
     const { startStr, endStr, allDay } = selectInfo
@@ -230,8 +232,16 @@ export default function Calendar () {
       const { data } = await client.mutate({
         mutation: CREATE_EVENT,
         variables: {
-          data: newEvent,
-          image: file
+          data: {
+            title: eventName,
+            date_debut: startStr,
+            date_fin: endStr,
+            allDay,
+            color,
+            content: description,
+            tags: formValues,
+            image: file
+          }
         }
       })
 
