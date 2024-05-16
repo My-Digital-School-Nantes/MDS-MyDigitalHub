@@ -1,7 +1,7 @@
 services:
   backend:
     container_name: mydigitalhub-backend
-    build: ./backend
+    image: ghcr.io/my-digital-school-nantes/mds-mydigitalhub-backend:master
     restart: unless-stopped
     env_file: 
       - ./backend/.env
@@ -13,11 +13,6 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
     volumes:
-      - ./backend/config:/opt/app/config
-      - ./backend/src:/opt/app/src
-      - ./backend/package.json:/opt/package.json
-      - ./backend/yarn.lock:/opt/yarn.lock
-      - ./backend/.env:/opt/app/.env
       - ./backend/public/uploads:/opt/app/public/uploads
     ports:
       - 1337:1337
@@ -54,18 +49,18 @@ services:
     networks:
       - mydigitalhub-backend
 
-  frontend:
-    build: ./frontend
-    ports:
-      - 3000:3000
-    container_name: -frontend
-    stdin_open: true
-    depends_on:
-      - mydigitalhub-backend
-    restart: unless-stopped
-    networks:
-      - mydigitalhub-backend
-      - public-network
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - 3000:3000
+  #   container_name: -frontend
+  #   stdin_open: true
+  #   depends_on:
+  #     - mydigitalhub-backend
+  #   restart: unless-stopped
+  #   networks:
+  #     - mydigitalhub-backend
+  #     - public-network
 
 volumes:
   strapi-data:
