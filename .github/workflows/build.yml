@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: 🔎 Build and analyze
+    name: 🔎 Analyze code with SonarQube
     runs-on: ubuntu-latest
     
     steps:
