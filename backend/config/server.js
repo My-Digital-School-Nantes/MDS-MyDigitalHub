@@ -1,4 +1,5 @@
 module.exports = ({ env }) => ({
+  url: env('BASE_URL', 'https://preprod.sergent.dev/api'),
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {
