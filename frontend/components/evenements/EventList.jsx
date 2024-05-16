@@ -5,6 +5,7 @@ import { LuSearch } from 'react-icons/lu'
 import { FaEdit, FaShareSquare } from 'react-icons/fa'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { MdDeleteForever } from 'react-icons/md'
+import Link from 'next/link'
 
 export function EventList ({ events = [] }) {
   const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0'
@@ -94,11 +95,13 @@ export function EventList ({ events = [] }) {
               </div>
             </CardHeader>
             <CardBody className='flex justify-center items-center overflow-visible py-2'>
-              <Image
-                alt={`Image de l'événement ${event.attributes.title}`}
-                className='object-cover rounded-xl h-48 w-full'
-                src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'}${event.attributes.image.data.attributes.url}`}
-              />
+              <Link href={`/evenements/${event.id}`}>
+                <Image
+                  alt={`Image de l'événement ${event.attributes.title}`}
+                  className='object-cover rounded-xl h-48 w-full'
+                  src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'}${event.attributes.image.data.attributes.url}`}
+                />
+              </Link>
             </CardBody>
           </Card>
         ))}

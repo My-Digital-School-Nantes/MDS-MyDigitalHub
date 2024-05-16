@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment'
@@ -11,12 +12,24 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { CREATE_EVENT, DELETE_EVENT } from '@/graphql/mutations/event'
+import client from '@/graphql/apolloClient'
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
 
 const MySwal = withReactContent(Swal)
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+// Composant principal du calendrier
 
 export default function Calendar () {
   const [events, setEvents] = useState([])
 
+  // Fonction pour récupérer les événements depuis l'API
   const fetchEvents = async () => {
     try {
       const response = await fetch('http://localhost:1337/api/calendar-events')
@@ -39,11 +52,17 @@ export default function Calendar () {
     }
   }
 
+  // Utilisation de useEffect pour récupérer les événements lors du montage du composant
   useEffect(() => {
     fetchEvents()
   }, [])
 
-  const handleEventClick = clickInfo => {
+  /* ---------------------------------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------------------------------- */
+  // Gestion de la suppression d'un événement
+
+  const handleEventClick = async (clickInfo) => {
     Swal.fire({
       title: 'Êtes-vous sûr?',
       text: 'Voulez-vous supprimer cet événement ?',
@@ -56,11 +75,11 @@ export default function Calendar () {
     }).then(async (result) => {
       if (result.value) {
         try {
-          const response = await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
-            method: 'DELETE'
+          const { data } = await client.mutate({
+            mutation: DELETE_EVENT,
+            variables: { id: clickInfo.event.id }
           })
-
-          if (response.ok) {
+          if (data.deleteCalendarEvent.data.id) {
             Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
             fetchEvents()
           } else {
@@ -73,7 +92,12 @@ export default function Calendar () {
     })
   }
 
-  const handleDateSelect = async selectInfo => {
+  /* ---------------------------------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------------------------------- */
+  // Gestion de la création d'un événement
+
+  const handleDateSelect = async (selectInfo) => {
     const { startStr, endStr, allDay } = selectInfo
 
     const { value: eventName } = await Swal.fire({
@@ -203,12 +227,15 @@ export default function Calendar () {
     formData.append('files.image', file)
 
     try {
-      const response = await fetch('http://localhost:1337/api/calendar-events', {
-        method: 'POST',
-        body: formData
+      const { data } = await client.mutate({
+        mutation: CREATE_EVENT,
+        variables: {
+          data: newEvent,
+          image: file
+        }
       })
 
-      if (response.ok) {
+      if (data.createCalendarEvent.data) {
         Swal.fire('Événement créé!')
         fetchEvents()
       } else {
@@ -216,8 +243,14 @@ export default function Calendar () {
       }
     } catch (error) {
       console.error('Erreur lors de la création de l\'événement :', error)
+      Swal.fire('Erreur', 'Une erreur est survenue lors de la création de l\'événement.', 'error')
     }
   }
+
+  /* ---------------------------------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------------------------------- */
+  // Rendu du composant FullCalendar
 
   return (
     <FullCalendar
@@ -253,6 +286,11 @@ export default function Calendar () {
     />
   )
 }
+
+/* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
+// Fonction pour rendre le contenu des cellules du jour
 
 function renderDayCellContent (dayCell) {
   const isToday = dayCell.isToday
