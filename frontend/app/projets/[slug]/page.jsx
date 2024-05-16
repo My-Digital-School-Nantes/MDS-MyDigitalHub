@@ -21,6 +21,8 @@ export default async function Projets () {
   const { slug } = router
   const projet = await getData(slug)
   console.log(projet)
+  console.log(slug)
+  console.log(router)
   return (
     <div className='bg-white dark:bg-black/70 rounded-lg shadow-lg'>
       Mega surpise
