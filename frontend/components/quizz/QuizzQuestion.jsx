@@ -1,6 +1,6 @@
 'use client'
 
-import { Card } from '@nextui-org/react'
+import { Button, Card } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -11,15 +11,34 @@ export function QuizzQuestion ({ params }) {
   const [userScore, setUserScore] = useState(0)
   const response = params.Questions[currentQuestionIndex]?.Responses
 
-  const nextQuestion = (e) => {
-    e.preventDefault()
-    if (userResponse === true) {
-      const radioButton = document.querySelector('input[name="userResponse"]:checked')
-      if (radioButton) {
-        radioButton.checked = false
-      }
-      setUserScore(userScore + 1)
-    }
+  const [isSelected, setIsSelected] = useState({
+    button1: { value: false, color: 'primary' },
+    button2: { value: false, color: 'primary' },
+    button3: { value: false, color: 'primary' },
+    button4: { value: false, color: 'primary' }
+  });
+
+  const handleClick = (buttonName) => {
+    // Mettre à jour l'état de isSelected pour le bouton spécifié
+    setIsSelected((prevState) => {
+      const newState = { ...prevState };
+      
+      // Réinitialiser la valeur de sélection de tous les boutons à false
+      Object.keys(newState).forEach((key) => {
+        newState[key].color = "primary";
+        newState[key].value = false;
+      });
+      
+      // Mettre à jour la valeur de sélection du bouton cliqué à true
+      newState[buttonName].color = "secondary";
+      newState[buttonName].value = true;
+  
+      return newState;
+    });
+  };
+  
+  const nextQuestion = () => {
+    setUserScore(userScore + 1)
     setCurrentQuestionIndex(prevIndex => prevIndex + 1)
   }
 
@@ -51,63 +70,18 @@ export function QuizzQuestion ({ params }) {
                       {params.Questions[currentQuestionIndex].questionText}
                     </h1>
                     <div className='grid grid-cols-2 gap-4'>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseA}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseA_isCorrect)
-                            }}
-                            required
-                          />
-                        </div>
-                      </Card>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseB}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseB_isCorrect)
-                            }}
-                          />
-                        </div>
-                      </Card>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseC}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseC_isCorrect)
-                            }}
-                          />
-                        </div>
-                      </Card>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseD}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseD_isCorrect)
-                            }}
-                          />
-                        </div>
-                      </Card>
+                      <Button color={isSelected.button1.color} onClick={() => handleClick('button1')}>
+                        Button 1
+                      </Button>
+                      <Button color={isSelected.button2.color} onClick={() => handleClick('button2')}>
+                        Button 2
+                      </Button>
+                      <Button color={isSelected.button3.color} onClick={() => handleClick('button3')}>
+                        Button 3
+                      </Button>
+                      <Button color={isSelected.button4.color} onClick={() => handleClick('button4')}>
+                        Button 4
+                      </Button>
                     </div>
                   </div>
                   <button onClick={nextQuestion}>Question suivante</button>
