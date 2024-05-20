@@ -51,7 +51,6 @@ export const ListAnnonce = ({ InitAnnonces }) => {
   }
   return (
     <section className='container mx-auto p-6 w-full mt-10'>
-      <h1 className='text-4xl font-bold mb-8 capitalize'>Liste des évènements</h1>
       <div className='flex items-center justify-between'>
         <div className='w-28' />
         <div className='text-center my-12 capitalize'>
