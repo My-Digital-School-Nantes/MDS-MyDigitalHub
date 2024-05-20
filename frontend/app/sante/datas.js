@@ -8,7 +8,7 @@ export const sports = [
 
 export const niveau = [
   { label: 'Debutant', value: 'Debutant' },
-  { label: 'Intermédiaire', value: 'intermédiaire' },
-  { label: 'Avancé', value: 'avance' },
-  { label: 'Expert', value: 'expert' }
+  { label: 'Intermediaire', value: 'Intermediaire' },
+  { label: 'Avance', value: 'Avance' },
+  { label: 'Expert', value: 'Expert' }
 ]

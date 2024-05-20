@@ -1,31 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-
 import { Button, Modal, Input, ModalContent, ModalHeader, ModalBody, ModalFooter, Autocomplete, AutocompleteItem, Textarea, DatePicker } from '@nextui-org/react'
 import { sports, niveau } from '../../../app/sante/datas'
 import { now, getLocalTimeZone } from '@internationalized/date'
-import { ADD_MUTATION } from '@/graphql/mutations/sante'
-import client from '@/graphql/apolloClient'
-
-export const AddAnnonce = async (formData) => {
-  try {
-    const response = await client.mutate({
-      mutation: ADD_MUTATION,
-      variables: {
-        title: formData.title,
-        description: formData.description,
-        date: formData.date,
-        contact: formData.contact,
-        niveau: formData.niveau,
-        sport: formData.sport,
-        publishedAt: new Date()
-      }
-    })
-    return response?.data?.createAnnonce?.data?.attributes
-  } catch (error) {
-    console.error('Error fetching data: ', error)
-  }
-}
 
 const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
   const [title, setTitle] = useState('')
@@ -35,7 +12,9 @@ const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
   const [selectedSport, setSelectedSport] = useState('')
   const [date, setDate] = useState(now(getLocalTimeZone()))
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
     const dateISO = new Date(
       date.year,
       date.month - 1,
@@ -54,13 +33,7 @@ const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
       sport: selectedSport,
       date: dateISO
     }
-
-    // const newAnnonce = await AddAnnonce(formData)
-    // if (newAnnonce) {
-    //   onAdd(newAnnonce)
-    // }
-    onAdd(formData)
-
+    await onAdd(formData)
     onOpenChange(false)
   }
 
@@ -72,7 +45,6 @@ const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
     >
       <form onSubmit={onSubmit}>
         <ModalContent>
-
           <ModalHeader className='flex flex-col gap-1'>Ajouter une annonces</ModalHeader>
           <ModalBody>
             <Input
@@ -138,7 +110,6 @@ const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
             >
               {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
             </Autocomplete>
-
           </ModalBody>
           <ModalFooter>
             <Button color='danger' variant='flat' onClick={() => onOpenChange(false)}>
@@ -148,7 +119,6 @@ const ModalAnnonce = ({ isOpen, onOpenChange, onAdd }) => {
               Enregistrer
             </Button>
           </ModalFooter>
-
         </ModalContent>
       </form>
     </Modal>

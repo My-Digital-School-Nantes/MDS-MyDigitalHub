@@ -12,19 +12,19 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Description": {
+    "description": {
       "type": "text"
     },
-    "Date": {
+    "date": {
       "type": "datetime"
     },
-    "Contact": {
+    "contact": {
       "type": "string"
     },
-    "Niveau": {
+    "niveau": {
       "type": "enumeration",
       "enum": [
         "Debutant",
@@ -33,7 +33,7 @@
         "Expert"
       ]
     },
-    "Sport": {
+    "sport": {
       "type": "enumeration",
       "enum": [
         "Course",

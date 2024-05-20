@@ -6,12 +6,12 @@ query annonce {
         data{
             id,
             attributes{
-                Title 
-                Description 
-                Date 
-                Contact 
-                Niveau 
-                Sport
+                title 
+                description 
+                date 
+                contact 
+                niveau 
+                sport
             }
         }
     }

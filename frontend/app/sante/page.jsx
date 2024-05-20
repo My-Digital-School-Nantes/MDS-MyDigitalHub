@@ -1,32 +1,7 @@
 import CardCarousel from '@/components/santeComponents/card/CardCarousel'
-// import ModalAnnonce from '@/components/santeComponents/ModalAnnonce'
 import { ListAnnonce } from '@/components/santeComponents/list/ListAnnonce'
 import { Divider } from '@nextui-org/react'
-
-import client from '@/graphql/apolloClient'
-import { GET_ANNONCES, GET_CONTACTS } from '@/graphql/queries/sante'
-
-export const getAnnonces = async () => {
-  try {
-    const response = await client.query({
-      query: GET_ANNONCES
-    })
-    return response?.data?.annonces?.data
-  } catch (error) {
-    console.error('Error fetching data: ', error)
-  }
-}
-
-export const getContacts = async () => {
-  try {
-    const response = await client.query({
-      query: GET_CONTACTS
-    })
-    return response?.data?.contacts?.data
-  } catch (error) {
-    console.error('Error fetching data: ', error)
-  }
-}
+import { getAnnonces, getContacts } from '@/app/api/santeApi'
 
 export default async function Sante () {
   const annonces = await getAnnonces()
