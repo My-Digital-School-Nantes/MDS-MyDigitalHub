@@ -21,7 +21,7 @@ import { useState } from 'react'
 import { AcmeLogo } from './AcmeLogo.jsx'
 import { ThemeSwitcher } from './ThemeSwitcher.jsx'
 
-function CustomNavbar () {
+export function CustomNavbar () {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { data: session, status } = useSession()
 
@@ -150,4 +150,3 @@ function CustomNavbar () {
     </Navbar>
   )
 }
-export default CustomNavbar

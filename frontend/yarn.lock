@@ -724,7 +724,7 @@
     "@react-stately/overlays" "^3.6.5"
     "@react-types/overlays" "^3.8.5"
 
-"@nextui-org/navbar@2.0.30":
+"@nextui-org/navbar@2.0.30", "@nextui-org/navbar@^2.0.30":
   version "2.0.30"
   resolved "https://registry.yarnpkg.com/@nextui-org/navbar/-/navbar-2.0.30.tgz#56dbaab35dcb739d99d1171dbadf0e7fe7871481"
   integrity sha512-Iaw3BU0gdX14nBtZUUFRnsXodnCe1Sbsv9Xk7OI44p+KbOhySgfcjf4iFcXM0vfTOMlOkBSsUzR9bt+/69G5pw==
