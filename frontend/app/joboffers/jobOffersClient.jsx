@@ -1,25 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getData } from './dataFetcher' // Assurez-vous que le chemin est correct
-import SearchInput from './searchInput' // Assurez-vous que le chemin est correct
-import JobCard from './jobCard' // Assurez-vous que le chemin est correct
+import { getData } from './dataFetcher'
+import SearchInput from './searchInput'
+import JobCard from './jobCard'
 import AddJobOfferModal from '@/components/jobOfferAdd/addJobOfferModal'
 
 const JobOffersClient = ({ initialData }) => {
   const [data, setData] = useState(initialData || [])
   const [searchTerm, setSearchTerm] = useState('')
-  const [isLoading, setIsLoading] = useState(false) // Ajouter un état de chargement
-
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true) // Début du chargement
+      setIsLoading(true)
       const result = await getData()
       setData(result || [])
-      setIsLoading(false) // Fin du chargement
+      setIsLoading(false)
     }
 
-    // Seulement appeler fetchData si initialData est vide
     if (!initialData || initialData.length === 0) {
       fetchData()
     }
@@ -45,16 +43,17 @@ const JobOffersClient = ({ initialData }) => {
         <AddJobOfferModal />
       </div>
       <br />
-      {isLoading ? (
-      // Afficher un indicateur de chargement pendant le chargement
-        <p>Loading...</p>
-      ) : (
-        <div className='cards flex flex-wrap gap-8'>
-          {filteredEvents.map((item, index) => (
-            <JobCard key={index} item={item} />
-          ))}
-        </div>
-      )}
+      {isLoading
+        ? (
+          <p>Loading...</p>
+          )
+        : (
+          <div className='cards flex flex-wrap gap-8'>
+            {filteredEvents.map((item, index) => (
+              <JobCard key={index} item={item} />
+            ))}
+          </div>
+          )}
     </>
   )
 }

@@ -7,8 +7,6 @@ import offerData from '../../../backend/src/api/offer/content-types/offer/schema
 
 const skillOptions = offerData.attributes.skills.options.map(skill => ({ label: skill, value: skill }))
 const educationOptions = offerData.attributes.education.options.map(edu => ({ label: edu, value: edu }))
-console.log('skillOptions:', skillOptions)
-console.log('educationOptions:', educationOptions)
 
 export default function AddJobOfferModal () {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()

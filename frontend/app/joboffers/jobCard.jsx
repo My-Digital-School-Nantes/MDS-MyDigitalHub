@@ -33,7 +33,7 @@ const JobCard = ({ item }) => (
         </ScrollShadow>
         <p><strong>Skills:</strong></p>
         <div className='flex flex-wrap gap-4'>
-          {item.attributes.skills.map((skill, index) => (
+          {Array.isArray(item.attributes.skills) && item.attributes.skills.map((skill, index) => (
             <Tooltip key={index} content={skill}>
               <Button variant='flat' color={colors[index % colors.length]} className='capitalize'>
                 {skill}
@@ -41,7 +41,7 @@ const JobCard = ({ item }) => (
             </Tooltip>
           ))}
         </div>
-        <p><strong>Education:</strong> {item.attributes.education.join(', ')}</p>
+        <p><strong>Education:</strong> {Array.isArray(item.attributes.education) ? item.attributes.education.join(', ') : item.attributes.education}</p>
         <p><strong>Start Date:</strong> {item.attributes.start_date}</p>
       </div>
     </CardBody>

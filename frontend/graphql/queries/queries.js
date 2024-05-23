@@ -47,27 +47,3 @@ mutation createOffer($title: String, $description: JSON, $skills: JSON, $educati
 export {
   GET_OFFERS, CREATE_OFFER
 }
-
-const CREATE_OFFER = gql`
-mutation CreateOffer($title: String!, $description: String!, $skills: [String!]!, $education: String!, $startDate: Date!, $publishedAt: Date!) {
-  createOffer(data: { title: $title, description: $description, skills: $skills, education: $education, start_date: $startDate, publishedAt: $publishedAt }) {
-    data {
-      id
-      attributes {
-        title
-        description
-        skills
-        education
-        start_date
-        createdAt
-        updatedAt
-        publishedAt
-      }
-    }
-  }
-}
-`
-
-export {
-  CREATE_OFFER
-}
