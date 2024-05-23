@@ -7,20 +7,25 @@ import {
 // import { setContext } from '@apollo/client/link/context'
 
 const httpLink = new HttpLink({
-  uri: `${process.env.STRAPI_URL}/graphql`
+  uri: `${process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL}/graphql`
 })
+
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore'
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all'
+  },
+}
 
 const client = new ApolloClient({
   link: from([httpLink]),
   cache: new InMemoryCache(),
-  defaultOptions: {
-    query: {
-      fetchPolicy: 'no-cache'
-    },
-    watchQuery: {
-      fetchPolicy: 'no-cache'
-    }
-  }
+  defaultOptions
+
 })
 
 export default client

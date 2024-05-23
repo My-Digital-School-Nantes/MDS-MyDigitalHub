@@ -15,9 +15,6 @@
     "title": {
       "type": "string"
     },
-    "description": {
-      "type": "blocks"
-    },
     "skills": {
       "type": "customField",
       "options": [
@@ -52,6 +49,9 @@
     },
     "start_date": {
       "type": "date"
+    },
+    "description": {
+      "type": "blocks"
     }
   }
 }
