@@ -18,7 +18,7 @@
     },
     "image": {
       "type": "media",
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "allowedTypes": [
         "images",
@@ -43,15 +43,6 @@
         "Marketing"
       ]
     },
-    "tags": {
-      "type": "enumeration",
-      "enum": [
-        "Projet perso",
-        "Projet école",
-        "Projet Alternance",
-        "Lean Start-up"
-      ]
-    },
     "users_permissions_user": {
       "type": "relation",
       "relation": "manyToOne",
@@ -60,6 +51,30 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "creator": {
+      "type": "string"
+    },
+    "creatorPhoto": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "tags": {
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "options": [
+        "Projet perso",
+        "Projet école",
+        "Projet Alternance",
+        "Lean Start-up"
+      ]
     }
   }
 }
