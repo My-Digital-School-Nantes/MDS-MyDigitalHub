@@ -1,6 +1,6 @@
 'use client'
 
-import { Card } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -9,18 +9,54 @@ export function QuizzQuestion ({ params }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userResponse, setUserResponse] = useState(false)
   const [userScore, setUserScore] = useState(0)
+  const [nextQuestionIsDisabled, setnextQuestionIsDisabled] = useState(true)
   const response = params.Questions[currentQuestionIndex]?.Responses
 
-  const nextQuestion = (e) => {
-    e.preventDefault()
+  const [isSelected, setIsSelected] = useState({
+    button1: { value: false, color: 'primary' },
+    button2: { value: false, color: 'primary' },
+    button3: { value: false, color: 'primary' },
+    button4: { value: false, color: 'primary' }
+  })
+
+  const handleClick = (buttonName, answer) => {
+    // Update state of isSelected for selected button
+    setIsSelected((prevState) => {
+      const newState = { ...prevState }
+
+      // Reset value of all value
+      Object.keys(newState).forEach((key) => {
+        newState[key].color = 'primary'
+        newState[key].value = false
+      })
+
+      // Update the right selected button value
+      newState[buttonName].color = 'secondary'
+      newState[buttonName].value = true
+      setnextQuestionIsDisabled(false)
+      setUserResponse(answer)
+
+      return newState
+    })
+  }
+
+  const nextQuestion = () => {
     if (userResponse === true) {
-      const radioButton = document.querySelector('input[name="userResponse"]:checked')
-      if (radioButton) {
-        radioButton.checked = false
-      }
       setUserScore(userScore + 1)
     }
     setCurrentQuestionIndex(prevIndex => prevIndex + 1)
+    setUserResponse(false)
+    setnextQuestionIsDisabled(true)
+    setIsSelected((prevState) => {
+      const newState = { ...prevState }
+
+      Object.keys(newState).forEach((key) => {
+        newState[key].color = 'primary'
+        newState[key].value = false
+      })
+
+      return newState
+    })
   }
 
   return (
@@ -51,66 +87,21 @@ export function QuizzQuestion ({ params }) {
                       {params.Questions[currentQuestionIndex].questionText}
                     </h1>
                     <div className='grid grid-cols-2 gap-4'>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseA}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseA_isCorrect)
-                            }}
-                            required
-                          />
-                        </div>
-                      </Card>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseB}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseB_isCorrect)
-                            }}
-                          />
-                        </div>
-                      </Card>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseC}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseC_isCorrect)
-                            }}
-                          />
-                        </div>
-                      </Card>
-                      <Card className='px-5 py-4'>
-                        <div className='flex flex-wrap justify-between items-center'>
-                          <label>
-                            {response.responseD}
-                          </label>
-                          <input
-                            type='radio'
-                            name='userResponse'
-                            onChange={(e) => {
-                              setUserResponse(response.responseD_isCorrect)
-                            }}
-                          />
-                        </div>
-                      </Card>
+                      <Button color={isSelected.button1.color} onClick={() => handleClick('button1', response.responseA_isCorrect)}>
+                        {response.responseA}
+                      </Button>
+                      <Button color={isSelected.button2.color} onClick={() => handleClick('button2', response.responseB_isCorrect)}>
+                        {response.responseB}
+                      </Button>
+                      <Button color={isSelected.button3.color} onClick={() => handleClick('button3', response.responseC_isCorrect)}>
+                        {response.responseC}
+                      </Button>
+                      <Button color={isSelected.button4.color} onClick={() => handleClick('button4', response.responseD_isCorrect)}>
+                        {response.responseD}
+                      </Button>
                     </div>
                   </div>
-                  <button onClick={nextQuestion}>Question suivante</button>
+                  <Button onClick={nextQuestion} disabled={nextQuestionIsDisabled}>Question suivante</Button>
                 </div>
                 )
               : (
