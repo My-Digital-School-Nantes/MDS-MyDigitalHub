@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quizzes",
+  "info": {
+    "singularName": "quizz",
+    "pluralName": "quizzes",
+    "displayName": "Quizz",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Questions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "quizz.questions"
+    },
+    "quizz_theme": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::quizz-theme.quizz-theme",
+      "inversedBy": "quizz"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

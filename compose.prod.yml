@@ -1,0 +1,68 @@
+services:
+  backend:
+    container_name: mydigitalhub-backend
+    image: ghcr.io/my-digital-school-nantes/mds-mydigitalhub-backend:master
+    restart: unless-stopped
+    environment:
+      DATABASE_CLIENT: mysql
+      DATABASE_HOST: strapiDB
+      DATABASE_PORT: 3306
+      DATABASE_NAME: myDigitalHub
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
+    volumes:
+      - ./backend/public/uploads:/opt/app/public/uploads
+    ports:
+      - 1337:1337
+    networks:
+      - mydigitalhub-backend
+      - public-network
+    depends_on:
+      - strapiDB
+
+  strapiDB:
+    container_name: strapiDB
+    platform: linux/amd64 #for platform error on Apple M1 chips
+    restart: unless-stopped
+    image: mariadb:latest
+    environment:
+      MYSQL_USER: strapi
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_PASSWORD: strapi
+      MYSQL_DATABASE: myDigitalHub
+    ports:
+      - 3306:3306
+    volumes:
+      - strapi-data:/var/lib/mysql
+      #- ./data:/var/lib/mysql # if you want to use a bind folder
+    networks:
+      - mydigitalhub-backend
+
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      - mydigitalhub-backend
+
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - 3000:3000
+  #   container_name: -frontend
+  #   stdin_open: true
+  #   depends_on:
+  #     - mydigitalhub-backend
+  #   restart: unless-stopped
+  #   networks:
+  #     - mydigitalhub-backend
+  #     - public-network
+
+volumes:
+  strapi-data:
+networks:
+  mydigitalhub-backend:
+  public-network:
+    external: true
+      

@@ -28,7 +28,7 @@ services:
       - strapiDB
 
   strapiDB:
-    container_name: mydigitalhub-mariadb
+    container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: ./backend/.env
@@ -38,6 +38,8 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
       MYSQL_PASSWORD: strapi
       MYSQL_DATABASE: myDigitalHub
+    ports:
+      - 3306:3306
     volumes:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
@@ -45,7 +47,6 @@ services:
       - mydigitalhub-backend
 
   adminer:
-    container_name: mydigitalhub-adminer
     image: adminer:latest
     restart: unless-stopped
     ports:
