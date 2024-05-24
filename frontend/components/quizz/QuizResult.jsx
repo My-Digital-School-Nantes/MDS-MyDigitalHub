@@ -1,13 +1,10 @@
 'use client'
-import React from 'react'
-import Link from 'next/link'
 import { useGamer } from '@/context/GamerContext'
 import { Avatar } from '@nextui-org/react'
 
 function QuizResult () {
   const { userPseudo } = useGamer()
   const { userAvatar } = useGamer()
-  console.log(userPseudo)
 
   return (
     <div className='flex flex-col items-center gap-10'>
