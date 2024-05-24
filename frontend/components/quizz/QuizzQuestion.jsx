@@ -54,8 +54,8 @@ export function QuizzQuestion ({ params }) {
                       isPlaying
                       duration={30}
                       size={120}
-                      colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                      colorsTime={[0, 10, 20, 30]}
+                      colors={['#00FF00', '#FFFF00', '#ED7F10', '#FF0000']}
+                      colorsTime={[25, 20, 10, 5]}
                       onComplete={() => {
                         nextQuestion()
                         return [true, 0] // This returns true to restart the timer and a delay of 0
