@@ -5,8 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 import QuizResult from './QuizResult'
-import { CountdownCircleTimer } from  'react-countdown-circle-timer'
-
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 export function QuizzQuestion ({ params }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -51,22 +50,19 @@ export function QuizzQuestion ({ params }) {
               ? (
                 <div className='flex flex-col items-center gap-20'>
                   <div className='flex flex-col items-center gap-10'>
-                  <CountdownCircleTimer 
-                      isPlaying 
-                      duration={30} 
+                    <CountdownCircleTimer
+                      isPlaying
+                      duration={30}
                       size={120}
-                      colors={[ 
-                        ['#004777', 0.33], 
-                        ['#F7B801', 0.33], 
-                        ['#A30000', 0.33], 
-                      ]} 
+                      colors={['#00FF00', '#FFFF00', '#ED7F10', '#FF0000']}
+                      colorsTime={[25, 20, 10, 5]}
                       onComplete={() => {
                         nextQuestion()
                         return [true, 0] // This returns true to restart the timer and a delay of 0
                       }}
-                    > 
-                      {({ remainingTime }) => remainingTime} 
-                  </CountdownCircleTimer>
+                    >
+                      {({ remainingTime }) => remainingTime}
+                    </CountdownCircleTimer>
                     <h1 className='pb-16 pt-4 text-4xl sm:text-6xl font-bold  text-gray-800 dark:text-gray-200 text-center'>
                       {params.Questions[currentQuestionIndex].questionText}
                     </h1>
