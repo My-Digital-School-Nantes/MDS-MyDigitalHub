@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Card } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ export function QuizzQuestion ({ params }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userResponse, setUserResponse] = useState(false)
   const [userScore, setUserScore] = useState(0)
+  const [nextQuestionIsDisabled, setnextQuestionIsDisabled] = useState(true)
   const response = params.Questions[currentQuestionIndex]?.Responses
 
   const [isSelected, setIsSelected] = useState({
@@ -16,30 +17,46 @@ export function QuizzQuestion ({ params }) {
     button2: { value: false, color: 'primary' },
     button3: { value: false, color: 'primary' },
     button4: { value: false, color: 'primary' }
-  });
+  })
 
-  const handleClick = (buttonName) => {
-    // Mettre à jour l'état de isSelected pour le bouton spécifié
+  const handleClick = (buttonName, answer) => {
+    // Update state of isSelected for selected button
     setIsSelected((prevState) => {
-      const newState = { ...prevState };
-      
-      // Réinitialiser la valeur de sélection de tous les boutons à false
+      const newState = { ...prevState }
+
+      // Reset value of all value
       Object.keys(newState).forEach((key) => {
-        newState[key].color = "primary";
-        newState[key].value = false;
-      });
-      
-      // Mettre à jour la valeur de sélection du bouton cliqué à true
-      newState[buttonName].color = "secondary";
-      newState[buttonName].value = true;
-  
-      return newState;
-    });
-  };
-  
+        newState[key].color = 'primary'
+        newState[key].value = false
+      })
+
+      // Update the right selected button value
+      newState[buttonName].color = 'secondary'
+      newState[buttonName].value = true
+      setnextQuestionIsDisabled(false)
+      setUserResponse(answer)
+
+      return newState
+    })
+  }
+
   const nextQuestion = () => {
-    setUserScore(userScore + 1)
+    if (userResponse === true) {
+      setUserScore(userScore + 1)
+    }
     setCurrentQuestionIndex(prevIndex => prevIndex + 1)
+    setUserResponse(false)
+    setnextQuestionIsDisabled(true)
+    setIsSelected((prevState) => {
+      const newState = { ...prevState }
+
+      Object.keys(newState).forEach((key) => {
+        newState[key].color = 'primary'
+        newState[key].value = false
+      })
+
+      return newState
+    })
   }
 
   return (
@@ -70,21 +87,21 @@ export function QuizzQuestion ({ params }) {
                       {params.Questions[currentQuestionIndex].questionText}
                     </h1>
                     <div className='grid grid-cols-2 gap-4'>
-                      <Button color={isSelected.button1.color} onClick={() => handleClick('button1')}>
-                        Button 1
+                      <Button color={isSelected.button1.color} onClick={() => handleClick('button1', response.responseA_isCorrect)}>
+                        {response.responseA}
                       </Button>
-                      <Button color={isSelected.button2.color} onClick={() => handleClick('button2')}>
-                        Button 2
+                      <Button color={isSelected.button2.color} onClick={() => handleClick('button2', response.responseB_isCorrect)}>
+                        {response.responseB}
                       </Button>
-                      <Button color={isSelected.button3.color} onClick={() => handleClick('button3')}>
-                        Button 3
+                      <Button color={isSelected.button3.color} onClick={() => handleClick('button3', response.responseC_isCorrect)}>
+                        {response.responseC}
                       </Button>
-                      <Button color={isSelected.button4.color} onClick={() => handleClick('button4')}>
-                        Button 4
+                      <Button color={isSelected.button4.color} onClick={() => handleClick('button4', response.responseD_isCorrect)}>
+                        {response.responseD}
                       </Button>
                     </div>
                   </div>
-                  <button onClick={nextQuestion}>Question suivante</button>
+                  <Button onClick={nextQuestion} disabled={nextQuestionIsDisabled}>Question suivante</Button>
                 </div>
                 )
               : (
