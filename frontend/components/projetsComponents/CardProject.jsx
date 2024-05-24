@@ -4,17 +4,7 @@ import { LuThumbsUp } from 'react-icons/lu'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import Markdown from 'react-markdown'
-import { PROJECT_MUTATION } from '@/graphql/mutations/project'
-
-const IncrementVote = async () => {
-  try {
-    await PROJECT_MUTATION
-    toast.success('Vote enregistré')
-  } catch (error) {
-    console.error(error)
-    toast.error('Erreur lors du vote')
-  }
-}
+import { IncrementVote } from '@/app/projets//[slug]/getProjectAction'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,7 +17,9 @@ export const CardProject = ({ projet }) => {
   }
 
   const handleUpvote = () => {
-    IncrementVote()
+    const newVote = projet.vote + 1
+    IncrementVote(projet.id, newVote)
+    toast.success('Vote enregistré')
   }
   return (
     <Card className='py-4'>
