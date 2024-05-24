@@ -32,6 +32,7 @@
     "@nextui-org/use-measure": "^2.0.1",
     "@react-aria/ssr": "^3.9.2",
     "@react-aria/visually-hidden": "^3.8.10",
+    "apollo-upload-client": "^18.0.1",
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.22",

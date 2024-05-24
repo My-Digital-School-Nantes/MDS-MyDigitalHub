@@ -11,6 +11,8 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { DELETE_EVENT } from '@/graphql/mutations/eventDelete'
+import client from '@/graphql/apolloClient'
 
 const MySwal = withReactContent(Swal)
 
@@ -43,7 +45,7 @@ export default function Calendar () {
     fetchEvents()
   }, [])
 
-  const handleEventClick = clickInfo => {
+  const handleDeleteEvent = async (clickInfo) => {
     Swal.fire({
       title: 'Êtes-vous sûr?',
       text: 'Voulez-vous supprimer cet événement ?',
@@ -56,11 +58,11 @@ export default function Calendar () {
     }).then(async (result) => {
       if (result.value) {
         try {
-          const response = await fetch(`http://localhost:1337/api/calendar-events/${clickInfo.event.id}`, {
-            method: 'DELETE'
+          const { data } = await client.mutate({
+            mutation: DELETE_EVENT,
+            variables: { id: clickInfo.event.id }
           })
-
-          if (response.ok) {
+          if (data.deleteCalendarEvent.data.id) {
             Swal.fire('Supprimé!', 'Votre événement a été supprimé.', 'success')
             fetchEvents()
           } else {
@@ -73,10 +75,10 @@ export default function Calendar () {
     })
   }
 
-  const handleDateSelect = async selectInfo => {
+  const handleCreateEvent = async selectInfo => {
     const { startStr, endStr, allDay } = selectInfo
 
-    const { value: eventName } = await Swal.fire({
+    const { value: eventName } = await MySwal.fire({
       title: 'Créer un événement',
       input: 'text',
       inputAttributes: {
@@ -86,15 +88,20 @@ export default function Calendar () {
       confirmButtonText: 'Créer',
       confirmButtonColor: '#2fb8c5',
       cancelButtonText: 'Annuler',
-      showLoaderOnConfirm: true
+      showLoaderOnConfirm: true,
+      preConfirm: (value) => {
+        if (!value) {
+          MySwal.showValidationMessage('Veuillez entrer le nom de l\'événement')
+        }
+        return value
+      }
     })
 
     if (!eventName) {
-      Swal.showValidationMessage('Veuillez entrer le nom de l\'événement')
       return
     }
 
-    const { value: description } = await Swal.fire({
+    const { value: description } = await MySwal.fire({
       title: 'Ajouter une description',
       input: 'textarea',
       inputAttributes: {
@@ -104,11 +111,16 @@ export default function Calendar () {
       confirmButtonText: 'OK',
       confirmButtonColor: '#2fb8c5',
       cancelButtonText: 'Annuler',
-      showLoaderOnConfirm: true
+      showLoaderOnConfirm: true,
+      preConfirm: (value) => {
+        if (!value) {
+          MySwal.showValidationMessage('Veuillez entrer une description')
+        }
+        return value
+      }
     })
 
     if (!description) {
-      Swal.showValidationMessage('Veuillez entrer une description')
       return
     }
 
@@ -146,7 +158,7 @@ export default function Calendar () {
       return
     }
 
-    const { value: color } = await Swal.fire({
+    const { value: color } = await MySwal.fire({
       title: 'Sélectionnez une couleur',
       input: 'select',
       inputOptions: {
@@ -162,15 +174,20 @@ export default function Calendar () {
       confirmButtonColor: '#2fb8c5',
       cancelButtonColor: '#d33',
       showCancelButton: true,
-      cancelButtonText: 'Annuler'
+      cancelButtonText: 'Annuler',
+      preConfirm: (value) => {
+        if (!value) {
+          MySwal.showValidationMessage('Veuillez sélectionner une couleur')
+        }
+        return value
+      }
     })
 
     if (!color) {
-      Swal.showValidationMessage('Veuillez sélectionner une couleur')
       return
     }
 
-    const { value: file } = await Swal.fire({
+    const { value: file } = await MySwal.fire({
       title: 'Ajouter une image',
       input: 'file',
       inputAttributes: {
@@ -180,11 +197,16 @@ export default function Calendar () {
       confirmButtonText: 'OK',
       confirmButtonColor: '#2fb8c5',
       cancelButtonText: 'Annuler',
-      showLoaderOnConfirm: true
+      showLoaderOnConfirm: true,
+      preConfirm: (file) => {
+        if (!file) {
+          MySwal.showValidationMessage('Veuillez ajouter une image')
+        }
+        return file
+      }
     })
 
     if (!file) {
-      Swal.showValidationMessage('Veuillez ajouter une image')
       return
     }
 
@@ -239,17 +261,17 @@ export default function Calendar () {
       }}
       events={events}
       eventColor='#fff'
-      initialView='dayGridMonth' // Affichage de base
-      editable // Pour activer les interactions d'events
-      droppable // Pour activer le fait d'ajouter un élement via le drag&drop
+      initialView='dayGridMonth' 
+      editable 
+      droppable
       nowIndicator
       dayMaxEvents
       selectMirror
       height={850}
       selectable
       dayCellContent={renderDayCellContent}
-      select={handleDateSelect}
-      eventClick={handleEventClick}
+      select={handleCreateEvent}
+      eventClick={handleDeleteEvent}
     />
   )
 }
@@ -266,3 +288,4 @@ function renderDayCellContent (dayCell) {
     </div>
   )
 }
+
