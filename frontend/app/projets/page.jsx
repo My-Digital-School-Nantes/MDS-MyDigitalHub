@@ -2,7 +2,7 @@ import { Input } from '@nextui-org/react'
 import { GET_PROJECTS } from '@/graphql/queries/projects'
 import { LuSearch } from 'react-icons/lu'
 import client from '@/graphql/apolloClient'
-import { ListProjects } from '@/components/projetsComponents/ListProject'
+import { ListProjects } from '../../components/projetsComponents/ListProject'
 
 export async function getData () {
   try {

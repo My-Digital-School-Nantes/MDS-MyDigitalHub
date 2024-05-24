@@ -23,7 +23,7 @@ services:
       - 1337:1337
     networks:
       - mydigitalhub-backend
-      - mydigitalhub-frontend
+      - public-network
     depends_on:
       - strapiDB
 
@@ -58,4 +58,6 @@ volumes:
   strapi-data:
 networks:
   mydigitalhub-backend:
-  mydigitalhub-frontend:
+  public-network:
+    external: true
+      
