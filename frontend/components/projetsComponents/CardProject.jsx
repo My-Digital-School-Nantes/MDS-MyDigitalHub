@@ -1,9 +1,9 @@
 'use client'
-import { Card, User, CardHeader, CardBody, Image, CardFooter, Button, Chip } from '@nextui-org/react'
-import { LuThumbsUp } from 'react-icons/lu'
+import { Button, Card, CardBody, CardFooter, CardHeader, Chip, Image, User } from '@nextui-org/react'
 import Link from 'next/link'
-import { toast } from 'react-toastify'
+import { LuThumbsUp } from 'react-icons/lu'
 import Markdown from 'react-markdown'
+import { toast } from 'react-toastify'
 
 export const CardProject = ({ projet }) => {
   console.log(projet)

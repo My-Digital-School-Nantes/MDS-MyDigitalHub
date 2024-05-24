@@ -6,15 +6,12 @@
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
     "questionText": {
       "type": "text"
     },
     "Responses": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "component": "quizz.responses"
     }
   }
