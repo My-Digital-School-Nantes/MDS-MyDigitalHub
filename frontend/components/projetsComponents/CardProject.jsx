@@ -20,10 +20,10 @@ export const dynamic = 'force-dynamic'
 
 export const CardProject = ({ projet }) => {
   const tagColors = {
-    Lean_Start_up: 'success',
-    tag2: 'primary',
-    tag3: 'secondary'
-    // Add more tags and colors as needed
+    'Lean Start-up': 'success',
+    'Projet école': 'primary',
+    'Projet Alternance': 'secondary',
+    'Projet Personnel': 'warning'
   }
 
   const handleUpvote = () => {
@@ -45,6 +45,14 @@ export const CardProject = ({ projet }) => {
           <h1 className='relative inline-block text-xl capitalize font-semibold text-black pt-4 before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-primary-400 before:transition before:origin-left before:scale-x-0 group-hover:before:scale-x-100 dark:text-white'>{projet.title}</h1>
         </Link>
 
+        <div className='flex gap-3'>
+          {
+            projet.tags?.map((tag, index) => (
+              <Chip key={index} radius='sm' color={tagColors[tag.trim()] || 'primary'}>{tag}</Chip>
+            ))
+          }
+        </div>
+
       </CardHeader>
       <CardBody className='overflow-visible py-2 gap-2'>
 
@@ -53,11 +61,7 @@ export const CardProject = ({ projet }) => {
         <p className='text-gray-600 dark:text-gray-400'>
           {projet.publishedDate}
         </p>
-        {
-          projet.tags.split(',').map((tag, index) => (
-            <Chip key={index} radius='sm' color={tagColors[tag.trim()] || 'default'}>{tag}</Chip>
-          ))
-        }
+
       </CardBody>
       <CardFooter className='flex justify-between items-end'>
         <User
