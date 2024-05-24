@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { toast } from 'react-toastify'
 import Markdown from 'react-markdown'
 import { PROJECT_MUTATION } from '@/graphql/mutations/project'
-import { env } from 'process'
 
 const IncrementVote = async () => {
   try {
