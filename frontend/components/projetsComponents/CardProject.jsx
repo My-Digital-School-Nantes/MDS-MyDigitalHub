@@ -19,6 +19,13 @@ const IncrementVote = async () => {
 export const dynamic = 'force-dynamic'
 
 export const CardProject = ({ projet }) => {
+  const tagColors = {
+    Lean_Start_up: 'success',
+    tag2: 'primary',
+    tag3: 'secondary'
+    // Add more tags and colors as needed
+  }
+
   const handleUpvote = () => {
     IncrementVote()
   }
@@ -46,14 +53,18 @@ export const CardProject = ({ projet }) => {
         <p className='text-gray-600 dark:text-gray-400'>
           {projet.publishedDate}
         </p>
-        <Chip radius='sm' color='primary'>{projet.category}</Chip>
+        {
+          projet.tags.split(',').map((tag, index) => (
+            <Chip key={index} radius='sm' color={tagColors[tag.trim()] || 'default'}>{tag}</Chip>
+          ))
+        }
       </CardBody>
       <CardFooter className='flex justify-between items-end'>
         <User
-          name='Guillaume Troyaux'
-          description='Developpeur Fullstack'
+          name={projet.creator}
+          description={projet.category}
           avatarProps={{
-            src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
+            src: 'http://localhost:1337' + projet?.creatorPhoto?.data?.attributes?.url
           }}
         />
         <div className='flex gap-2 items-center'>

@@ -21,6 +21,15 @@ query getProjects {
         slug,
         category,
         tags,
+        creator,
+        creatorPhoto {
+          data {
+            attributes {
+              name,
+              url,
+              formats
+            }
+          }}
       }
     }
   }
