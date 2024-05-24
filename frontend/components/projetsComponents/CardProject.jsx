@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { toast } from 'react-toastify'
 import Markdown from 'react-markdown'
 import { PROJECT_MUTATION } from '@/graphql/mutations/project'
+import { env } from 'process'
 
 const IncrementVote = async () => {
   try {
@@ -32,13 +33,13 @@ export const CardProject = ({ projet }) => {
   return (
     <Card className='py-4'>
       <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-3'>
-        <Link href={'http://localhost:3000/projets/' + projet.slug} className='group block'>
-          <div className=' overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
+        <Link href={`/projets/${projet.slug}`} className='group block'>
+          <div className='overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
             <Image
               alt='Projet Image'
               isZoomed
-              className='rounded-2xl w-screen h-64'
-              src={'http://localhost:1337' + projet?.image?.data?.attributes?.url}
+              className='rounded-2xl  h-64'
+              src={'http://localhost:1337' + (projet.image && projet.image.data && projet.image.data[0].attributes.url)}
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw%'
             />
           </div>
