@@ -4,22 +4,33 @@ import { LuThumbsUp } from 'react-icons/lu'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import Markdown from 'react-markdown'
+import { PROJECT_MUTATION } from '@/graphql/mutations/project'
+
+const IncrementVote = async () => {
+  try {
+    await PROJECT_MUTATION
+    toast.success('Vote enregistré')
+  } catch (error) {
+    console.error(error)
+    toast.error('Erreur lors du vote')
+  }
+}
+
+export const dynamic = 'force-dynamic'
 
 export const CardProject = ({ projet }) => {
-  console.log(projet)
   const handleUpvote = () => {
-    // TODO: Add upvote
-    projet.votes += 1
-    toast.success('Upvoted!')
+    IncrementVote()
   }
   return (
     <Card className='py-4'>
       <CardHeader className='pb-0 pt-2 px-4 flex-col items-start gap-3'>
         <Link href={'http://localhost:3000/projets/' + projet.slug} className='group block'>
-          <div className='aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
+          <div className=' overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800'>
             <Image
               alt='Projet Image'
-              className='group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl w-screen h-64'
+              isZoomed
+              className='rounded-2xl w-screen h-64'
               src={'http://localhost:1337' + projet?.image?.data?.attributes?.url}
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw%'
             />
