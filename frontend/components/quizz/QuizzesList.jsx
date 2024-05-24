@@ -2,15 +2,6 @@
 
 import CardQuizz from '@/components/quizz/CardQuizz'
 
-// const quizzPerPage = 8
-// const totalQuizz = 500
-// const { currentPage, setPage, totalPages } = usePagination({
-//   totalItems: totalQuizz,
-//   itemsPerPage: quizzPerPage
-// })
-
-// const startIndex = (currentPage - 1) * quizzPerPage
-
 export default function QuizzesList ({ data }) {
   return (
     <div>
@@ -21,6 +12,8 @@ export default function QuizzesList ({ data }) {
         ))}
 
       </div>
+
+      {/* TODO: Add pagination */}
 
       {/* <PaginationQuizz
         total={totalPages}
