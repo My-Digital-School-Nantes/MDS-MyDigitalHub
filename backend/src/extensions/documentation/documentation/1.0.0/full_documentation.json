@@ -9036,8 +9036,7 @@
           }
         },
         "tags": [
-          "Quizz-theme"
-        ],
+          "Quizz-theme"        ],
         "parameters": [
           {
             "name": "id",
