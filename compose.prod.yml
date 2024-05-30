@@ -46,18 +46,18 @@ services:
     networks:
       - mydigitalhub-backend
 
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - 3000:3000
-  #   container_name: -frontend
-  #   stdin_open: true
-  #   depends_on:
-  #     - mydigitalhub-backend
-  #   restart: unless-stopped
-  #   networks:
-  #     - mydigitalhub-backend
-  #     - public-network
+  frontend:
+    image: ghcr.io/my-digital-school-nantes/mds-mydigitalhub-frontend:master
+    ports:
+      - 3000:3000
+    container_name: mydigitalhub-frontend
+    stdin_open: true
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - mydigitalhub-backend
+      - public-network
 
 volumes:
   strapi-data:
