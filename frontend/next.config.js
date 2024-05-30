@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone'
+  output: 'standalone',
+  basePath: '/mydigitalhub'
 }
 
 module.exports = nextConfig
