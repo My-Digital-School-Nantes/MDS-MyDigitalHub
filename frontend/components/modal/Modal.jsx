@@ -1,5 +1,5 @@
 import { Button, Modal, Input, ModalContent, ModalHeader, ModalBody, ModalFooter, Checkbox, Link, Autocomplete, AutocompleteItem } from '@nextui-org/react'
-import { animals } from '../../app/sante/animalsDatas'
+import { animals } from '@/data/animalsDatas'
 
 const ModalAnnonce = ({ isOpen, onOpenChange }) => {
   return (

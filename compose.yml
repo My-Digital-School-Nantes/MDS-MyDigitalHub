@@ -21,9 +21,9 @@ services:
       - ./backend/public/uploads:/opt/app/public/uploads
     ports:
       - 1337:1337
-    networks:
-      - mydigitalhub-backend
-      - mydigitalhub-frontend
+    # networks:
+    #   - mydigitalhub-backend
+    #   - mydigitalhub-frontend
     depends_on:
       - strapiDB
 
@@ -43,19 +43,36 @@ services:
     volumes:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
-    networks:
-      - mydigitalhub-backend
+    # networks:
+    #   - mydigitalhub-backend
 
   adminer:
     image: adminer:latest
     restart: unless-stopped
     ports:
       - 8080:8080
-    networks:
-      - mydigitalhub-backend
+    # networks:
+    #   - mydigitalhub-backend
+
+  frontend:
+    build: ./frontend
+    # environment:
+    #   NEXT_PUBLIC_STRAPI_URL: http://localhost:1337
+    #   NEXTAUTH_SECRET: secret
+    #   NEXTAUTH_URL: http://localhost:3000
+    ports:
+      - 3000:3000
+    container_name: myDigitalHub-frontend
+    stdin_open: true
+    depends_on:
+      - backend
+    restart: unless-stopped
+    # networks:
+    #   - mydigitalhub-backend
+    #   - public-network
 
 volumes:
   strapi-data:
-networks:
-  mydigitalhub-backend:
-  mydigitalhub-frontend:
+# networks:
+#   mydigitalhub-backend:
+#   mydigitalhub-frontend:

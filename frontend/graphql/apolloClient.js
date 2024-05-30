@@ -7,11 +7,12 @@ import {
 // import { setContext } from '@apollo/client/link/context'
 
 const httpLink = new HttpLink({
-  uri: `${process.env.STRAPI_URL}/graphql`
+  uri: `${process.env.NEXT_PUBLIC_STRAPI_URL}/graphql`
 })
 
 const client = new ApolloClient({
   link: from([httpLink]),
+  ssrMode: true,
   cache: new InMemoryCache(),
   defaultOptions: {
     query: {

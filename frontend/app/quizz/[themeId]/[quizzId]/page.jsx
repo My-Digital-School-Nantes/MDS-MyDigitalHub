@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import AvatarSelector from '@/components/AvatarSelector'
 import PseudoForm from '@/components/forms/PseudoForm'
 
+export const dynamic = 'force-dynamic'
+
 export default function QuizzIdPage ({ params }) {
   const quizData = {
     theme: "Histoire de l'art",

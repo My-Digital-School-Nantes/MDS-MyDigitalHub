@@ -24,8 +24,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NODE_ENV production
-ARG STRAPI_URL
-ENV STRAPI_URL ${STRAPI_URL}
+ARG NEXT_PUBLIC_STRAPI_URL
+ENV NEXT_PUBLIC_STRAPI_URL ${NEXT_PUBLIC_STRAPI_URL}
 ARG NEXTAUTH_SECRET
 ENV NEXTAUTH_SECRET ${NEXTAUTH_SECRET}
 ARG NEXTAUTH_URL
@@ -46,8 +46,8 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ARG STRAPI_URL
-ENV STRAPI_URL ${STRAPI_URL}
+ARG NEXT_PUBLIC_STRAPI_URL
+ENV NEXT_PUBLIC_STRAPI_URL ${NEXT_PUBLIC_STRAPI_URL}
 ARG NEXTAUTH_SECRET
 ENV NEXTAUTH_SECRET ${NEXTAUTH_SECRET}
 ARG NEXTAUTH_URL
@@ -64,7 +64,6 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/templates ./templates
 
 # Set the correct permission for prerender cache
 RUN mkdir .next

@@ -7,7 +7,7 @@ import {
   Button,
   Tooltip,
   Input,
-  ScrollShadow,
+  ScrollShadow
 } from '@nextui-org/react'
 import { GET_OFFERS } from '@/graphql/queries/queries'
 import client from '@/graphql/apolloClient'
@@ -24,27 +24,28 @@ export const getData = async () => {
   }
 }
 
- const colors = [
-    'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
-  ]
+const colors = [
+  'default', 'primary', 'secondary', 'success', 'warning', 'danger', 'foreground'
+]
+
+export const dynamic = 'force-dynamic'
 
 export default async function JobOffers () {
   const data = await getData()
   console.log('data', data)
 
- 
   // const handleSearchChange = e => {
   //   setSearchTerm(e.target.value)
   // }
- 
+
   // const filteredEvents = data.filter(data =>
   //   data.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
   // )
- 
+
   // const handleClear = () => {
   //   setSearchTerm('')
   // }
- 
+
   return (
     <>
       <h1 className='text-4xl text-center my-8'>MDS Job Offers</h1>
@@ -79,7 +80,7 @@ export default async function JobOffers () {
       </div>
       <br />
       <div className='cards flex gap-4'>
-        {data.map((item, index) => (
+        {data && data.map((item, index) => (
           <Card key={index} className='border border-transparent hover:border-primary'>
             <CardHeader className='flex gap-4'>
               <Image

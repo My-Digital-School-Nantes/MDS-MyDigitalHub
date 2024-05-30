@@ -1,8 +1,8 @@
-async function getData(id){
-  const res =
-}
+// async function getData(id){
+//   const res =
+// }
 
-
+export const dynamic = 'force-dynamic'
 
 export default function page () {
   return (

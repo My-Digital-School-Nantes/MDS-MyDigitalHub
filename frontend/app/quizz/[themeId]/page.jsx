@@ -12,6 +12,7 @@ export const getData = async () => {
     console.error(error)
   }
 }
+export const dynamic = 'force-dynamic'
 
 export default async function ThemePage () {
   const data = await getData()
